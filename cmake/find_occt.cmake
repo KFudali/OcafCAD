@@ -1,4 +1,3 @@
-
 set(OpenCASCADE_DIR "" CACHE PATH "Path to dir containing OpenCASCADEConfig.cmake")
 
 find_package(OpenCASCADE REQUIRED CONFIG)

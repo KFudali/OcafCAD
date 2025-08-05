@@ -1,14 +1,17 @@
-collect_unit_test_sources(${CMAKE_CURRENT_SOURCE_DIR}/Part utPartSrc)
-
+add_subdirectory(Part)
 add_executable(utGeometryCore
     utGeometryCore.cpp
-    ${utPartSrc}
 )
 
 target_link_libraries(utGeometryCore PRIVATE
     GeometryCore
-    GTest::gmock_main
+    utPart
     GTest::gtest_main
+    GTest::gmock_main
+)
+
+target_compile_definitions(utGeometryCore PRIVATE
+    TEST_DATA_DIR="${testDataDir}"
 )
 
 include(GoogleTest)

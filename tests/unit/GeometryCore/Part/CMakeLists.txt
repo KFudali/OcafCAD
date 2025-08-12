@@ -4,7 +4,7 @@ add_library(utPart INTERFACE)
 target_sources(utPart INTERFACE ${utPartSources})
 
 target_link_libraries(utPart INTERFACE
-    GeometryCore
+    Part
     GTest::gtest_main
     GTest::gmock_main
 )

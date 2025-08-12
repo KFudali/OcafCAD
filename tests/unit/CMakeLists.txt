@@ -1,2 +1,3 @@
+add_subdirectory(Tools)
 add_subdirectory(GeometryCore)
 add_subdirectory(OcafKernel)

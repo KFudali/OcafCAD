@@ -1,6 +1,6 @@
 add_subdirectory(Part)
 add_executable(utGeometryCore
-    utGeometryCore.cpp
+    utRunGeometryCore.cpp
 )
 
 target_link_libraries(utGeometryCore PRIVATE

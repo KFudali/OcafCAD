@@ -8,6 +8,7 @@ target_link_libraries(Part PRIVATE
 )
 
 target_include_directories(Part PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/PartAttributes
     ${CMAKE_CURRENT_SOURCE_DIR}
     ${BOOST_DIR}
 )

@@ -1,24 +1,23 @@
 #ifndef Part_hpp
 #define Part_hpp
 
-#include "PartLabelKey.hpp"
-
-class PartDocumentTool{
-    public:
-    PartDocumentTool(XCafDoc);
-};
+#include "PartLabel.hpp"
+#include "PartTools.hpp"
 
 class Part{
     public:
+    inline static ColorRGBA defaultPartColor = ColorRGBA();
+    inline static std::string defaultPartName = "PartName";
+
     Part(
-        PartLabel aPartLabel,
-        PartDocumentTool aPartDocumentTool
+        PartLabel aPartLabel
     );
+    
     ~Part() = default;
 
-    PartLabelKey labelKey() const; 
-    ShapePrototype shapePrototype() const;
-    
+    inline PartLabel partLabel() const {return mPartLabel;}; 
+    PartPrototype partPrototype() const;
+
     std::string name() const;
     ColorRGBA color() const;
     Location location() const; 
@@ -26,9 +25,22 @@ class Part{
     bool setName(const std::string& aName);
     bool setColor(const ColorRGBA& aColor);
     bool setLocation(const Location& aLocation);
+    bool setPrototype(const PartPrototype& aName);
+
+    bool isAssembly() const;
+    bool isComponent() const;
+
+    bool addComponent(PartLabel aPartLabel); 
+    bool removeComponent(PartLabel aPartLabel);
+
+    std::vector<PartLabel> childrenComponents() const;
+    PartLabel parentAssembly() const;
 
     private:
-    PartLabelKey mPartLabelKey;
-    PartDocumentTool mPartDocumentTool;
+    PartLabel mPartLabel;
+    PartTools mPartTools;
+
 };
+
+
 #endif

@@ -56,9 +56,9 @@ TEST_F(SignalMessageBusTest, BusCallsMethodThatIsSubscribedToEvent){
     EXPECT_CALL(*subscriber, mockHandleA(eventA)).Times(1);
     EXPECT_CALL(*subscriber, mockHandleB(eventB)).Times(1);
     EXPECT_CALL(*subscriber, mockHandleC(eventC)).Times(1);
-    testBus.publish(eventA);    
-    testBus.publish(eventB);    
-    testBus.publish(eventC);    
+    testBus.publish(eventA);  
+    testBus.publish(eventB);   
+    testBus.publish(eventC);
 }
 
 TEST_F(SignalMessageBusTest, BusDoesNotCallNotSubscribedMethods){

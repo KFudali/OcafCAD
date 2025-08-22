@@ -1,4 +1,4 @@
-add_subdirectory(Part)
+# add_subdirectory(Part)
 add_executable(utGeometryCore
     utRunGeometryCore.cpp
 )

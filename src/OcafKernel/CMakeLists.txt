@@ -1,5 +1,4 @@
-add_subdirectory(Part)
-# add_subdirectory(PartDocument)
+add_subdirectory(PartDocument)
 
 add_library(OcafKernel
     OcafKernel.cpp
@@ -7,8 +6,8 @@ add_library(OcafKernel
 
 target_link_libraries(OcafKernel
     PRIVATE ${OpenCASCADE_LIBRARIES}
-    PUBLIC ${Tools}
-    PUBLIC ${Part}
+    PUBLIC PartDocument
+    PUBLIC Tools
 )
 
 target_include_directories(OcafKernel

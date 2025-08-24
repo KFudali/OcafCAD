@@ -1,21 +1,36 @@
 #ifndef PartDocument_hpp
 #define PartDocument_hpp
 
-#include <StandardHandle.hxx>
+#include <Standard_Handle.hxx>
 #include <TDocStd_Document.hxx>
+#include <XCAFApp_Application.hxx>
+
+#include "DocLabel.hpp"
+#include "PartLabel.hpp"
+#include "PrototypeLabel.hpp"
+
+#include "RootAssembly.hpp"
+#include "PartPrototype.hpp"
+#include "Part.hpp"
 
 class PartDocument {
     public:
-    PartDocument(Handle(TDocStd_Document) aDocument);
-   
-    std::unique_ptr<PartDocumentView> view() const;
-    std::unique_ptr<PartDocumentRegistry> registry() const;
-    Handle(TDocStd_Document) data();
+    PartDocument(Handle(XCAFApp_Application) aXCAFApp);
+    inline Handle(TDocStd_Document) data() {return mDoc;};
+    
+    inline DocLabel RootAssemblyLabel() const {return mRootAssembly->label();};
+    
+    Part addPart(PrototypeLabel aPrototype, Location aLocation); 
+    PrototypeLabel addPrototype(PartPrototype aPrototype);
+    
+    std::vector<PrototypeLabel> prototypes() const;
+    std::vector<PartLabel> freeParts() const; 
     
     private:
-    Handle(TDocStd_Document) mDocument;
-    std::unique_ptr<PartDocumentView> mView;
-    std::unique_ptr<PartDocumentRegistry> mRegistry;
+    Handle(XCAFApp_Application) mApp;
+    Handle(XCAFDoc_ShapeTool) mShapeTool;
+    Handle(TDocStd_Document) mDoc;
+    std::unique_ptr<RootAssembly> mRootAssembly;
 };
 
 #endif

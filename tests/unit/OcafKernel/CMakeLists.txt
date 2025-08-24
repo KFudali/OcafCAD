@@ -1,5 +1,6 @@
-add_subdirectory(Part)
 add_subdirectory(Fixtures)
+add_subdirectory(PartDocument)
+
 add_executable(utOcafKernel
     utRunOcafKernel.cpp
 )
@@ -10,7 +11,6 @@ target_link_libraries(utOcafKernel PRIVATE
     GTest::gtest_main
     GTest::gmock_main
 )
-
 
 target_compile_definitions(utOcafKernel PRIVATE
     TEST_DATA_DIR="${testDataDir}"

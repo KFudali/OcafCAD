@@ -1,7 +1,7 @@
 add_library(OcafKernelFixtures INTERFACE)
 
 target_link_libraries(OcafKernelFixtures INTERFACE
-   ${OpenCASCADE_LIBRARIES}
+   OcafKernel
 )
 
 target_include_directories(OcafKernelFixtures INTERFACE

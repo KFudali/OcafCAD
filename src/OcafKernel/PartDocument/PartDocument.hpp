@@ -10,6 +10,7 @@
 #include "PrototypeLabel.hpp"
 
 #include "RootAssembly.hpp"
+#include "PrototypeRegistry.hpp"
 #include "PartPrototype.hpp"
 #include "Part.hpp"
 
@@ -30,7 +31,9 @@ class PartDocument {
     Handle(XCAFApp_Application) mApp;
     Handle(XCAFDoc_ShapeTool) mShapeTool;
     Handle(TDocStd_Document) mDoc;
+
     std::unique_ptr<RootAssembly> mRootAssembly;
+    std::unique_ptr<PrototypeRegistry> mPrototypeRegistry;
 };
 
 #endif

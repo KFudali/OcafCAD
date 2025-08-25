@@ -17,11 +17,14 @@ class RootAssembly {
     RootAssembly(Handle(TDocStd_Document) aDoc);
     ~RootAssembly() = default;
 
+    static bool isRootAssembly(TDF_Label aLabel);
+
     void clear(); 
-    inline DocLabel label() const {return mLabel;};
-    
     PartLabel addPart(PrototypeLabel aPrototypeLabel, Location aLocation);
     void removePart(PartLabel aPartLabel);
+
+    std::vector<PartLabel> freeParts() const;
+    inline DocLabel label() const {return mLabel;};
 
     private:
 

@@ -13,12 +13,13 @@ bool PartAssemblyTool::isAssembly() const {
 };
 
 bool PartAssemblyTool::isComponent() const {
-    if (!mShapeTool->IsComponent(mPartLabel.label())) {
+    auto label = mPartLabel.label();
+    bool isOcafComponent = mShapeTool->IsComponent(label);
+    if (!isOcafComponent) {
         return false;
-    } else {
-        auto parentPart = parentAssembly();
-        return parentPart.isValid();
     }
+    auto parent = parentAssembly();
+    return parent.isValid(); 
 }
 std::vector<PartLabel> PartAssemblyTool::childrenComponents() const {
     TDF_LabelSequence componentLabels;

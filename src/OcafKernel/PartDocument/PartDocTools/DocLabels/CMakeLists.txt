@@ -9,6 +9,7 @@ target_sources(DocLabels PRIVATE
 
 target_link_libraries(DocLabels
     PUBLIC ${OpenCASCADE_LIBRARIES}
+    PRIVATE OcafAttributes
 )
 
 target_include_directories(DocLabels

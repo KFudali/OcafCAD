@@ -3,6 +3,8 @@ add_subdirectory(PartDocTools)
 add_subdirectory(PrototypeRegistry)
 add_subdirectory(RootAssembly)
 
+add_library(PartDocument)
+
 target_sources(PartDocument PRIVATE
     PartDocument.cpp
 )
@@ -10,6 +12,8 @@ target_sources(PartDocument PRIVATE
 target_link_libraries(PartDocument 
     PUBLIC Part
     PUBLIC PartDocTools
+    PUBLIC RootAssembly
+    PUBLIC PrototypeRegistry
     PRIVATE ${OpenCASCADE_LIBRARIES}
 )
 

@@ -8,6 +8,7 @@ PartDocument::PartDocument(Handle(XCAFApp_Application) aXCAFApp) : mApp(aXCAFApp
     mShapeTool = XCAFDoc_DocumentTool::ShapeTool(mDoc->Main());
     mShapeTool->SetAutoNaming(false);
     mRootAssembly = std::make_unique<RootAssembly>(mDoc);
+    mPrototypeRegistry = std::make_unique<PrototypeRegistry>(mDoc);
 } 
 
 Part PartDocument::addPart(PrototypeLabel aPrototype, Location aLocation){
@@ -15,14 +16,13 @@ Part PartDocument::addPart(PrototypeLabel aPrototype, Location aLocation){
 }
 
 PrototypeLabel PartDocument::addPrototype(PartPrototype aPrototype) {
-    auto label = mShapeTool->AddShape(aPrototype, false, false); 
-    return PrototypeLabel(label);
+    return mPrototypeRegistry->addPrototype(aPrototype);
 }
 
 std::vector<PrototypeLabel> PartDocument::prototypes() const {
-    return {};
+    return mPrototypeRegistry->prototypeList();
 }
 
 std::vector<PartLabel> PartDocument::freeParts() const {
-    return {};
+    return mRootAssembly->freeParts();
 }

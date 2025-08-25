@@ -1,9 +1,8 @@
 #include "DocLabelUtils.hpp"
+#include "RootAssemblyAttribute.hpp"
 
 bool DocLabelUtils::isRootAssemblyLabel(TDF_Label aLabel) {
-
-
-    return false;
+    return aLabel.IsAttribute(RootAssemblyAttribute::GetID());
 }
 
 bool DocLabelUtils::isPartLabel(TDF_Label aLabel) {

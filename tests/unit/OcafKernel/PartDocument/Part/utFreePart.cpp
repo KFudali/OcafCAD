@@ -5,7 +5,6 @@
 #include "PartLabel.hpp"
 #include "Part.hpp"
 
-
 class FreePartTest : public ::testing::Test {
     protected:   
     void SetUp() override {

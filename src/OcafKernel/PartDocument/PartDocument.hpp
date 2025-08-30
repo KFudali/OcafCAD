@@ -19,7 +19,7 @@ class PartDocument {
     PartDocument(Handle(XCAFApp_Application) aXCAFApp);
     inline Handle(TDocStd_Document) data() {return mDoc;};
     
-    inline DocLabel RootAssemblyLabel() const {return mRootAssembly->label();};
+    inline DocLabel rootAssemblyLabel() const {return mRootAssembly->label();};
     
     PartLabel addEmptyPart(); 
     PartLabel addEmptyAssembly(); 

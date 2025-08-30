@@ -1,8 +1,11 @@
 #include "PartAssemblyTool.hpp"
 #include "DocLabelUtils.hpp"
 
+#include <BRep_Builder.hxx>
+#include <TopoDS_Compound.hxx>
 #include <TDataStd_TreeNode.hxx>
 #include <XCAFDoc.hxx>
+#include <ranges>
 
 PartAssemblyTool::PartAssemblyTool(PartLabel aPartLabel) 
   : mPartLabel(aPartLabel),
@@ -43,5 +46,46 @@ PartLabel PartAssemblyTool::parentAssembly() const {
     }
 };
 
-bool PartAssemblyTool::addComponent(PartLabel aPartLabel) {return false;};
-bool PartAssemblyTool::removeComponent(PartLabel aPartLabel) {return false;};
+PartLabel PartAssemblyTool::addComponent(
+    PrototypeLabel aProtoLabel, 
+    Location aLocation
+) {
+    if (!isAssembly()) {
+        return PartLabel();
+    }
+    auto proto = mShapeTool->GetShape(aProtoLabel.label());
+    auto label = mShapeTool->AddComponent(
+        mPartLabel.label(), proto
+    );
+    TDF_Label ref;
+    mShapeTool->SetLocation(label, aLocation, ref);
+    return PartLabel(label);
+};
+
+PartLabel PartAssemblyTool::addComponent(
+    PartLabel aPartLabel,
+    Location aLocation
+) {
+    if (!isAssembly()) {
+        return PartLabel();
+    }
+
+    TDF_Label protoLabel;
+    mShapeTool->GetReferredShape(aPartLabel.label(), protoLabel);
+    if (protoLabel.IsNull()) {
+        return PartLabel();
+    }
+    return addComponent(PrototypeLabel(protoLabel), aLocation);
+}
+
+bool PartAssemblyTool::removeComponent(PartLabel aPartLabel) {
+    if (!isAssembly()) {
+        return false;
+    }
+    auto components = childrenComponents();
+    if (std::ranges::find(components, aPartLabel) != components.end()) {
+        mShapeTool->RemoveComponent(aPartLabel.label());
+        return true;
+    }
+    return false;
+}

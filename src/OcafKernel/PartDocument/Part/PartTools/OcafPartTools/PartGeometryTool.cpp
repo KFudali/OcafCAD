@@ -5,7 +5,9 @@ PartGeometryTool::PartGeometryTool(PartLabel aPartLabel)
     mShapeTool(XCAFDoc_DocumentTool::ShapeTool(aPartLabel.label())) {}
 
 PartPrototype PartGeometryTool::prototype() const {
-    return mShapeTool->GetShape(mLabel.label());
+    TDF_Label prototypeLabel;
+    mShapeTool->GetReferredShape(mLabel.label(), prototypeLabel);
+    return mShapeTool->GetShape(prototypeLabel);
 }
 
 Location PartGeometryTool::location() const {

@@ -2,6 +2,7 @@
 #define Part_hpp
 
 #include "PartLabel.hpp"
+#include "PrototypeLabel.hpp"
 #include "PartTools.hpp"
 
 class Part{
@@ -17,7 +18,7 @@ class Part{
 
     inline PartLabel partLabel() const {return mPartLabel;}; 
     PartPrototype prototype() const;
-
+    
     std::string name() const;
     ColorRGBA color() const;
     Location location() const; 
@@ -31,7 +32,16 @@ class Part{
     bool isAssembly() const;
     bool isComponent() const;
 
-    bool addComponent(PartLabel aPartLabel); 
+    PartLabel addComponent(
+        PartLabel aPartLabel, 
+        Location aLocation
+    );
+    
+    PartLabel addComponent(
+        PrototypeLabel aPartLabel, 
+        Location aLocation
+    );
+    
     bool removeComponent(PartLabel aPartLabel);
 
     std::vector<PartLabel> childrenComponents() const;

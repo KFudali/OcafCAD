@@ -27,8 +27,17 @@ bool Part::isComponent() const {
     return mPartTools.assembly().isComponent();
 }
 
-bool Part::addComponent(PartLabel aPartLabel){
-    return mPartTools.assembly().addComponent(aPartLabel);
+PartLabel Part::addComponent(
+    PartLabel aPartLabel, 
+    Location aLocation
+){
+    return mPartTools.assembly().addComponent(aPartLabel, aLocation);
+}
+PartLabel Part::addComponent(
+    PrototypeLabel aProtoLabel, 
+    Location aLocation
+){
+    return mPartTools.assembly().addComponent(aProtoLabel, aLocation);
 }
 bool Part::removeComponent(PartLabel aPartLabel){
     return mPartTools.assembly().removeComponent(aPartLabel);

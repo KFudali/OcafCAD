@@ -2,6 +2,8 @@
 #define AbstractPartAssemblyTool_hpp
 
 #include "PartLabel.hpp"
+#include "PrototypeLabel.hpp"
+#include "Location.hpp"
 
 class AbstractPartAssemblyTool{
     public:
@@ -12,7 +14,15 @@ class AbstractPartAssemblyTool{
     virtual std::vector<PartLabel> childrenComponents() const = 0;
     virtual PartLabel parentAssembly() const = 0;
 
-    virtual bool addComponent(PartLabel aPartLabel) = 0; 
+    virtual PartLabel addComponent(
+        PartLabel aPartLabel, 
+        Location aLocation
+    ) = 0; 
+    
+    virtual PartLabel addComponent(
+        PrototypeLabel aPrototypeLabel, 
+        Location aLocation
+    ) = 0; 
     virtual bool removeComponent(PartLabel aPartLabel) = 0;
 };
 

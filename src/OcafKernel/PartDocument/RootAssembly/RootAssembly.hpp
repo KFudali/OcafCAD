@@ -20,9 +20,13 @@ class RootAssembly {
     static bool isRootAssembly(TDF_Label aLabel);
 
     void clear(); 
+    
     PartLabel addPart(PrototypeLabel aPrototypeLabel, Location aLocation);
+    PartLabel addEmptyAssembly();
+    PartLabel addEmptyPart();
+    
     void removePart(PartLabel aPartLabel);
-
+    
     std::vector<PartLabel> freeParts() const;
     inline DocLabel label() const {return mLabel;};
 

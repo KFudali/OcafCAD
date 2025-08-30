@@ -10,6 +10,13 @@ class DocLabel {
     DocLabel() : mLabel() {};
     DocLabel(TDF_Label aLabel);
 
+    bool operator==(const DocLabel& aOther) const {
+        return mLabel.IsEqual(aOther.mLabel);
+    }
+    bool operator!=(const DocLabel& aOther) const {
+        return !mLabel.IsEqual(aOther.mLabel);
+    }
+
     bool isValid() const { return !mLabel.IsNull(); };
     TDF_Label label() const { return mLabel; }    
 

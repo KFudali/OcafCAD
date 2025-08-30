@@ -1,6 +1,8 @@
 #include "RootAssembly.hpp"
 #include "RootAssemblyAttribute.hpp"
 #include "DocLabelUtils.hpp"
+#include <TopoDS_Compound.hxx>
+
 
 RootAssembly::RootAssembly(Handle(TDocStd_Document) aDoc)
  :  mDoc(aDoc),
@@ -38,5 +40,20 @@ PartLabel RootAssembly::addPart(
     );
     return PartLabel(label);
 };
+
+PartLabel RootAssembly::addEmptyPart(){
+    auto shape = mShapeTool->NewShape();
+    auto label = mShapeTool->AddComponent(mLabel.label(), shape, Location());
+    return PartLabel(label);
+}
+
+PartLabel RootAssembly::addEmptyAssembly(){
+    auto shape = mShapeTool->NewShape();
+    auto label = mShapeTool->AddComponent(mLabel.label(), shape, Location());
+    mShapeTool->Expand(label);
+    bool ass = mShapeTool->IsAssembly(label);
+    return PartLabel(label);
+}
+
 
 void RootAssembly::removePart(PartLabel aPartLabel){}

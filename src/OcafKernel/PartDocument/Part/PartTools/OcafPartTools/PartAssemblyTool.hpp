@@ -18,14 +18,19 @@ class PartAssemblyTool : public AbstractPartAssemblyTool {
     std::vector<PartLabel> childrenComponents() const override;
     PartLabel parentAssembly() const override;
 
-    bool addComponent(PartLabel aPartLabel) override;
+    PartLabel addComponent(
+        PartLabel aPartLabel, 
+        Location aLocation
+    ) override;
+    
+    PartLabel addComponent(
+        PrototypeLabel aPartLabel, 
+        Location aLocation
+    ) override;
+    
     bool removeComponent(PartLabel aPartLabel) override;
 
     private:
-
-    TDF_Label parentLabel(TDF_Label aLabel) const;
-    bool isRootAssembly(TDF_Label aLabel) const;
-    bool isPrototype(TDF_Label aLabel) const;
 
     Handle(XCAFDoc_ShapeTool) mShapeTool;
     PartLabel mPartLabel;

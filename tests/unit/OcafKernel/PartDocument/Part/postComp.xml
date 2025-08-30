@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document format="XmlXCAF" xmlns="http://www.opencascade.org/OCAF/XML" xmlns:xcaf="http://www.opencascade.org/OCAF/XML/XCAF" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opencascade.org/OCAF/XML">
+ <info date="2025-08-29" schemav="0" DocVersion="12" objnb="40">
+  <iitem>Copyright: Open Cascade, 2001-2002</iitem>
+  <iitem>REFERENCE_COUNTER: 0</iitem>
+  <iitem>MODIFICATION_COUNTER: 1</iitem>
+ </info>
+ <comments/>
+ <label tag="0">
+  <TDataStd_TreeNode id="1" treeid="efd212eb-6dfd-11d4-b9c8-0060b0ee281b" children="2 "/>
+  <label tag="1">
+   <XCAFDoc_DocumentTool id="3"/>
+   <TDataStd_TreeNode id="2" treeid="efd212eb-6dfd-11d4-b9c8-0060b0ee281b"/>
+   <label tag="1">
+    <TDataStd_Name id="4" nameguid="2a96b608-ec8b-11d0-bee7-080009dc3333">Shapes</TDataStd_Name>
+    <XCAFDoc_ShapeTool id="5"/>
+    <TDF_TagSource id="6">4</TDF_TagSource>
+    <label tag="1">
+     <TNaming_NamedShape id="7" evolution="primitive">
+      <olds/>
+      <news>
+       <shape tshape="+1" index="1"/>
+      </news>
+     </TNaming_NamedShape>
+     <TDataStd_UAttribute id="8" guid="5b896b00-3adf-11d4-b9b7-0060b0ee281b"/>
+     <TDF_TagSource id="9">1</TDF_TagSource>
+     <label tag="1">
+      <xcaf:Location id="10"/>
+      <TDataStd_TreeNode id="11" treeid="5b896afe-3adf-11d4-b9b7-0060b0ee281b"/>
+      <TDataStd_UAttribute id="12" guid="5b896b00-3adf-11d4-b9b7-0060b0ee281b"/>
+      <TDataStd_TreeNode id="13" treeid="efd212e4-6dfd-11d4-b9c8-0060b0ee281b"/>
+      <TDataStd_Name id="14" nameguid="2a96b608-ec8b-11d0-bee7-080009dc3333">PartName</TDataStd_Name>
+      <TDF_TagSource id="15">1</TDF_TagSource>
+      <label tag="1">
+       <xcaf:Location id="16">
+        <location locId="1"/>
+       </xcaf:Location>
+       <TDataStd_TreeNode id="17" treeid="5b896afe-3adf-11d4-b9b7-0060b0ee281b"/>
+      </label>
+     </label>
+    </label>
+    <label tag="2">
+     <TNaming_NamedShape id="18" evolution="primitive">
+      <olds/>
+      <news>
+       <shape tshape="+2" index="1"/>
+      </news>
+     </TNaming_NamedShape>
+     <TDataStd_TreeNode id="19" treeid="5b896afe-3adf-11d4-b9b7-0060b0ee281b" children="11 "/>
+    </label>
+    <label tag="3">
+     <TNaming_NamedShape id="20" evolution="primitive">
+      <olds/>
+      <news>
+       <shape tshape="+36" index="1"/>
+      </news>
+     </TNaming_NamedShape>
+    </label>
+    <label tag="4">
+     <TNaming_NamedShape id="21" evolution="primitive">
+      <olds/>
+      <news>
+       <shape tshape="+45" index="1"/>
+      </news>
+     </TNaming_NamedShape>
+     <TDataStd_TreeNode id="22" treeid="5b896afe-3adf-11d4-b9b7-0060b0ee281b" children="17 "/>
+    </label>
+   </label>
+   <label tag="2">
+    <TDataStd_Name id="23" nameguid="2a96b608-ec8b-11d0-bee7-080009dc3333">Colors</TDataStd_Name>
+    <XCAFDoc_ColorTool id="24"/>
+    <TDF_TagSource id="25">1</TDF_TagSource>
+    <label tag="1">
+     <xcaf:Color id="26">503</xcaf:Color>
+     <TDataStd_Name id="27" nameguid="2a96b608-ec8b-11d0-bee7-080009dc3333">YELLOW (#FFFF00FF)</TDataStd_Name>
+     <TDataStd_TreeNode id="28" treeid="efd212e4-6dfd-11d4-b9c8-0060b0ee281b" children="13 "/>
+    </label>
+   </label>
+   <label tag="3">
+    <TDataStd_Name id="29" nameguid="2a96b608-ec8b-11d0-bee7-080009dc3333">Layers</TDataStd_Name>
+    <XCAFDoc_LayerTool id="30"/>
+   </label>
+   <label tag="4">
+    <TDataStd_Name id="31" nameguid="2a96b608-ec8b-11d0-bee7-080009dc3333">D&amp;GTs</TDataStd_Name>
+    <XCAFDoc_DimTolTool id="32"/>
+   </label>
+   <label tag="5">
+    <TDataStd_Name id="33" nameguid="2a96b608-ec8b-11d0-bee7-080009dc3333">Materials</TDataStd_Name>
+    <XCAFDoc_MaterialTool id="34"/>
+   </label>
+   <label tag="7">
+    <TDataStd_Name id="35" nameguid="2a96b608-ec8b-11d0-bee7-080009dc3333">Views</TDataStd_Name>
+    <XCAFDoc_ViewTool id="36"/>
+   </label>
+   <label tag="8">
+    <TDataStd_Name id="37" nameguid="2a96b608-ec8b-11d0-bee7-080009dc3333">Clipping Planes</TDataStd_Name>
+    <XCAFDoc_ClippingPlaneTool id="38"/>
+   </label>
+   <label tag="9">
+    <TDataStd_Name id="39" nameguid="2a96b608-ec8b-11d0-bee7-080009dc3333">Notes</TDataStd_Name>
+    <XCAFDoc_NotesTool id="40"/>
+   </label>
+  </label>
+ </label>
+ <shapes>
+CASCADE Topology V3, (c) Open Cascade
+Locations 1
+1
+              1               0               0               1 
+              0               1               0               2 
+              0               0               1               3 
+Curve2ds 28
+1 0 0 1 0 
+1 0 0 1 0 
+1 1 0 0 -1 
+1 0 0 0 1 
+1 0 -1 1 0 
+1 0 0 1 0 
+1 0 0 0 -1 
+1 0 0 0 1 
+1 0 0 1 0 
+1 0 1 1 0 
+1 1 0 0 -1 
+1 1 0 0 1 
+1 0 -1 1 0 
+1 0 1 1 0 
+1 0 0 0 -1 
+1 1 0 0 1 
+1 0 0 0 1 
+1 0 0 1 0 
+1 1 0 0 1 
+1 0 0 1 0 
+1 0 0 0 1 
+1 0 1 1 0 
+1 1 0 0 1 
+1 0 1 1 0 
+1 0 1.5707963267948966 1 0 
+1 6.2831853071795862 -6.2831853071795862 0 1 
+1 0 -6.2831853071795862 0 1 
+1 0 -1.5707963267948966 1 0 
+Curves 13
+1 0 0 0 0 0 1 
+1 0 0 1 -0 1 0 
+1 0 1 0 0 0 1 
+1 0 0 0 -0 1 0 
+1 1 0 0 0 0 1 
+1 1 0 1 -0 1 0 
+1 1 1 0 0 0 1 
+1 1 0 0 -0 1 0 
+1 0 0 0 1 0 -0 
+1 0 0 1 1 0 -0 
+1 0 1 0 1 0 -0 
+1 0 1 1 1 0 -0 
+2 0 0 0 -2.4492935982947064e-16 -1 0 1 -2.4492935982947064e-16 0 0 0 1 1
+Polygon3D 0
+PolygonOnTriangulations 0
+Surfaces 7
+1 0 0 0 1 0 -0 0 0 1 0 -1 0 
+1 0 0 0 -0 1 0 0 0 1 1 0 -0 
+1 0 0 1 0 0 1 1 0 -0 -0 1 0 
+1 0 1 0 -0 1 0 0 0 1 1 0 -0 
+1 0 0 0 0 0 1 1 0 -0 -0 1 0 
+1 1 0 0 1 0 -0 0 0 1 0 -1 0 
+4 0 0 0 0 0 1 1 0 -0 -0 1 0 1
+Triangulations 0
+
+TShapes 45
+Co
+
+1100000
+*
+Co
+
+1100000
+*
+Ve
+1e-07
+0 0 1
+0 0
+
+0101101
+*
+Ve
+1e-07
+0 0 0
+0 0
+
+0101101
+*
+Ed
+ 1e-07 1 1 0
+1  1 0 0 1
+2  1 1 0 0 1
+2  2 2 0 0 1
+0
+
+0101000
+-43 0 +42 0 *
+Ve
+1e-07
+0 1 1
+0 0
+
+0101101
+*
+Ed
+ 1e-07 1 1 0
+1  2 0 0 1
+2  3 1 0 0 1
+2  4 3 0 0 1
+0
+
+0101000
+-40 0 +43 0 *
+Ve
+1e-07
+0 1 0
+0 0
+
+0101101
+*
+Ed
+ 1e-07 1 1 0
+1  3 0 0 1
+2  5 1 0 0 1
+2  6 4 0 0 1
+0
+
+0101000
+-40 0 +38 0 *
+Ed
+ 1e-07 1 1 0
+1  4 0 0 1
+2  7 1 0 0 1
+2  8 5 0 0 1
+0
+
+0101000
+-38 0 +42 0 *
+Wi
+
+0101100
+-41 0 -39 0 +37 0 +36 0 *
+Fa
+0  1e-07 1 0
+
+0111000
++35 0 *
+Ve
+1e-07
+1 0 1
+0 0
+
+0101101
+*
+Ve
+1e-07
+1 0 0
+0 0
+
+0101101
+*
+Ed
+ 1e-07 1 1 0
+1  5 0 0 1
+2  9 6 0 0 1
+2  10 2 0 0 1
+0
+
+0101000
+-33 0 +32 0 *
+Ve
+1e-07
+1 1 1
+0 0
+
+0101101
+*
+Ed
+ 1e-07 1 1 0
+1  6 0 0 1
+2  11 6 0 0 1
+2  12 3 0 0 1
+0
+
+0101000
+-30 0 +33 0 *
+Ve
+1e-07
+1 1 0
+0 0
+
+0101101
+*
+Ed
+ 1e-07 1 1 0
+1  7 0 0 1
+2  13 6 0 0 1
+2  14 4 0 0 1
+0
+
+0101000
+-30 0 +28 0 *
+Ed
+ 1e-07 1 1 0
+1  8 0 0 1
+2  15 6 0 0 1
+2  16 5 0 0 1
+0
+
+0101000
+-28 0 +32 0 *
+Wi
+
+0101100
+-31 0 -29 0 +27 0 +26 0 *
+Fa
+0  1e-07 6 0
+
+0111000
++25 0 *
+Ed
+ 1e-07 1 1 0
+1  9 0 0 1
+2  17 2 0 0 1
+2  18 5 0 0 1
+0
+
+0101000
+-32 0 +42 0 *
+Ed
+ 1e-07 1 1 0
+1  10 0 0 1
+2  19 2 0 0 1
+2  20 3 0 0 1
+0
+
+0101000
+-33 0 +43 0 *
+Wi
+
+0101100
+-23 0 -31 0 +22 0 +41 0 *
+Fa
+0  1e-07 2 0
+
+0111000
++21 0 *
+Ed
+ 1e-07 1 1 0
+1  11 0 0 1
+2  21 4 0 0 1
+2  22 5 0 0 1
+0
+
+0101000
+-28 0 +38 0 *
+Ed
+ 1e-07 1 1 0
+1  12 0 0 1
+2  23 4 0 0 1
+2  24 3 0 0 1
+0
+
+0101000
+-30 0 +40 0 *
+Wi
+
+0101100
+-19 0 -27 0 +18 0 +37 0 *
+Fa
+0  1e-07 4 0
+
+0111000
++17 0 *
+Wi
+
+0101100
+-36 0 -19 0 +26 0 +23 0 *
+Fa
+0  1e-07 5 0
+
+0111000
++15 0 *
+Wi
+
+0101100
+-39 0 -18 0 +29 0 +22 0 *
+Fa
+0  1e-07 3 0
+
+0111000
++13 0 *
+Sh
+
+0101100
+-34 0 +24 0 -20 0 +16 0 -14 0 +12 0 *
+So
+
+1100000
++11 0 *
+Ve
+1e-07
+6.12323399573677e-17 -1.49975978266186e-32 1
+0 0
+
+0101101
+*
+Ed
+ 1e-07 1 1 1
+2  25 7 0 0 6.28318530717959
+0
+
+0101000
++9 0 -9 0 *
+Ve
+1e-07
+6.12323399573677e-17 -1.49975978266186e-32 -1
+0 0
+
+0101101
+*
+Ed
+ 1e-07 1 1 0
+1  13 0 4.71238898038469 7.85398163397448
+3  26 27CN 7 0 4.71238898038469 7.85398163397448
+0
+
+0101000
+-9 0 +7 0 *
+Ed
+ 1e-07 1 1 1
+2  28 7 0 0 6.28318530717959
+0
+
+0101000
++7 0 -7 0 *
+Wi
+
+0101100
+-8 0 +6 0 +5 0 -6 0 *
+Fa
+0  1e-07 7 0
+
+0111000
++4 0 *
+Sh
+
+0101100
++3 0 *
+So
+
+1100000
++2 0 *
+
+</shapes>
+</document>

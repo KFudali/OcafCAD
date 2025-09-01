@@ -3,18 +3,26 @@
 
 #include <memory>
 
+#include "PartDocument.hpp"
+#include "CommandStack.hpp"
+#include "OcafKernelSignalPublisher.hpp"
+#include "AbstractOcafKernelObserver.hpp"
+#include "OcafKernelConnections.hpp"
+
 class OcafKernel{
     public:
-    OcafKernel(std::shared_ptr<AbstractMessageBus> aMessageBus);
+    OcafKernel();
     
-    std::unique_ptr<PartDocument> partDocument();
+    PartDocument& partDocument(){ return *mPartDocument; };
+    CommandStack& commands() {return *mCommandStack; };
    
-    std::unique_ptr<MessageSubscriber> deltaEvents();
-    std::unique_ptr<CommandStack> commands();
+    OcafKernelConnections connectObserver(
+        AbstractOcafKernelObserver& aObserver
+    );
     
     private:
     std::unique_ptr<PartDocument> mPartDocument;
-    std::unique_ptr<DeltaObserver> mDeltaObserver;
+    std::unique_ptr<OcafKernelSignalPublisher> mPublisher;
     std::unique_ptr<CommandStack> mCommandStack;
 };
 

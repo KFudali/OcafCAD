@@ -1,4 +1,5 @@
 #include "SignalMessageBus.hpp"
+#include "SignalSubscription.hpp"
 
 std::unique_ptr<AbstractSubscription> SignalMessageBus::subscribeImpl(
     std::type_index type, 

@@ -2,15 +2,12 @@
 #define AbstractMessageBus_hpp
 
 #include "AbstractEvent.hpp"
+#include "AbstractSubscription.hpp"
 #include <functional>
 #include <typeindex>
 #include <memory>
 #include <any>
 
-class AbstractSubscription {
-    public:
-    virtual bool disconnect() = 0;
-};
 
 class AbstractMessageBus {
 public:

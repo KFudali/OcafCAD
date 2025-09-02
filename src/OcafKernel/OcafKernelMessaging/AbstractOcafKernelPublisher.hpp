@@ -1,8 +1,6 @@
 #ifndef AbstractOcafKernelPublisher_hpp
 #define AbstractOcafKernelPublisher_hpp
 
-
-#include "OcafKernelConnections.hpp"
 #include "PartLabel.hpp"
 #include "PrototypeLabel.hpp"
 #include "PartAttributeType.hpp"

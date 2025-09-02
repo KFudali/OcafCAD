@@ -8,7 +8,6 @@
 
 #include "AbstractMessageBus.hpp"
 #include "MessageSubscriber.hpp"
-#include "MessagePublisher.hpp"
 #include "AbstractOcafKernelPublisher.hpp"
 
 class OcafKernel{
@@ -23,10 +22,9 @@ class OcafKernel{
     std::unique_ptr<PartDocument> mPartDocument;
     std::unique_ptr<CommandStack> mCommandStack;
 
-    std::unique_ptr<AbstractOcafKernelPublisher> mPublisher;
     std::unique_ptr<AbstractMessageBus> mInternalMessageBus;
     std::unique_ptr<MessageSubscriber> mSubscriber;
-    std::unique_ptr<MessagePublisher> mPublisher;
+    std::unique_ptr<AbstractOcafKernelPublisher> mPublisher;
 
 };
 

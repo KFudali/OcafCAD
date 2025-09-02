@@ -4,6 +4,7 @@
 #include <XmlXCAFDrivers.hxx>
 
 #include "SignalMessageBus.hpp"
+#include "SignalOcafKernelPublisher.hpp"
 
 OcafKernel::OcafKernel() {
     auto app = XCAFApp_Application::GetApplication();
@@ -12,5 +13,5 @@ OcafKernel::OcafKernel() {
     mCommandStack = std::make_unique<CommandStack>(mPartDocument->data());
     mInternalMessageBus = std::make_unique<SignalMessageBus>();
     mSubscriber = std::make_unique<MessageSubscriber>(*mInternalMessageBus);
-    mPublisher = std::make_unique<MessageSubscriber>(*mInternalMessageBus);
+    mPublisher = std::make_unique<SignalOcafKernelPublisher>(*mInternalMessageBus);
 }

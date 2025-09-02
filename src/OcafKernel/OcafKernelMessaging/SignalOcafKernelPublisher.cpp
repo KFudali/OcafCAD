@@ -1,43 +1,40 @@
 #include "SignalOcafKernelPublisher.hpp"
-
-#include "PrototypeEvents.hpp"
-#include "PartEvents.hpp"
-#include "AssemblyEvents.hpp"
+#include "OcafKernelEvents.hpp"
 
 SignalOcafKernelPublisher::SignalOcafKernelPublisher(AbstractMessageBus& aMessageBus)
     : mMessageBus(aMessageBus)
 {}
 
 void SignalOcafKernelPublisher::publishPrototypeAdded(PrototypeLabel label) {
-    mMessageBus.publish(PrototypeAddedEvent(label));
+    mMessageBus.publish<PrototypeAddedEvent>(PrototypeAddedEvent(label));
 }
 
 void SignalOcafKernelPublisher::publishPrototypeRemoved(PrototypeLabel label) {
-    mMessageBus.publish(PrototypeRemovedEvent(label));
+    mMessageBus.publish<PrototypeRemovedEvent>(PrototypeRemovedEvent(label));
 }
 
 void SignalOcafKernelPublisher::publishPartAdded(PartLabel label) const {
-    mMessageBus.publish(PartAddedEvent(label));
+    mMessageBus.publish<PartAddedEvent>(PartAddedEvent(label));
 }
 
 void SignalOcafKernelPublisher::publishPartRemoved(PartLabel label) const {
-    mMessageBus.publish(PartAddedRemoved(label));
+    mMessageBus.publish<PartRemovedEvent>(PartRemovedEvent(label));
 }
 
 void SignalOcafKernelPublisher::publishPartLocationChanged(PartLabel label) const {
-    mMessageBus.publish(PartLocationChangedEvent(label));
+    mMessageBus.publish<PartLocationChangedEvent>(PartLocationChangedEvent(label));
 }
 
 void SignalOcafKernelPublisher::publishPartAttributeChanged(
     PartLabel label, PartAttributeType attributeEnum
 ) const {
-    mMessageBus.publish(PartAttributeChanged(label, attributeEnum));
+    mMessageBus.publish<PartAttributeChanged>(PartAttributeChanged(label, attributeEnum));
 }
 
 void SignalOcafKernelPublisher::publishComponentAddedToAssembly(PartLabel compLabel) const {
-    mMessageBus.publish(ComponentAddedToAssemblyEvent(compLabel));
+    mMessageBus.publish<ComponentAddedToAssemblyEvent>(ComponentAddedToAssemblyEvent(compLabel));
 }
 
 void SignalOcafKernelPublisher::publishComponentRemovedFromAssembly(PartLabel label) const {
-    mMessageBus.publish(ComponentRemovedFromAssemblyEvent(label));
+    mMessageBus.publish<ComponentRemovedFromAssemblyEvent>(ComponentRemovedFromAssemblyEvent(label));
 }

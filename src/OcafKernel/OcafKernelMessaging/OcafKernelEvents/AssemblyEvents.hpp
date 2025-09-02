@@ -6,14 +6,22 @@
 
 class ComponentAddedToAssemblyEvent : public BaseOcafKernelEvent {
 public:
-    explicit ComponentAddedToAssemblyEvent(PartLabel compLabel) : compLabel(compLabel) {}
-    PartLabel compLabel;
+    explicit ComponentAddedToAssemblyEvent(PartLabel label) : label(label) {}
+    PartLabel label;
+
+    std::string log() const {
+        return "ComponentAddedToAssemblyEvent, compLabel: " + label.toString();
+    };
 };
 
 class ComponentRemovedFromAssemblyEvent : public BaseOcafKernelEvent {
 public:
     explicit ComponentRemovedFromAssemblyEvent(PartLabel label) : label(label) {}
     PartLabel label;
+
+    std::string log() const {
+        return "ComponentRemovedFromAssemblyEvent, compLabel: " + label.toString();
+    };
 };
 
 #endif

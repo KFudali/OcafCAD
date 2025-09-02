@@ -6,6 +6,7 @@ add_library(OcafKernelMessaging
 
 target_link_libraries(OcafKernelMessaging
     PUBLIC PartDocTools
+    PUBLIC OcafKernelEvents
     PUBLIC Tools
 )
 

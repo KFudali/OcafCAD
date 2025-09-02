@@ -5,9 +5,11 @@
 
 #include "PartDocument.hpp"
 #include "CommandStack.hpp"
-#include "OcafKernelSignalPublisher.hpp"
-#include "AbstractOcafKernelObserver.hpp"
-#include "OcafKernelConnections.hpp"
+
+#include "AbstractMessageBus.hpp"
+#include "MessageSubscriber.hpp"
+#include "MessagePublisher.hpp"
+#include "AbstractOcafKernelPublisher.hpp"
 
 class OcafKernel{
     public:
@@ -15,15 +17,17 @@ class OcafKernel{
     
     PartDocument& partDocument(){ return *mPartDocument; };
     CommandStack& commands() {return *mCommandStack; };
-   
-    OcafKernelConnections connectObserver(
-        AbstractOcafKernelObserver& aObserver
-    );
+    MessageSubscriber& events() {return *mSubscriber; }
     
     private:
     std::unique_ptr<PartDocument> mPartDocument;
-    std::unique_ptr<OcafKernelSignalPublisher> mPublisher;
     std::unique_ptr<CommandStack> mCommandStack;
+
+    std::unique_ptr<AbstractOcafKernelPublisher> mPublisher;
+    std::unique_ptr<AbstractMessageBus> mInternalMessageBus;
+    std::unique_ptr<MessageSubscriber> mSubscriber;
+    std::unique_ptr<MessagePublisher> mPublisher;
+
 };
 
 #endif

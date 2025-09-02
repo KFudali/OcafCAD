@@ -3,6 +3,7 @@
 
 #include "AbstractEvent.hpp"
 #include "AbstractSubscription.hpp"
+
 #include <functional>
 #include <typeindex>
 #include <memory>
@@ -43,6 +44,9 @@ public:
     void publish(const EventType& message) const {
         publishImpl(std::type_index(typeid(EventType)), std::any(message));
     }
+
+
+
 
 protected:
     virtual std::unique_ptr<AbstractSubscription> subscribeImpl(

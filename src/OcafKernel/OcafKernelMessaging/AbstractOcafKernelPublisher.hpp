@@ -11,6 +11,7 @@ class AbstractOcafKernelPublisher{
     public:
     virtual ~AbstractOcafKernelPublisher() = default;
 
+
     virtual void publishPrototypeAdded(PrototypeLabel aLabel) = 0; 
     virtual void publishPrototypeRemoved(PrototypeLabel aLabel) = 0;
     

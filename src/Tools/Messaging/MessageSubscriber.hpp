@@ -7,14 +7,14 @@ class MessageSubscriber {
 public:
     virtual ~MessageSubscriber() = default;
     MessageSubscriber(
-        std::shared_ptr<AbstractMessageBus> aMessageBus
+        AbstractMessageBus& aMessageBus
     ) : mMessageBus(aMessageBus){}
 
     template<EventConcept EventType>
     std::unique_ptr<AbstractSubscription> subscribe(
         std::function<void(const EventType&)> handler
     ) {
-        mMessageBus->subscribe<EventType>(handler);
+        mMessageBus.subscribe<EventType>(handler);
     }
     
     template<EventConcept EventType, typename HandleOwner, typename HandleMethod>
@@ -25,7 +25,7 @@ public:
         mMessageBus->subscribe<EventType>(obj, memFunc);
     }
     private:
-    std::shared_ptr<AbstractMessageBus> mMessageBus;
+    AbstractMessageBus& mMessageBus;
 
 };
 

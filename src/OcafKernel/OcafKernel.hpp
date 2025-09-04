@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "PartDocument.hpp"
-#include "CommandStack.hpp"
+#include "AbstractDocCommandStack.hpp"
 
 #include "AbstractMessageBus.hpp"
 #include "MessageSubscriber.hpp"
@@ -15,12 +15,12 @@ class OcafKernel{
     OcafKernel();
     
     PartDocument& partDocument(){ return *mPartDocument; };
-    CommandStack& commands() {return *mCommandStack; };
+    AbstractDocCommandStack& commands() {return *mCommandStack; };
     MessageSubscriber& events() {return *mSubscriber; }
     
     private:
     std::unique_ptr<PartDocument> mPartDocument;
-    std::unique_ptr<CommandStack> mCommandStack;
+    std::unique_ptr<AbstractDocCommandStack> mCommandStack;
 
     std::unique_ptr<AbstractMessageBus> mInternalMessageBus;
     std::unique_ptr<MessageSubscriber> mSubscriber;

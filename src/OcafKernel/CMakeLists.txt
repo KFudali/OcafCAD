@@ -1,5 +1,7 @@
 add_subdirectory(PartDocument)
 add_subdirectory(OcafKernelMessaging)
+add_subdirectory(DocumentDeltaObserver)
+add_subdirectory(DocumentCommands)
 
 add_library(OcafKernel
     OcafKernel.cpp
@@ -8,6 +10,8 @@ add_library(OcafKernel
 target_link_libraries(OcafKernel
     PRIVATE ${OpenCASCADE_LIBRARIES}
     PUBLIC PartDocument
+    PUBLIC DocumentDeltaObserver
+    PUBLIC DocumentCommands
     PUBLIC OcafKernelMessaging
     PUBLIC Tools
 )

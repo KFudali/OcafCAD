@@ -57,7 +57,7 @@ TEST_F(PublisherDeltaObserverTest, ObserverPublishesOnRedeNewPrototype) {
     mKernel->commands().commitCommand();
     mKernel->commands().undo();
 
-    EXPECT_CALL(*subscriber, onPrototypeRemoved(testing::_)).Times(1);
+    EXPECT_CALL(*subscriber, onPrototypeAdded(testing::_)).Times(1);
     mKernel->commands().redo();
 }
 

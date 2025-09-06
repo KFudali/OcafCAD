@@ -5,6 +5,7 @@
 
 #include "SignalMessageBus.hpp"
 #include "SignalOcafKernelPublisher.hpp"
+#include "PublisherDeltaObserver.hpp"
 #include "DocCommandStack.hpp"
 
 OcafKernel::OcafKernel() {
@@ -15,4 +16,7 @@ OcafKernel::OcafKernel() {
     mInternalMessageBus = std::make_unique<SignalMessageBus>();
     mSubscriber = std::make_unique<MessageSubscriber>(*mInternalMessageBus);
     mPublisher = std::make_unique<SignalOcafKernelPublisher>(*mInternalMessageBus);
+    mDeltaObserver = std::make_unique<PublisherDeltaObserver>(*mPublisher);
+
+    mCommandStack->appendDeltaObserver(mDeltaObserver.get());
 }

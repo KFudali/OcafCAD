@@ -33,20 +33,21 @@ class SignalOcafKernelPublisherTest : public ::testing::Test {
 };
 
 TEST_F(SignalOcafKernelPublisherTest, PrototypeEventsArePublished) {
-    MockSubscriber mock;
-
-    mMessageBus->subscribe<PrototypeAddedEvent>(
-        [&](const PrototypeAddedEvent& e) { mock.onPrototypeAdded(e); });
-    mMessageBus->subscribe<PrototypeRemovedEvent>(
-        [&](const PrototypeRemovedEvent& e) { mock.onPrototypeRemoved(e); });
-
+    auto subscriber = std::make_shared<MockSubscriber>();
+    auto addedSub = mMessageBus->subscribe<PrototypeAddedEvent>(
+        subscriber, &MockSubscriber::onPrototypeAdded
+    );
+    auto removedSub = mMessageBus->subscribe<PrototypeRemovedEvent>(
+        subscriber, &MockSubscriber::onPrototypeRemoved
+    );
     PrototypeLabel label;
-
-    EXPECT_CALL(mock, onPrototypeAdded(
-                          testing::Field(&PrototypeAddedEvent::label, label)))
+    EXPECT_CALL(
+        *subscriber, 
+        onPrototypeAdded(testing::Field(&PrototypeAddedEvent::label, label)))
         .Times(1);
-    EXPECT_CALL(mock, onPrototypeRemoved(
-                          testing::Field(&PrototypeRemovedEvent::label, label)))
+    EXPECT_CALL(
+        *subscriber, 
+        onPrototypeRemoved(testing::Field(&PrototypeRemovedEvent::label, label)))
         .Times(1);
 
     mPublisher->publishPrototypeAdded(label);
@@ -54,35 +55,43 @@ TEST_F(SignalOcafKernelPublisherTest, PrototypeEventsArePublished) {
 }
 
 TEST_F(SignalOcafKernelPublisherTest, PartEventsArePublished) {
-    MockSubscriber mock;
-
-    mMessageBus->subscribe<PartAddedEvent>(
-        [&](const PartAddedEvent& e) { mock.onPartAdded(e); });
-    mMessageBus->subscribe<PartRemovedEvent>(
-        [&](const PartRemovedEvent& e) { mock.onPartRemoved(e); });
-    mMessageBus->subscribe<PartLocationChangedEvent>(
-        [&](const PartLocationChangedEvent& e) {
-            mock.onPartLocationChanged(e);
-        });
-    mMessageBus->subscribe<PartAttributeChanged>(
-        [&](const PartAttributeChanged& e) { mock.onPartAttributeChanged(e); });
+    auto subscriber = std::make_shared<MockSubscriber>();
+    auto addedSub = mMessageBus->subscribe<PartAddedEvent>(
+        subscriber, &MockSubscriber::onPartAdded
+    );
+    auto removedSub = mMessageBus->subscribe<PartRemovedEvent>(
+        subscriber, &MockSubscriber::onPartRemoved
+    );
+    auto locChangedSub = mMessageBus->subscribe<PartLocationChangedEvent>(
+        subscriber, &MockSubscriber::onPartLocationChanged
+    );
+    auto attrChangedSub = mMessageBus->subscribe<PartAttributeChanged>(
+        subscriber, &MockSubscriber::onPartAttributeChanged
+    );
 
     PartLabel partLabel;
     PartAttributeType attr = PartAttributeType::Color;
 
-    EXPECT_CALL(mock,
-                onPartAdded(testing::Field(&PartAddedEvent::label, partLabel)))
-        .Times(1);
-    EXPECT_CALL(mock, onPartRemoved(
-                          testing::Field(&PartRemovedEvent::label, partLabel)))
-        .Times(1);
-    EXPECT_CALL(mock, onPartLocationChanged(testing::Field(
-                          &PartLocationChangedEvent::label, partLabel)))
+    EXPECT_CALL(
+        *subscriber,
+        onPartAdded(testing::Field(&PartAddedEvent::label, partLabel)))
         .Times(1);
     EXPECT_CALL(
-        mock, onPartAttributeChanged(testing::AllOf(
-                  testing::Field(&PartAttributeChanged::label, partLabel),
-                  testing::Field(&PartAttributeChanged::attributeEnum, attr))))
+        *subscriber, 
+        onPartRemoved(testing::Field(&PartRemovedEvent::label, partLabel)))
+        .Times(1);
+    EXPECT_CALL(
+        *subscriber, 
+        onPartLocationChanged(testing::Field(&PartLocationChangedEvent::label, partLabel)))
+        .Times(1);
+    EXPECT_CALL(
+        *subscriber, 
+        onPartAttributeChanged(
+            testing::AllOf(
+                testing::Field(&PartAttributeChanged::label, partLabel),
+                testing::Field(&PartAttributeChanged::attributeEnum, attr)
+            )
+        ))
         .Times(1);
 
     mPublisher->publishPartAdded(partLabel);
@@ -92,25 +101,26 @@ TEST_F(SignalOcafKernelPublisherTest, PartEventsArePublished) {
 }
 
 TEST_F(SignalOcafKernelPublisherTest, ComponentAssemblyEventsArePublished) {
-    MockSubscriber mock;
-
-    mMessageBus->subscribe<ComponentAddedToAssemblyEvent>(
-        [&](const ComponentAddedToAssemblyEvent& e) {
-            mock.onComponentAddedToAssembly(e);
-        });
-    mMessageBus->subscribe<ComponentRemovedFromAssemblyEvent>(
-        [&](const ComponentRemovedFromAssemblyEvent& e) {
-            mock.onComponentRemovedFromAssembly(e);
-        });
+    auto subscriber = std::make_shared<MockSubscriber>();
+    auto addedSub = mMessageBus->subscribe<ComponentAddedToAssemblyEvent>(
+        subscriber, &MockSubscriber::onComponentAddedToAssembly
+    );
+    auto removedSub = mMessageBus->subscribe<ComponentRemovedFromAssemblyEvent>(
+        subscriber, &MockSubscriber::onComponentRemovedFromAssembly
+    );
 
     PartLabel compLabel;
-
-    EXPECT_CALL(mock, onComponentAddedToAssembly(testing::Field(
-                          &ComponentAddedToAssemblyEvent::label, compLabel)))
+    EXPECT_CALL(
+        *subscriber, 
+        onComponentAddedToAssembly(
+            testing::Field(&ComponentAddedToAssemblyEvent::label, compLabel)
+        ))
         .Times(1);
-    EXPECT_CALL(mock,
-                onComponentRemovedFromAssembly(testing::Field(
-                    &ComponentRemovedFromAssemblyEvent::label, compLabel)))
+    EXPECT_CALL(
+        *subscriber,
+        onComponentRemovedFromAssembly(
+            testing::Field(&ComponentRemovedFromAssemblyEvent::label, compLabel)
+        ))
         .Times(1);
 
     mPublisher->publishComponentAddedToAssembly(compLabel);

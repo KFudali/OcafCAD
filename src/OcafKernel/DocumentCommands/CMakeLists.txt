@@ -1,3 +1,5 @@
+add_subdirectory(DocumentDeltaObserver)
+
 add_library(DocumentCommands
     DocCommandStack.cpp
 )

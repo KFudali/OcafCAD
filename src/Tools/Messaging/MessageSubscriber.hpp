@@ -14,7 +14,7 @@ public:
     std::unique_ptr<AbstractSubscription> subscribe(
         std::function<void(const EventType&)> handler
     ) {
-        mMessageBus.subscribe<EventType>(handler);
+        return mMessageBus.subscribe<EventType>(handler);
     }
     
     template<EventConcept EventType, typename HandleOwner, typename HandleMethod>
@@ -22,7 +22,7 @@ public:
         std::shared_ptr<HandleOwner> obj,
         HandleMethod memFunc
     ) {
-        mMessageBus->subscribe<EventType>(obj, memFunc);
+        return mMessageBus.subscribe<EventType>(obj, memFunc);
     }
     private:
     AbstractMessageBus& mMessageBus;

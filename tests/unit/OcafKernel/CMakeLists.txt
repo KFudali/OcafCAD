@@ -1,15 +1,16 @@
 add_subdirectory(Fixtures)
 add_subdirectory(PartDocument)
 add_subdirectory(OcafKernelMessaging)
+add_subdirectory(DocumentCommands)
 
 add_executable(utOcafKernel
     utRunOcafKernel.cpp
 )
 
 target_link_libraries(utOcafKernel PRIVATE
-    OcafKernel
     utPart
     utOcafKernelMessaging
+    utDocumentCommands
     GTest::gtest_main
     GTest::gmock_main
 )

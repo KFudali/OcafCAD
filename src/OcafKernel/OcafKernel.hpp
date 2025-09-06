@@ -9,6 +9,7 @@
 #include "AbstractMessageBus.hpp"
 #include "MessageSubscriber.hpp"
 #include "AbstractOcafKernelPublisher.hpp"
+#include "AbstractDeltaObserver.hpp"
 
 class OcafKernel{
     public:
@@ -16,7 +17,7 @@ class OcafKernel{
     
     PartDocument& partDocument(){ return *mPartDocument; };
     AbstractDocCommandStack& commands() {return *mCommandStack; };
-    MessageSubscriber& events() {return *mSubscriber; }
+    MessageSubscriber& events() {return *mSubscriber;};
     
     private:
     std::unique_ptr<PartDocument> mPartDocument;
@@ -25,6 +26,7 @@ class OcafKernel{
     std::unique_ptr<AbstractMessageBus> mInternalMessageBus;
     std::unique_ptr<MessageSubscriber> mSubscriber;
     std::unique_ptr<AbstractOcafKernelPublisher> mPublisher;
+    std::unique_ptr<AbstractDeltaObserver> mDeltaObserver;
 
 };
 

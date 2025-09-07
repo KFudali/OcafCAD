@@ -25,7 +25,8 @@ bool DocCommandStack::undo() {
     return undone;
 }
 bool DocCommandStack::redo() {
-    auto redone = mDoc->Undo();
+    auto redos = mDoc->GetAvailableRedos();
+    auto redone = mDoc->Redo();
     if (redone){
         auto delta = mDoc->GetUndos().First();
         notifyDeltaObservers(delta);

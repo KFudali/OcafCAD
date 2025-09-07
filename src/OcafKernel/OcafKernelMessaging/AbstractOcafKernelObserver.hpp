@@ -15,8 +15,8 @@ public:
     virtual void onPartAdded(PartLabel label) = 0;
     virtual void onPartRemoved(PartLabel label) = 0;
     virtual void onPartLocationChanged(PartLabel label) = 0;
-    virtual void onPartAttributeChanged(
-        PartLabel label, PartAttributeType attributeEnum
+    virtual void onPartMarkerAttributeChanged(
+        PartLabel label, AttributeType attributeEnum
     ) = 0;
 
     virtual void onComponentAddedToAssembly(PartLabel compLabel) = 0;

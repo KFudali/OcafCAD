@@ -2,14 +2,14 @@
 #define PartEvents_hpp
 
 #include "BaseOcafKernelEvent.hpp"
-#include "PartLabel.hpp"
+#include "DocLabel.hpp"
 #include "PrototypeLabel.hpp"
 #include "PartAttributeType.hpp"
 
 class PartAddedEvent : public BaseOcafKernelEvent {
 public:
-    explicit PartAddedEvent(PartLabel label) : label(label) {}
-    PartLabel label;
+    explicit PartAddedEvent(DocLabel label) : label(label) {}
+    DocLabel label;
 
     std::string log() const {
         return "PartAddedEvent, label: " + label.toString();
@@ -18,8 +18,8 @@ public:
 
 class PartRemovedEvent : public BaseOcafKernelEvent {
 public:
-    explicit PartRemovedEvent(PartLabel label) : label(label) {}
-    PartLabel label;
+    explicit PartRemovedEvent(DocLabel label) : label(label) {}
+    DocLabel label;
 
     std::string log() const {
         return "PartRemovedEvent, label: " + label.toString();
@@ -28,25 +28,25 @@ public:
 
 class PartLocationChangedEvent : public BaseOcafKernelEvent {
 public:
-    explicit PartLocationChangedEvent(PartLabel label) : label(label) {}
-    PartLabel label;
+    explicit PartLocationChangedEvent(DocLabel label) : label(label) {}
+    DocLabel label;
 
     std::string log() const {
         return "PartLocationChangedEvent, label: " + label.toString();
     };
 };
 
-class PartAttributeChanged : public BaseOcafKernelEvent {
+class PartMarkerAttributeChanged : public BaseOcafKernelEvent {
     public:
-    PartAttributeChanged(PartLabel label, PartAttributeType attributeEnum)
+    PartMarkerAttributeChanged(DocLabel label, AttributeType attributeEnum)
         : label(label), attributeEnum(attributeEnum) {}
 
     std::string log() const {
-        return "PartAttributeChangedEvent, label: " + label.toString();
+        return "PartMarkerAttributeChangedEvent, label: " + label.toString();
     };
 
-    PartLabel label;
-    PartAttributeType attributeEnum;
+    DocLabel label;
+    AttributeType attributeEnum;
 };
 
 #endif

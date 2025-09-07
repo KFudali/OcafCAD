@@ -1,8 +1,7 @@
 #ifndef AbstractOcafKernelPublisher_hpp
 #define AbstractOcafKernelPublisher_hpp
 
-#include "PartLabel.hpp"
-#include "PrototypeLabel.hpp"
+#include "DocLabel.hpp"
 #include "PartAttributeType.hpp"
 
 class AbstractOcafKernelPublisher{
@@ -10,24 +9,24 @@ class AbstractOcafKernelPublisher{
     virtual ~AbstractOcafKernelPublisher() = default;
 
 
-    virtual void publishPrototypeAdded(PrototypeLabel aLabel) = 0; 
-    virtual void publishPrototypeRemoved(PrototypeLabel aLabel) = 0;
+    virtual void publishPrototypeAdded(DocLabel aLabel) = 0; 
+    virtual void publishPrototypeRemoved(DocLabel aLabel) = 0;
     
-    virtual void publishPartAdded(PartLabel aLabel) const = 0;
-    virtual void publishPartRemoved(PartLabel aLabel) const = 0;
+    virtual void publishPartAdded(DocLabel aLabel) const = 0;
+    virtual void publishPartRemoved(DocLabel aLabel) const = 0;
 
     virtual void publishPartLocationChanged(
-        PartLabel aLabel
+        DocLabel aLabel
     ) const = 0;
-    virtual void publishPartAttributeChanged(
-        PartLabel aLabel, PartAttributeType aAttribtueEnum
+    virtual void publishPartMarkerAttributeChanged(
+        DocLabel aLabel, AttributeType aAttribtueEnum
     ) const = 0;
 
     virtual void publishComponentAddedToAssembly(
-        PartLabel aCompLabel
+        DocLabel aCompLabel
     ) const = 0;
     virtual void publishComponentRemovedFromAssembly(
-        PartLabel aLabel
+        DocLabel aLabel
     ) const = 0;
 };
 

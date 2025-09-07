@@ -12,18 +12,18 @@ class SignalOcafKernelPublisher : public AbstractOcafKernelPublisher {
     public:
     SignalOcafKernelPublisher(AbstractMessageBus& aMessageBus);
     
-    void publishPrototypeAdded(PrototypeLabel label) override;
-    void publishPrototypeRemoved(PrototypeLabel label) override;
+    void publishPrototypeAdded(DocLabel label) override;
+    void publishPrototypeRemoved(DocLabel label) override;
 
-    void publishPartAdded(PartLabel label) const override;
-    void publishPartRemoved(PartLabel label) const override;
-    void publishPartLocationChanged(PartLabel label) const override;
-    void publishPartAttributeChanged(
-        PartLabel label, PartAttributeType attributeEnum
+    void publishPartAdded(DocLabel label) const override;
+    void publishPartRemoved(DocLabel label) const override;
+    void publishPartLocationChanged(DocLabel label) const override;
+    void publishPartMarkerAttributeChanged(
+        DocLabel label, AttributeType attributeEnum
     ) const override;
 
-    void publishComponentAddedToAssembly(PartLabel compLabel) const override;
-    void publishComponentRemovedFromAssembly(PartLabel label) const override;
+    void publishComponentAddedToAssembly(DocLabel compLabel) const override;
+    void publishComponentRemovedFromAssembly(DocLabel label) const override;
    
     private:
     AbstractMessageBus& mMessageBus;

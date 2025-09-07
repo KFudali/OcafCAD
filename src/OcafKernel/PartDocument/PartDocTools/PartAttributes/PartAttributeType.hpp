@@ -1,7 +1,7 @@
 #ifndef PartAttributeType_hpp
 #define PartAttributeType_hpp
 
-enum class PartAttributeType {
+enum class AttributeType {
     Name = 0,
     Color = 1
 

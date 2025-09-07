@@ -1,8 +1,10 @@
 #include "RootAssembly.hpp"
-#include "RootAssemblyAttribute.hpp"
 #include "DocLabelUtils.hpp"
 #include <TopoDS_Compound.hxx>
 
+#include "RootAssemblyMarkerAttribute.hpp"
+#include "PartMarkerAttribute.hpp"
+#include "PrototypeMarkerAttribute.hpp"
 
 RootAssembly::RootAssembly(Handle(TDocStd_Document) aDoc)
  :  mDoc(aDoc),
@@ -10,7 +12,7 @@ RootAssembly::RootAssembly(Handle(TDocStd_Document) aDoc)
 {
     TDF_Label label = mShapeTool->NewShape();
     mLabel = DocLabel(label);
-    mLabel.label().AddAttribute(new RootAssemblyAttribute());
+    mLabel.label().AddAttribute(new RootAssemblyMarkerAttribute());
 }
 
 bool RootAssembly::isRootAssembly(TDF_Label aLabel) {

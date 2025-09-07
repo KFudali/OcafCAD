@@ -44,19 +44,21 @@ TEST_F(PublisherDeltaObserverTest, ObserverPublishesOnUndoNewPrototype) {
     mKernel->commands().undo();
 }
 
-TEST_F(PublisherDeltaObserverTest, ObserverPublishesOnRedeNewPrototype) {
+TEST_F(PublisherDeltaObserverTest, ObserverPublishesOnRedoNewPrototype) {
     auto subscriber = std::make_shared<MockSubscriber>();
 
     auto sub = mKernel->events().subscribe<PrototypeAddedEvent>(
         subscriber, &MockSubscriber::onPrototypeAdded
     );
-
-    EXPECT_CALL(*subscriber, onPrototypeRemoved(testing::_)).Times(1);
+    ON_CALL(*subscriber, onPrototypeAdded(testing::_)).WillByDefault(testing::Return());
     mKernel->commands().openCommand();
     mKernel->partDocument().addPrototype(StubPartPrototypes::cube());
-    mKernel->commands().commitCommand();
-    mKernel->commands().undo();
 
+    EXPECT_CALL(*subscriber, onPrototypeAdded(testing::_)).Times(1);
+    mKernel->commands().commitCommand();
+    testing::Mock::VerifyAndClearExpectations(subscriber.get());
+    mKernel->commands().undo();
+    
     EXPECT_CALL(*subscriber, onPrototypeAdded(testing::_)).Times(1);
     mKernel->commands().redo();
 }

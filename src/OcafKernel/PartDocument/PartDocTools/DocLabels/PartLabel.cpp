@@ -1,9 +1,14 @@
 #include "PartLabel.hpp"
 #include "DocLabelUtils.hpp"
+#include "PartMarkerAttribute.hpp"
 
 PartLabel::PartLabel(TDF_Label aLabel) : DocLabel(aLabel){
-    bool isPartLabel = DocLabelUtils::isPartLabel(aLabel);
-    if (!isPartLabel) {
-        throw LabelIsNotAPartLabel("Label is not a Part label.");
+    if (aLabel.IsAttribute(PartMarkerAttribute::GetID())){
+        return;
     }
+    if (DocLabelUtils::isPartLabel(aLabel)){
+        aLabel.AddAttribute(new PartMarkerAttribute());
+        return;
+    }
+    throw LabelIsNotAPartLabel("Label is not a Part label.");
 }

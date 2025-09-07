@@ -13,7 +13,7 @@ struct MockSubscriber {
     MOCK_METHOD(void, onPartRemoved, (const PartRemovedEvent&), ());
     MOCK_METHOD(void, onPartLocationChanged, (const PartLocationChangedEvent&),
                 ());
-    MOCK_METHOD(void, onPartAttributeChanged, (const PartAttributeChanged&),
+    MOCK_METHOD(void, onPartMarkerAttributeChanged, (const PartMarkerAttributeChanged&),
                 ());
     MOCK_METHOD(void, onComponentAddedToAssembly,
                 (const ComponentAddedToAssemblyEvent&), ());
@@ -40,7 +40,7 @@ TEST_F(SignalOcafKernelPublisherTest, PrototypeEventsArePublished) {
     auto removedSub = mMessageBus->subscribe<PrototypeRemovedEvent>(
         subscriber, &MockSubscriber::onPrototypeRemoved
     );
-    PrototypeLabel label;
+    DocLabel label;
     EXPECT_CALL(
         *subscriber, 
         onPrototypeAdded(testing::Field(&PrototypeAddedEvent::label, label)))
@@ -65,12 +65,12 @@ TEST_F(SignalOcafKernelPublisherTest, PartEventsArePublished) {
     auto locChangedSub = mMessageBus->subscribe<PartLocationChangedEvent>(
         subscriber, &MockSubscriber::onPartLocationChanged
     );
-    auto attrChangedSub = mMessageBus->subscribe<PartAttributeChanged>(
-        subscriber, &MockSubscriber::onPartAttributeChanged
+    auto attrChangedSub = mMessageBus->subscribe<PartMarkerAttributeChanged>(
+        subscriber, &MockSubscriber::onPartMarkerAttributeChanged
     );
 
-    PartLabel partLabel;
-    PartAttributeType attr = PartAttributeType::Color;
+    DocLabel partLabel;
+    AttributeType attr = AttributeType::Color;
 
     EXPECT_CALL(
         *subscriber,
@@ -86,10 +86,10 @@ TEST_F(SignalOcafKernelPublisherTest, PartEventsArePublished) {
         .Times(1);
     EXPECT_CALL(
         *subscriber, 
-        onPartAttributeChanged(
+        onPartMarkerAttributeChanged(
             testing::AllOf(
-                testing::Field(&PartAttributeChanged::label, partLabel),
-                testing::Field(&PartAttributeChanged::attributeEnum, attr)
+                testing::Field(&PartMarkerAttributeChanged::label, partLabel),
+                testing::Field(&PartMarkerAttributeChanged::attributeEnum, attr)
             )
         ))
         .Times(1);
@@ -97,7 +97,7 @@ TEST_F(SignalOcafKernelPublisherTest, PartEventsArePublished) {
     mPublisher->publishPartAdded(partLabel);
     mPublisher->publishPartRemoved(partLabel);
     mPublisher->publishPartLocationChanged(partLabel);
-    mPublisher->publishPartAttributeChanged(partLabel, attr);
+    mPublisher->publishPartMarkerAttributeChanged(partLabel, attr);
 }
 
 TEST_F(SignalOcafKernelPublisherTest, ComponentAssemblyEventsArePublished) {
@@ -109,7 +109,7 @@ TEST_F(SignalOcafKernelPublisherTest, ComponentAssemblyEventsArePublished) {
         subscriber, &MockSubscriber::onComponentRemovedFromAssembly
     );
 
-    PartLabel compLabel;
+    DocLabel compLabel;
     EXPECT_CALL(
         *subscriber, 
         onComponentAddedToAssembly(

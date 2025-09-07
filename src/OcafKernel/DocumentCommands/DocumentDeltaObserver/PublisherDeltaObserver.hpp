@@ -18,6 +18,13 @@ public:
     bool processDelta(Handle(TDF_Delta) aDelta) const override;
 
 private:
+
+    void processAddition(Handle(TDF_DeltaOnAddition) aAttrDelta) const;
+    void processRemoval(Handle(TDF_DeltaOnRemoval) aAttrDelta) const;
+    void processForget(Handle(TDF_DeltaOnForget) aAttrDelta) const;
+    void processResume(Handle(TDF_DeltaOnResume) aAttrDelta) const;
+    void processModification(Handle(TDF_DeltaOnModification) aAttrDelta) const;
+
     AbstractOcafKernelPublisher& mPublisher;
     Handle(TDocStd_Document) mDocument;
 };

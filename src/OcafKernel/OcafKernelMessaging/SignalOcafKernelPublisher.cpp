@@ -5,36 +5,36 @@ SignalOcafKernelPublisher::SignalOcafKernelPublisher(AbstractMessageBus& aMessag
     : mMessageBus(aMessageBus)
 {}
 
-void SignalOcafKernelPublisher::publishPrototypeAdded(PrototypeLabel label) {
+void SignalOcafKernelPublisher::publishPrototypeAdded(DocLabel label) {
     mMessageBus.publish<PrototypeAddedEvent>(PrototypeAddedEvent(label));
 }
 
-void SignalOcafKernelPublisher::publishPrototypeRemoved(PrototypeLabel label) {
+void SignalOcafKernelPublisher::publishPrototypeRemoved(DocLabel label) {
     mMessageBus.publish<PrototypeRemovedEvent>(PrototypeRemovedEvent(label));
 }
 
-void SignalOcafKernelPublisher::publishPartAdded(PartLabel label) const {
+void SignalOcafKernelPublisher::publishPartAdded(DocLabel label) const {
     mMessageBus.publish<PartAddedEvent>(PartAddedEvent(label));
 }
 
-void SignalOcafKernelPublisher::publishPartRemoved(PartLabel label) const {
+void SignalOcafKernelPublisher::publishPartRemoved(DocLabel label) const {
     mMessageBus.publish<PartRemovedEvent>(PartRemovedEvent(label));
 }
 
-void SignalOcafKernelPublisher::publishPartLocationChanged(PartLabel label) const {
+void SignalOcafKernelPublisher::publishPartLocationChanged(DocLabel label) const {
     mMessageBus.publish<PartLocationChangedEvent>(PartLocationChangedEvent(label));
 }
 
-void SignalOcafKernelPublisher::publishPartAttributeChanged(
-    PartLabel label, PartAttributeType attributeEnum
+void SignalOcafKernelPublisher::publishPartMarkerAttributeChanged(
+    DocLabel label, AttributeType attributeEnum
 ) const {
-    mMessageBus.publish<PartAttributeChanged>(PartAttributeChanged(label, attributeEnum));
+    mMessageBus.publish<PartMarkerAttributeChanged>(PartMarkerAttributeChanged(label, attributeEnum));
 }
 
-void SignalOcafKernelPublisher::publishComponentAddedToAssembly(PartLabel compLabel) const {
+void SignalOcafKernelPublisher::publishComponentAddedToAssembly(DocLabel compLabel) const {
     mMessageBus.publish<ComponentAddedToAssemblyEvent>(ComponentAddedToAssemblyEvent(compLabel));
 }
 
-void SignalOcafKernelPublisher::publishComponentRemovedFromAssembly(PartLabel label) const {
+void SignalOcafKernelPublisher::publishComponentRemovedFromAssembly(DocLabel label) const {
     mMessageBus.publish<ComponentRemovedFromAssemblyEvent>(ComponentRemovedFromAssemblyEvent(label));
 }

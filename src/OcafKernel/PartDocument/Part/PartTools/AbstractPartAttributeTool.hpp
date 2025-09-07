@@ -1,12 +1,12 @@
-#ifndef AbstractPartAttributesTool_hpp
-#define AbstractPartAttributesTool_hpp
+#ifndef AbstractPartAttributeTool_hpp
+#define AbstractPartAttributeTool_hpp
 
 #include <string>
 #include "ColorRGBA.hpp"
 
-class AbstractPartAttributesTool{
+class AbstractPartAttributeTool{
     public:
-    virtual ~AbstractPartAttributesTool() = default;
+    virtual ~AbstractPartAttributeTool() = default;
     
     virtual bool hasColor() const = 0;
     virtual bool hasName() const = 0;

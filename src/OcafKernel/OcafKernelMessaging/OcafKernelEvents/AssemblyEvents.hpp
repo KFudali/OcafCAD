@@ -2,12 +2,12 @@
 #define AssemblyEvents_hpp
 
 #include "BaseOcafKernelEvent.hpp"
-#include "PartLabel.hpp"
+#include "DocLabel.hpp"
 
 class ComponentAddedToAssemblyEvent : public BaseOcafKernelEvent {
 public:
-    explicit ComponentAddedToAssemblyEvent(PartLabel label) : label(label) {}
-    PartLabel label;
+    explicit ComponentAddedToAssemblyEvent(DocLabel label) : label(label) {}
+    DocLabel label;
 
     std::string log() const {
         return "ComponentAddedToAssemblyEvent, compLabel: " + label.toString();
@@ -16,8 +16,8 @@ public:
 
 class ComponentRemovedFromAssemblyEvent : public BaseOcafKernelEvent {
 public:
-    explicit ComponentRemovedFromAssemblyEvent(PartLabel label) : label(label) {}
-    PartLabel label;
+    explicit ComponentRemovedFromAssemblyEvent(DocLabel label) : label(label) {}
+    DocLabel label;
 
     std::string log() const {
         return "ComponentRemovedFromAssemblyEvent, compLabel: " + label.toString();

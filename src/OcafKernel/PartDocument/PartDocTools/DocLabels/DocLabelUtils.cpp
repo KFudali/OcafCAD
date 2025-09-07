@@ -1,11 +1,11 @@
 #include "DocLabelUtils.hpp"
-#include "RootAssemblyAttribute.hpp"
+#include "RootAssemblyMarkerAttribute.hpp"
 
 #include "XCAFDoc_ShapeTool.hxx"
 #include "XCAFDoc_DocumentTool.hxx"
 
 bool DocLabelUtils::isRootAssemblyLabel(TDF_Label aLabel) {
-    return aLabel.IsAttribute(RootAssemblyAttribute::GetID());
+    return aLabel.IsAttribute(RootAssemblyMarkerAttribute::GetID());
 }
 
 bool DocLabelUtils::isPartLabel(TDF_Label aLabel) {

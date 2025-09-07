@@ -1,8 +1,8 @@
-#ifndef PartAttributeTool_hpp
-#define PartAttributeTool_hpp
+#ifndef PartMarkerAttributeTool_hpp
+#define PartMarkerAttributeTool_hpp
 
 #include "PartLabel.hpp"
-#include "AbstractPartAttributesTool.hpp"
+#include "AbstractPartAttributeTool.hpp"
 
 #include <Standard_Handle.hxx>
 #include <XCAFDoc_ShapeTool.hxx>
@@ -17,7 +17,7 @@ class PartDoesNotHaveAttribute : public std::runtime_error {
     : std::runtime_error(message) {}
 };
 
-class PartAttributeTool : public AbstractPartAttributesTool {
+class PartAttributeTool : public AbstractPartAttributeTool {
     public:
     PartAttributeTool(PartLabel aPartLabel);
 

@@ -1,6 +1,6 @@
 add_subdirectory(DocLabels)
-add_subdirectory(PartAttributes)
 add_subdirectory(OcafAttributes)
+add_subdirectory(PartAttributes)
 
 add_library(PartDocTools INTERFACE)
 

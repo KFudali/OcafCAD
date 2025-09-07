@@ -2,12 +2,12 @@
 #define PrototypeEvents_hpp
 
 #include "BaseOcafKernelEvent.hpp"
-#include "PrototypeLabel.hpp"
+#include "DocLabel.hpp"
 
 class PrototypeAddedEvent : public BaseOcafKernelEvent {
 public:
-    explicit PrototypeAddedEvent(PrototypeLabel label) : label(label) {}
-    PrototypeLabel label;
+    explicit PrototypeAddedEvent(DocLabel label) : label(label) {}
+    DocLabel label;
 
     std::string log() const {
         return "PrototypeAddedEvent, label: " + label.toString();
@@ -16,8 +16,8 @@ public:
 
 class PrototypeRemovedEvent : public BaseOcafKernelEvent {
 public:
-    explicit PrototypeRemovedEvent(PrototypeLabel label) : label(label) {}
-    PrototypeLabel label;
+    explicit PrototypeRemovedEvent(DocLabel label) : label(label) {}
+    DocLabel label;
     
     std::string log() const {
         return "PrototypeRemovedEvent, label: " + label.toString();

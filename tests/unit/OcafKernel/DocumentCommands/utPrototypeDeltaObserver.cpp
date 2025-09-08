@@ -8,7 +8,7 @@ struct MockSubscriber {
     MOCK_METHOD(void, onPrototypeRemoved, (const PrototypeRemovedEvent&), ());
 };
 
-class PublisherDeltaObserverTest : public ::testing::Test {
+class PrototypeDeltaObserverTest : public ::testing::Test {
     protected:
     void SetUp() override {
         mKernel = std::make_unique<OcafKernel>(); 
@@ -17,7 +17,7 @@ class PublisherDeltaObserverTest : public ::testing::Test {
 
 };
 
-TEST_F(PublisherDeltaObserverTest, ObserverPublishesOnNewPrototype) {
+TEST_F(PrototypeDeltaObserverTest, ObserverPublishesOnNewPrototype) {
     auto subscriber = std::make_shared<MockSubscriber>();
 
     auto sub = mKernel->events().subscribe<PrototypeAddedEvent>(
@@ -30,7 +30,7 @@ TEST_F(PublisherDeltaObserverTest, ObserverPublishesOnNewPrototype) {
     mKernel->commands().commitCommand();
 }
 
-TEST_F(PublisherDeltaObserverTest, ObserverPublishesOnUndoNewPrototype) {
+TEST_F(PrototypeDeltaObserverTest, ObserverPublishesOnUndoNewPrototype) {
     auto subscriber = std::make_shared<MockSubscriber>();
 
     auto sub = mKernel->events().subscribe<PrototypeRemovedEvent>(
@@ -44,13 +44,12 @@ TEST_F(PublisherDeltaObserverTest, ObserverPublishesOnUndoNewPrototype) {
     mKernel->commands().undo();
 }
 
-TEST_F(PublisherDeltaObserverTest, ObserverPublishesOnRedoNewPrototype) {
+TEST_F(PrototypeDeltaObserverTest, ObserverPublishesOnRedoNewPrototype) {
     auto subscriber = std::make_shared<MockSubscriber>();
 
     auto sub = mKernel->events().subscribe<PrototypeAddedEvent>(
         subscriber, &MockSubscriber::onPrototypeAdded
     );
-    ON_CALL(*subscriber, onPrototypeAdded(testing::_)).WillByDefault(testing::Return());
     mKernel->commands().openCommand();
     mKernel->partDocument().addPrototype(StubPartPrototypes::cube());
 
@@ -62,11 +61,3 @@ TEST_F(PublisherDeltaObserverTest, ObserverPublishesOnRedoNewPrototype) {
     EXPECT_CALL(*subscriber, onPrototypeAdded(testing::_)).Times(1);
     mKernel->commands().redo();
 }
-
-// mKernel->partDocument().save(
-//     "C:\\Users\\kryst\\Documents\\Repositories\\OcafCAD\\tests\\unit\\OcafKernel\\DeltaObserver\\preAddition.xml"
-// );
-
-// mKernel->partDocument().save(
-//     "C:\\Users\\kryst\\Documents\\Repositories\\OcafCAD\\tests\\unit\\OcafKernel\\DeltaObserver\\postAddition.xml"
-// );

@@ -44,12 +44,9 @@ bool PublisherDeltaObserver::processDelta(Handle(TDF_Delta) aDelta) const {
         else if (attrDelta->IsKind(STANDARD_TYPE(TDF_DeltaOnModification))) {
             processModification(Handle(TDF_DeltaOnModification)::DownCast(attrDelta));
         }
-
     }
-
     return true;
 }
-
 
 void PublisherDeltaObserver::processAddition(
     Handle(TDF_DeltaOnAddition) aAttrDelta
@@ -60,6 +57,9 @@ void PublisherDeltaObserver::processAddition(
     } 
     if (aAttrDelta->Attribute()->IsKind(STANDARD_TYPE(PartMarkerAttribute))){
         mPublisher.publishPartAdded(DocLabel(label));
+        if (!DocLabelUtils::isRootAssemblyLabel(label.Father())){
+            mPublisher.publishComponentAddedToAssembly(DocLabel(label));
+        }
     } 
 }
 
@@ -72,6 +72,9 @@ void PublisherDeltaObserver::processRemoval(
     } 
     if (aAttrDelta->Attribute()->IsKind(STANDARD_TYPE(PartMarkerAttribute))){
         mPublisher.publishPartRemoved(DocLabel(label));
+        if (!DocLabelUtils::isRootAssemblyLabel(label.Father())){
+            mPublisher.publishComponentRemovedFromAssembly(DocLabel(label));
+        }
     } 
 }
 void PublisherDeltaObserver::processForget(
@@ -97,7 +100,6 @@ void PublisherDeltaObserver::processResume(
         mPublisher.publishPartAdded(DocLabel(label));
     } 
 }
-
 
 void PublisherDeltaObserver::processModification(
     Handle(TDF_DeltaOnModification) aAttrDelta

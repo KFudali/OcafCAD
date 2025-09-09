@@ -1,11 +1,13 @@
+add_subdirectory(Transfer)
+
 add_library(GeometryCore
     GeometryCore.cpp
 )
 
 target_link_libraries(GeometryCore PUBLIC
-    ${OpenCASCADE_LIBRARIES}
     OcafKernel
     Tools
+    Transfer
 )
 
 target_include_directories(GeometryCore PRIVATE

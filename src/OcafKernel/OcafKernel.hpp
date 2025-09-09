@@ -14,7 +14,7 @@
 class OcafKernel{
     public:
     OcafKernel();
-    
+   
     PartDocument& partDocument(){ return *mPartDocument; };
     AbstractDocCommandStack& commands() {return *mCommandStack; };
     MessageSubscriber& events() {return *mSubscriber;};

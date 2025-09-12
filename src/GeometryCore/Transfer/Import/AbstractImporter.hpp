@@ -3,12 +3,11 @@
 
 #include "PartDocument.hpp"
 #include "AbstractProgressScope.hpp"
-#include "IdleProgressScope.hpp"
 
 class AbstractImporter{
     virtual void importIntoDoc(
         PartDocument& aDestDoc,
-        AbstractProgressScope& aProgressScope = IdleProgressScope()
+        AbstractProgressScope& aProgressScope
     ) = 0;
 };
 

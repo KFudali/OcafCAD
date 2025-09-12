@@ -1,10 +1,12 @@
+add_subdirectory(Transfer)
+
 add_executable(utGeometryCore
     utRunGeometryCore.cpp
 )
 
 target_link_libraries(utGeometryCore PRIVATE
     GeometryCore
-    utPart
+    utTransfer
     GTest::gtest_main
     GTest::gmock_main
 )

@@ -3,11 +3,11 @@
 
 #include "AbstractImporter.hpp"
 
-class AbstractImporter {
-    virtual void importIntoDoc(
+class STEPImporter : public AbstractImporter {
+    void importIntoDoc(
         PartDocument& aDestDoc, 
         AbstractProgressScope& aProgressScope
-    );
+    ) override;
 };
 
 #endif

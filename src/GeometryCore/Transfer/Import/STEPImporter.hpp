@@ -6,7 +6,7 @@
 class AbstractImporter {
     virtual void importIntoDoc(
         PartDocument& aDestDoc, 
-        AbstractProgressScope& aProgressScope = IdleProgressScope()
+        AbstractProgressScope& aProgressScope
     );
 };
 

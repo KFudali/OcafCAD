@@ -8,9 +8,9 @@ class EventProgressPublisher : public AbstractProgressPublisher {
     public:
     EventProgressPublisher(
         std::unique_ptr<MessagePublisher> aMessagePublisher
-    ) : _publisher(std::move(aMessagePublisher)){};
+    ) : mPublisher(std::move(aMessagePublisher)){};
 
-    void scopeStarted(
+    void scopeLaunched(
         const ProgressScopeId& aScopeId,
         const std::string& aMessage
     ) const override;
@@ -25,7 +25,7 @@ class EventProgressPublisher : public AbstractProgressPublisher {
     ) const override;
 
     private:
-    std::unique_ptr<MessagePublisher> _publisher;
+    std::unique_ptr<MessagePublisher> mPublisher;
 };
 
 #endif

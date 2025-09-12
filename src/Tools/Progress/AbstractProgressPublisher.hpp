@@ -8,7 +8,7 @@ class AbstractProgressPublisher {
 public:
     virtual ~AbstractProgressPublisher() = default;
 
-    virtual void scopeStarted(
+    virtual void scopeLaunched(
         const ProgressScopeId& aScopeId,
         const std::string& aMessage
     ) const = 0;

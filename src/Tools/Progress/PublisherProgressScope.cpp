@@ -1,86 +1,112 @@
 #include "PublisherProgressScope.hpp"
+#include <algorithm>
 
 PublisherProgressScope::PublisherProgressScope(
     const ProgressScopeId& id,
-    const std::string& aMessage,
     std::shared_ptr<AbstractProgressPublisher> aProgressPublisher,
     double aWeight,
     PublisherProgressScope* aParent
 ) :
-    _id(id),
-    _message(aMessage),
-    _publisher(std::move(aProgressPublisher)),
-    _weight(aWeight),
-    _parent(aParent),
-    _progressFraction(0.0)
+    mId(id),
+    mPublisher(aProgressPublisher),
+    mWeight(aWeight),
+    mParent(aParent),
+    mProgressFraction(0.0),
+    mLaunched(false)
 {}
 
+void PublisherProgressScope::launch(const std::string& aMessage) {
+    if (mLaunched) {
+        reset();
+    }
+    mMessage = aMessage;
+    mLaunched = true;
+    mPublisher->scopeLaunched(mId, mMessage);
+}
+
 void PublisherProgressScope::advance(double aFraction) {
-    if (aFraction >= 1.0) {
-        _progressFraction = 1.0;
+    mProgressFraction += aFraction;
+    if (mProgressFraction >= 1.0) {
+        mProgressFraction = 1.0;
         finalize();
         return;
     }
-    _progressFraction = aFraction;
-    _publisher->scopeAdvanced(_id, _progressFraction);
 
-    if (_parent) {
-        auto parentProgress = _progressFraction * _weight;
-        _parent->advance(parentProgress);
+    mPublisher->scopeAdvanced(mId, mProgressFraction);
+
+    if (mParent) {
+        mParent->advance(aFraction * mWeight);
     }
 }
 
 void PublisherProgressScope::finalize() {
-    _publisher->scopeFinalized(_id);
-    _progressFraction = 1.0;
-    if (_parent) {
-        _parent->removeChild(_id);
+    finalizeAllChildren();
+
+    mProgressFraction = 1.0;
+    mPublisher->scopeFinalized(mId);
+
+    if (mParent) {
+        mParent->removeChild(mId);
     }
 }
 
 void PublisherProgressScope::reset() {
-    _progressFraction = 0.0;
-    _publisher->scopeAdvanced(_id, _progressFraction);
+    mProgressFraction = 0.0;
+    mLaunched = false;
+    mMessage = "Default";
+    mPublisher->scopeAdvanced(mId, mProgressFraction);
+
+    for (auto& child : mActiveChildren) {
+        child->reset();
+    }
 }
 
-AbstractProgressScope& PublisherProgressScope::newSubScope(
+std::shared_ptr<AbstractProgressScope> PublisherProgressScope::newSubScope(
     const std::string& aMessage, double weight
 ) {
-    auto childId = _id.spawnChild(_nextChildId++);
-    auto child = std::make_unique<PublisherProgressScope>(
-        childId, aMessage, _publisher, weight, this
+    auto childId = mId.spawnChild(mNextChildId++);
+    auto child = std::make_shared<PublisherProgressScope>(
+        childId, mPublisher, weight, this
     );
-    auto& ref = *child;
-    _children.push_back(std::move(child));
-    return ref;
+    
+    child->launch(aMessage);
+    mActiveChildren.push_back(child);
+    return child;
 }
 
 void PublisherProgressScope::finalizeAllChildren() {
-    for (auto& child : _children) {
+    for (auto& child : mActiveChildren) {
         child->finalize();
     }
-    _children.clear();
+    mActiveChildren.clear();
 }
 
 bool PublisherProgressScope::finalizeChild(const ProgressScopeId& aChildId) {
-    for (auto& child : _children) {
-        if (child->id() == aChildId) {
-            child->finalize();
-            removeChild(aChildId);
-            return true;
+    auto it = std::find_if(
+        mActiveChildren.begin(),
+        mActiveChildren.end(),
+        [&](const std::shared_ptr<AbstractProgressScope>& child) {
+            return child->id() == aChildId;
         }
+    );
+
+    if (it != mActiveChildren.end()) {
+        (*it)->finalize();
+        mActiveChildren.erase(it);
+        return true;
     }
     return false;
 }
 
 void PublisherProgressScope::removeChild(const ProgressScopeId& aChildId) {
-    _children.erase(
+    mActiveChildren.erase(
         std::remove_if(
-            _children.begin(), _children.end(),
-            [&](const std::unique_ptr<PublisherProgressScope>& child) {
+            mActiveChildren.begin(),
+            mActiveChildren.end(),
+            [&](const std::shared_ptr<AbstractProgressScope>& child) {
                 return child->id() == aChildId;
             }
         ),
-        _children.end()
+        mActiveChildren.end()
     );
 }

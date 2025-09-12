@@ -44,7 +44,7 @@ TEST_F(EventProgressPublisherTest, publishesStartedEventOnScopeStarted) {
         testing::Field(&ProgressScopeStartedEvent::message, testing::Eq(message))
     )));
 
-    eventProgress->scopeStarted(id, message);
+    eventProgress->scopeLaunched(id, message);
 }
 
 TEST_F(EventProgressPublisherTest, publishesEventOnScopeAdvanced) {

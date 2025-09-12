@@ -4,24 +4,24 @@
 
 class StubEventA : public AbstractEvent {
     protected:
-    int _id;
+    int mId;
     public:
-    StubEventA(int id) : _id(id) {}
-    int id() const {return _id;}
-    bool operator==(const StubEventA& aOther) const {return this->_id == aOther._id;}
-    std::string log() const {return "StubEvent, id: " + std::to_string(_id);}
+    StubEventA(int id) : mId(id) {}
+    int id() const {return mId;}
+    bool operator==(const StubEventA& aOther) const {return this->mId == aOther.mId;}
+    std::string log() const {return "StubEvent, id: " + std::to_string(mId);}
 };
 
 class StubEventB : public StubEventA {
     public:
     StubEventB(int id) : StubEventA(id) {}
-    bool operator==(const StubEventB& aOther) const {return this->_id == aOther._id;}
+    bool operator==(const StubEventB& aOther) const {return this->mId == aOther.mId;}
 };
 
 class StubEventC : public StubEventA {
     public:
     StubEventC(int id) : StubEventA(id) {}
-    bool operator==(const StubEventC& aOther) const {return this->_id == aOther._id;}
+    bool operator==(const StubEventC& aOther) const {return this->mId == aOther.mId;}
 };
 
 struct MockSubscriber {

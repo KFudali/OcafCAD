@@ -8,25 +8,28 @@ class PublisherProgressScope : public AbstractProgressScope {
 public: 
     PublisherProgressScope(
         const ProgressScopeId& aId,
-        const std::string& aMessage,
         std::shared_ptr<AbstractProgressPublisher> aProgressPublisher,
         double aWeight = 1.0,
         PublisherProgressScope* aParent = nullptr
     );
 
-    inline ProgressScopeId id() const override { return _id; }
-    inline std::string message() const override { return _message; }
-    inline double progressFraction() const override { return _progressFraction; }
+    inline ProgressScopeId id() const override { return mId; }
+    inline std::string message() const override { return mMessage; }
+    inline double progressFraction() const override { return mProgressFraction; }
 
+    void launch(const std::string& aMessage) override;
     void advance(double aFraction) override;
     void finalize() override;
     void reset() override;
 
-    AbstractProgressScope& newSubScope(
+    std::shared_ptr<AbstractProgressScope> newSubScope(
         const std::string& aScopeLabel, double weight
     ) override;
 
-    inline AbstractProgressScope* parentScope() override { return _parent; }
+    inline AbstractProgressScope* parentScope() override { return mParent; }
+    const std::vector<std::shared_ptr<AbstractProgressScope>>& activeChildren(){
+        return mActiveChildren;
+    };
 
     void finalizeAllChildren() override;    
     bool finalizeChild(const ProgressScopeId& aChildId) override;
@@ -34,15 +37,18 @@ public:
 private:
     void removeChild(const ProgressScopeId& aChildId);
 
-    double _progressFraction = 0.0;
-    double _weight;
+    
+    ProgressScopeId mId;
+    int mNextChildId = 1;
 
-    ProgressScopeId _id;
-    PublisherProgressScope* _parent = nullptr;
-    std::string _message = "Processing...";
-    std::vector<std::unique_ptr<PublisherProgressScope>> _children;
-    int _nextChildId = 1;
-    std::shared_ptr<AbstractProgressPublisher> _publisher;
+    bool mLaunched = false;
+    double mProgressFraction = 0.0;
+    double mWeight = 1.0;
+    std::string mMessage = "Default";
+    
+    PublisherProgressScope* mParent;
+    std::vector<std::shared_ptr<AbstractProgressScope>> mActiveChildren;
+    std::shared_ptr<AbstractProgressPublisher> mPublisher;
 };
 
 #endif

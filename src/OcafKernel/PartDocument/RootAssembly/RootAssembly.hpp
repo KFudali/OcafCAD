@@ -21,7 +21,10 @@ class RootAssembly {
 
     void clear(); 
     
-    PartLabel addPart(PrototypeLabel aPrototypeLabel, Location aLocation);
+    PartLabel addPart(
+        PrototypeLabel aPrototypeLabel, 
+        Location aLocation
+    );
     PartLabel addEmptyAssembly();
     PartLabel addEmptyPart();
     

@@ -3,6 +3,7 @@
 
 #include <Standard_Handle.hxx>
 #include <TDocStd_Document.hxx>
+#include <optional>
 
 #include "AbstractProgressScope.hpp"
 #include "PartDocument.hpp"
@@ -28,12 +29,17 @@ class PartDocumentImporter {
 
     void importLabel(TDF_Label aLabel);
     PrototypeLabel importPrototype(TDF_Label aProtoLabel);
-    void importComponent(
-        TDF_Label aCompLabel,
-        PartLabel aParentAssembly
+    
+    void importPart(
+        TDF_Label aPartLabel, 
+        std::optional<PartLabel> aDestParent = std::nullopt
     );
-    PartLabel importPart(TDF_Label aPartLabel);
-    PartLabel importAssembly(TDF_Label aAssemblyLabel);
+    PrototypeLabel importPartPrototype(TDF_Label aPartLabel);
+    void importPartComponents(
+        TDF_Label aSrcCompLabel, 
+        PartLabel aDestParentLabel
+    );
+
 
     bool isPrototype(TDF_Label aLabel) const;
     bool isAssembly(TDF_Label aLabel) const;

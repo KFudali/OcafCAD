@@ -48,12 +48,7 @@ void PartDocumentImporter::importLabel(TDF_Label aLabel) {
     if (isPrototype(aLabel)){
         importPrototype(aLabel);
         return;
-    }
-    if (isAssembly(aLabel)){
-        importAssembly(aLabel);
-        return;
-    }
-    if (isPart(aLabel)) {
+    } else {
         importPart(aLabel);
         return;
     }
@@ -85,7 +80,6 @@ bool PartDocumentImporter::isAssembly(TDF_Label aLabel) const {
     return mShapeTool->IsAssembly(aLabel);
 }
 
-
 PrototypeLabel PartDocumentImporter::importPrototype(TDF_Label aProtoLabel) {
     PartPrototype proto = mShapeTool->GetShape(aProtoLabel);
     if (proto.IsNull()){
@@ -96,57 +90,48 @@ PrototypeLabel PartDocumentImporter::importPrototype(TDF_Label aProtoLabel) {
     return mDest.addPrototype(proto);
 }
 
-PartLabel PartDocumentImporter::importPart(TDF_Label aPartLabel) {
+void PartDocumentImporter::importPart(
+    TDF_Label aPartLabel,
+    std::optional<PartLabel> aDestParentLabel
+) {
+    auto partProtoLabel = importPartPrototype(aPartLabel);
+    PartLabel destPartLabel;
+    auto loc = mShapeTool->GetLocation(aPartLabel);
+    if (aDestParentLabel){
+        auto parent = Part(*aDestParentLabel);
+        destPartLabel = parent.addComponent(partProtoLabel, loc);
+    } else {
+        destPartLabel = mDest.addPart(partProtoLabel, loc);
+    }
+    if (isAssembly(aPartLabel)){
+        importPartComponents(aPartLabel, destPartLabel);
+    }
+}
+
+PrototypeLabel PartDocumentImporter::importPartPrototype(TDF_Label aPartLabel){
+    PrototypeLabel partProtoLabel; 
+    if (isPrototype(aPartLabel)){
+        return importPrototype(aPartLabel);
+    } 
     TDF_Label referredLabel;
     mShapeTool->GetReferredShape(aPartLabel, referredLabel);
     if (referredLabel.IsNull()){
-        return PartLabel();
+        PartPrototype proto = mShapeTool->GetShape(aPartLabel);
+        partProtoLabel = importPrototype(aPartLabel);
+    } else {
+        partProtoLabel = importPrototype(referredLabel);
     }
-    auto loc = mShapeTool->GetLocation(aPartLabel);
-    if (isPrototype(referredLabel)){
-        auto prototypeLabel = importPrototype(referredLabel);
-        return mDest.addPart(prototypeLabel, loc);
-    }
-    return PartLabel();
+    return partProtoLabel;
 }
 
-void PartDocumentImporter::importComponent(
+
+void PartDocumentImporter::importPartComponents(
     TDF_Label aSrcCompLabel,
     PartLabel aDestParentLabel
 ) {
-    auto destParent = Part(aDestParentLabel); 
-
-    auto loc = mShapeTool->GetLocation(aSrcCompLabel);
-    auto destCompLabel = PartLabel();
-    if (isPrototype(aSrcCompLabel)){
-        auto proto = importPrototype(aSrcCompLabel);
-        destCompLabel = destParent.addComponent(proto, loc);
+    TDF_LabelSequence srcCompChildrenLabels;
+    mShapeTool->GetComponents(aSrcCompLabel, srcCompChildrenLabels);
+    for (auto srcCompChildLabel : srcCompChildrenLabels){
+        importPart(srcCompChildLabel, aDestParentLabel);
     }
-    if (isPart(aSrcCompLabel)){
-        TDF_Label referredLabel;
-        mShapeTool->GetReferredShape(aSrcCompLabel, referredLabel);
-        if (isPrototype(referredLabel)){
-            auto prototypeLabel = importPrototype(referredLabel);
-            destParent.addComponent(prototypeLabel, loc);
-        }
-    }
-    if (isAssembly(aSrcCompLabel)){
-        auto destComp = Part(destCompLabel);
-        TDF_LabelSequence srcCompChildrenLabels;
-        mShapeTool->GetComponents(aSrcCompLabel, srcCompChildrenLabels);
-        for (auto srcCompChildLabel : srcCompChildrenLabels){
-            importComponent(srcCompChildLabel, destCompLabel);
-        }
-    } 
-}
-
-PartLabel PartDocumentImporter::importAssembly(TDF_Label aAssemblyLabel) {
-    auto assemblyLabel = mDest.addEmptyAssembly();
-    auto assembly = Part(assemblyLabel);
-    TDF_LabelSequence srcComponentLabels;
-    mShapeTool->GetComponents(aAssemblyLabel, srcComponentLabels);
-    for(auto srcCompLabel : srcComponentLabels){
-        importComponent(srcCompLabel, assemblyLabel);
-    }
-    return PartLabel(assemblyLabel);
 }

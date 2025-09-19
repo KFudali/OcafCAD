@@ -28,6 +28,7 @@ class BaseImportTestDoc {
 		if (app->SaveAs(doc, xmlPath) == PCDM_StoreStatus::PCDM_SS_OK) {
 			return true;
 		}
+		return false;
 	}
 
     Handle(XCAFApp_Application) app;
@@ -39,7 +40,7 @@ class BaseImportTestDoc {
 class TwoAssembliesWithSamePrototypeDoc : public BaseImportTestDoc{
 	public:
 	TwoAssembliesWithSamePrototypeDoc(){
-		mCubeProtoLabel = shapeTool->AddShape(StubPartPrototypes::cube());
+		mCubeProtoLabel = shapeTool->AddShape(cube);
 		mAssemblyA = shapeTool->NewShape();
 		mAssemblyB = shapeTool->NewShape();
 		auto labelA = shapeTool->AddComponent(mAssemblyA, mCubeProtoLabel, Location());	
@@ -49,6 +50,8 @@ class TwoAssembliesWithSamePrototypeDoc : public BaseImportTestDoc{
 		labelB.IsNull();
 	};
 
+
+	PartPrototype cube = StubPartPrototypes::cube();
 	TDF_Label mAssemblyA;
 	TDF_Label mAssemblyB;
 	TDF_Label mCubeProtoLabel;

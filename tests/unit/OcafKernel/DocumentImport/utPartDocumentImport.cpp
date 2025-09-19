@@ -21,7 +21,7 @@ TEST_F(DocumentImportTest, TestTwoAssembliesWithPrototypeImport){
     auto source = TwoAssembliesWithSamePrototypeDoc();
     PartDocumentImporter::import(source.doc, *dest, *progress);
     dest->save("C:/Users/kryst/Documents/Repositories/OcafCAD/tests/unit/OcafKernel/DocumentImport/destDoc.xml");
-    EXPECT_EQ(dest->prototypes().size(), 1);
+    EXPECT_EQ(dest->prototypes().size(), 3);
     auto freeParts = dest->freeParts();
     EXPECT_EQ(freeParts.size(), 2);
 
@@ -29,6 +29,15 @@ TEST_F(DocumentImportTest, TestTwoAssembliesWithPrototypeImport){
     Part partB = Part(freeParts[1]);
     EXPECT_TRUE(partA.isAssembly());
     EXPECT_TRUE(partB.isAssembly());
+
+    auto compsA = partA.childrenComponents();
+    auto compsB = partB.childrenComponents();
+
+    ASSERT_EQ(compsA.size(), 1);
+    ASSERT_EQ(compsB.size(), 1);
+
+    EXPECT_TRUE(Part(compsA[0]).prototype().IsEqual(source.cube));
+    EXPECT_TRUE(Part(compsB[0]).prototype().IsEqual(source.cube));
 }
 
 // TEST_F(DocumentImportTest, TestTwoAssembliesWithSubAssemblyImport){

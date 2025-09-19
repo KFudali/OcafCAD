@@ -58,6 +58,7 @@ PartLabel RootAssembly::addPart(
         aPrototypeLabel.label(),
         aLocation
     );
+    mShapeTool->Expand(label);
     return PartLabel(label);
 };
 

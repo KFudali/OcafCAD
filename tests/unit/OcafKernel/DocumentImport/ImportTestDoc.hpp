@@ -31,10 +31,27 @@ class BaseImportTestDoc {
 		return false;
 	}
 
+	PartPrototype sphere = StubPartPrototypes::sphere();
+	PartPrototype cube = StubPartPrototypes::cube();
     Handle(XCAFApp_Application) app;
 	Handle(TDocStd_Document) doc;
 	Handle(XCAFDoc_ShapeTool) shapeTool;
 	Handle(XCAFDoc_ColorTool) colorTool;
+};
+
+class OneAssemblyWithTwoPrototypesDoc : public BaseImportTestDoc{
+	public:
+	OneAssemblyWithTwoPrototypesDoc(){
+		mCubeProtoLabel = shapeTool->AddShape(cube);
+		mSphereProtoLabel = shapeTool->AddShape(sphere);
+		mAssembly = shapeTool->NewShape();
+		shapeTool->AddComponent(mAssembly, mCubeProtoLabel, Location());	
+		shapeTool->AddComponent(mAssembly, mSphereProtoLabel, Location());	
+	};
+
+	TDF_Label mAssembly;
+	TDF_Label mCubeProtoLabel;
+	TDF_Label mSphereProtoLabel;
 };
 
 class TwoAssembliesWithSamePrototypeDoc : public BaseImportTestDoc{
@@ -45,13 +62,8 @@ class TwoAssembliesWithSamePrototypeDoc : public BaseImportTestDoc{
 		mAssemblyB = shapeTool->NewShape();
 		auto labelA = shapeTool->AddComponent(mAssemblyA, mCubeProtoLabel, Location());	
 		auto labelB = shapeTool->AddComponent(mAssemblyB, mCubeProtoLabel, Location());	
-		save("C:/Users/kryst/Documents/Repositories/OcafCAD/tests/unit/OcafKernel/DocumentImport/testDoc.cpp");
-		labelA.IsNull();
-		labelB.IsNull();
 	};
 
-
-	PartPrototype cube = StubPartPrototypes::cube();
 	TDF_Label mAssemblyA;
 	TDF_Label mAssemblyB;
 	TDF_Label mCubeProtoLabel;
@@ -60,9 +72,12 @@ class TwoAssembliesWithSamePrototypeDoc : public BaseImportTestDoc{
 class TwoAssembliesWithSameSubAssembly : public BaseImportTestDoc{
 	public:
 	TwoAssembliesWithSameSubAssembly(){
-		mCubeProtoLabel = shapeTool->AddShape(StubPartPrototypes::cube());
+		mCubeProtoLabel = shapeTool->AddShape(cube);
+		mSphereProtoLabel = shapeTool->AddShape(sphere);
+		
 		auto subAssembly = shapeTool->NewShape();
 		shapeTool->AddComponent(subAssembly, mCubeProtoLabel, Location());
+		shapeTool->AddComponent(subAssembly, mSphereProtoLabel, Location());
 
 		auto parentAssemblyA = shapeTool->NewShape();
 		auto parentAssemblyB = shapeTool->NewShape();
@@ -71,9 +86,11 @@ class TwoAssembliesWithSameSubAssembly : public BaseImportTestDoc{
 		shapeTool->AddComponent(parentAssemblyB, subAssembly, Location());
 	};
 
+	TDF_Label sharedSubAssembly;
 	TDF_Label mAssemblyA;
 	TDF_Label mAssemblyB;
 	TDF_Label mCubeProtoLabel;
+	TDF_Label mSphereProtoLabel;
 };
 
 

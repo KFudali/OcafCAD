@@ -15,6 +15,7 @@ bool PartAssemblyTool::isAssembly() const {
    return mShapeTool->IsAssembly(mPartLabel.label()); 
 };
 
+
 bool PartAssemblyTool::isComponent() const {
     auto label = mPartLabel.label();
     bool isOcafComponent = mShapeTool->IsComponent(label);
@@ -45,6 +46,16 @@ PartLabel PartAssemblyTool::parentAssembly() const {
         return PartLabel(parent);
     }
 };
+
+PartLabel PartAssemblyTool::addEmptyComponent(){
+    auto newEmpty = mShapeTool->NewShape();
+    auto label = mShapeTool->AddComponent(
+        mPartLabel.label(), 
+        newEmpty,
+        Location()
+    );
+    return PartLabel(label);
+}
 
 PartLabel PartAssemblyTool::addComponent(
     PrototypeLabel aProtoLabel, 

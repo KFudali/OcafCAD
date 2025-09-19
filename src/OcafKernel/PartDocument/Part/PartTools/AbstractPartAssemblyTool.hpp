@@ -14,6 +14,8 @@ class AbstractPartAssemblyTool{
     virtual std::vector<PartLabel> childrenComponents() const = 0;
     virtual PartLabel parentAssembly() const = 0;
 
+    virtual PartLabel addEmptyComponent() = 0;   
+ 
     virtual PartLabel addComponent(
         PartLabel aPartLabel, 
         Location aLocation

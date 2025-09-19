@@ -15,11 +15,11 @@ private:
     std::string mMsg;
 };
 
-
 class PrototypeLabel : public DocLabel{
     public: 
     PrototypeLabel() = default;
     PrototypeLabel(TDF_Label aLabel);
+    static bool isPrototypeLabel(TDF_Label aLabel);
 };
 
 #endif

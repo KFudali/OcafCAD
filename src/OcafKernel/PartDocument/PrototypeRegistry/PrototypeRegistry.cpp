@@ -6,8 +6,11 @@ PrototypeRegistry::PrototypeRegistry(Handle(TDocStd_Document) aDoc) : mDoc(aDoc)
 }
 
 PrototypeLabel PrototypeRegistry::addPrototype(PartPrototype aShape){
-    TDF_Label aLabel = mShapeTool->AddShape(aShape, false, false);
-    return PrototypeLabel(aLabel);
+    TDF_Label label = mShapeTool->FindShape(aShape, false);
+    if (label.IsNull()){
+        label = mShapeTool->AddShape(aShape, false, false);
+    }
+    return PrototypeLabel(label);
 };
 
 bool PrototypeRegistry::removePrototype(PrototypeLabel aPrototypeLabel) {
@@ -20,13 +23,12 @@ bool PrototypeRegistry::removePrototype(PrototypeLabel aPrototypeLabel) {
 std::vector<PrototypeLabel> PrototypeRegistry::prototypeList() const {
     std::vector<PrototypeLabel> prototypes;
     TDF_LabelSequence labels;
-    mShapeTool->GetFreeShapes(labels);
+    mShapeTool->GetShapes(labels);
 
     for (auto label : labels) {
-        if (RootAssembly::isRootAssembly(label)) {
-            continue;
+        if (PrototypeLabel::isPrototypeLabel(label)){
+            prototypes.push_back(PrototypeLabel(label));
         }
-        prototypes.push_back(PrototypeLabel(label));
     }
     return prototypes;
 }

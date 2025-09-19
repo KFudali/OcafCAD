@@ -32,6 +32,8 @@ class Part{
     bool isAssembly() const;
     bool isComponent() const;
 
+    PartLabel addEmptyComponent();
+
     PartLabel addComponent(
         PartLabel aPartLabel, 
         Location aLocation

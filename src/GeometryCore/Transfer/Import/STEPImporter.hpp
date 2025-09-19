@@ -22,6 +22,7 @@ class STEPImporter : public AbstractImporter {
    
     
     private:
+    Handle(TDocStd_Document) initDocument() const;
     Handle(TDocStd_Document) readSource(AbstractInputSource* aSource) const;
     std::unique_ptr<AbstractInputSource> mSource;
 };

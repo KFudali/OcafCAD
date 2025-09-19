@@ -27,6 +27,7 @@ class PartDocument {
     PrototypeLabel addPrototype(PartPrototype aPrototype);
     
     std::vector<PrototypeLabel> prototypes() const;
+    std::vector<PartLabel> topLevelParts() const; 
     std::vector<PartLabel> freeParts() const; 
    
     bool save(const std::string& aFilePath) const;

@@ -1,4 +1,5 @@
 add_subdirectory(PartDocument)
+add_subdirectory(DocumentImport)
 add_subdirectory(OcafKernelMessaging)
 add_subdirectory(DocumentCommands)
 
@@ -9,6 +10,7 @@ add_library(OcafKernel
 target_link_libraries(OcafKernel
     PRIVATE ${OpenCASCADE_LIBRARIES}
     PUBLIC PartDocument
+    PUBLIC DocumentImport
     PUBLIC DocumentCommands
     PUBLIC OcafKernelMessaging
     PUBLIC Tools

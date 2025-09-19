@@ -39,7 +39,7 @@ TEST_F(PartDocumentTest, AddedEmptyPartAppearsInFreeParts){
     auto cubePartLabel = partDocument->addPart(cubeProtoLabel, Location());
     auto spherePartLabel = partDocument->addPart(sphereProtoLabel, Location());
 
-    auto parts = partDocument->freeParts();
+    auto parts = partDocument->topLevelParts();
 
     std::vector<PartLabel> expected{cubePartLabel, spherePartLabel};
     EXPECT_TRUE(std::is_permutation(
@@ -60,10 +60,21 @@ TEST_F(PartDocumentTest, AddedEmptyAppearInFreeParts){
         emptyAssemblyLabel_a, emptyAssemblyLabel_b
     };
 
-    auto parts = partDocument->freeParts();
+    auto parts = partDocument->topLevelParts();
 
     EXPECT_TRUE(std::is_permutation(
         parts.begin(), parts.end(), 
         expected.begin(), expected.end()
     ));
+}
+
+TEST_F(PartDocumentTest, CannotAddTheSamePrototypeTwice){
+    auto firstCubeLabel = partDocument->addPrototype(cube);
+    auto secondCubeLabel = partDocument->addPrototype(cube);
+
+    EXPECT_EQ(firstCubeLabel, secondCubeLabel);
+    
+    auto prototypes = partDocument->prototypes(); 
+    ASSERT_EQ(prototypes.size(), 1);
+    EXPECT_EQ(prototypes[0], firstCubeLabel);
 }

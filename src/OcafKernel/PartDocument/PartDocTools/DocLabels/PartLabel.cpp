@@ -12,3 +12,7 @@ PartLabel::PartLabel(TDF_Label aLabel) : DocLabel(aLabel){
     }
     throw LabelIsNotAPartLabel("Label is not a Part label.");
 }
+
+bool PartLabel::isPartLabel(TDF_Label aLabel){
+    return aLabel.IsAttribute(PartMarkerAttribute::GetID());
+}

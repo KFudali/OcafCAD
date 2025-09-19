@@ -26,7 +26,25 @@ std::vector<PartLabel> RootAssembly::freeParts() const {
     TDF_LabelSequence labels;
     mShapeTool->GetComponents(mLabel.label(), labels);
     for (auto label : labels) {
-        parts.push_back(PartLabel(label));
+        auto docLabel = DocLabel(label);
+        auto address = docLabel.toString();
+        auto topLevel = mShapeTool->IsTopLevel(label);
+        auto free = mShapeTool->IsFree(label);
+        if (PartLabel::isPartLabel(label) && mShapeTool->IsFree(label)){
+            parts.push_back(PartLabel(label));
+        }
+    }
+    return parts;
+}
+
+std::vector<PartLabel> RootAssembly::topLevelParts() const {
+    std::vector<PartLabel> parts;
+    TDF_LabelSequence labels;
+    mShapeTool->GetComponents(mLabel.label(), labels);
+    for (auto label : labels) {
+        if (PartLabel::isPartLabel(label)){
+            parts.push_back(PartLabel(label));
+        }
     }
     return parts;
 }

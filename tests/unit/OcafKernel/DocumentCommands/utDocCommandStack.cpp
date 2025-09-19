@@ -11,7 +11,6 @@ public:
     MOCK_METHOD(bool, processDelta, (Handle(TDF_Delta) aDelta), (const, override));
 };
 
-
 class DocCommandStackTest : public ::testing::Test{
     protected:
     void SetUp(){
@@ -56,6 +55,8 @@ TEST_F(DocCommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnUndo){
     ASSERT_TRUE(appended);
     mCommands->openCommand();
     mPartDocument->addPrototype(StubPartPrototypes::cube());
+
+    EXPECT_CALL(observer, processDelta(testing::_)).Times(1);
     mCommands->commitCommand();
 
     EXPECT_CALL(observer, processDelta(testing::_)).Times(1);
@@ -71,7 +72,11 @@ TEST_F(DocCommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnRedo){
     ASSERT_TRUE(appended);
     mCommands->openCommand();
     mPartDocument->addPrototype(StubPartPrototypes::cube());
+
+    EXPECT_CALL(observer, processDelta(testing::_)).Times(1);
     mCommands->commitCommand();
+    
+    EXPECT_CALL(observer, processDelta(testing::_)).Times(1);
     mCommands->undo();
 
     EXPECT_CALL(observer, processDelta(testing::_)).Times(1);

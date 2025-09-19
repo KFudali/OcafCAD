@@ -15,10 +15,10 @@ DEFINE_STANDARD_RTTIEXT(OccProgressIndicator, Message_ProgressIndicator);
 
 	Standard_EXPORT void Show(
 		const Message_ProgressScope& aScope, 
-		const Standard_Boolean force = Standard_True) Standard_OVERRIDE;
+		const Standard_Boolean force = Standard_True
+	) Standard_OVERRIDE;
 
 	private:
-	
     AbstractProgressScope& mScope;
 };
 

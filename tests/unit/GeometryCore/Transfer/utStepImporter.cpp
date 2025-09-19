@@ -12,14 +12,5 @@ class STEPImporterTest : public ::testing::Test {
 };
 
 TEST_F(STEPImporterTest, testImporterInit) {
-
-
-}
-
-TEST(TestTrue, TestTrue){
-    EXPECT_TRUE(true);
-}
-
-TEST(TestTrue, TestTrue){
     EXPECT_TRUE(true);
 }

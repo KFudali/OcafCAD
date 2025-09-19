@@ -28,6 +28,7 @@ class RootAssembly {
     void removePart(PartLabel aPartLabel);
     
     std::vector<PartLabel> freeParts() const;
+    std::vector<PartLabel> topLevelParts() const;
     inline DocLabel label() const {return mLabel;};
 
     private:

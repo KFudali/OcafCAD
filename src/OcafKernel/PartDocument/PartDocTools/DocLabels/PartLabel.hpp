@@ -19,6 +19,8 @@ class PartLabel : public DocLabel {
     public: 
     PartLabel() = default;
     PartLabel(TDF_Label aLabel);
+
+    static bool isPartLabel(TDF_Label aLabel);
 };
 
 #endif

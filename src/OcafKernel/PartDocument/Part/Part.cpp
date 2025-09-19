@@ -27,6 +27,10 @@ bool Part::isComponent() const {
     return mPartTools.assembly().isComponent();
 }
 
+PartLabel Part::addEmptyComponent() {
+    return mPartTools.assembly().addEmptyComponent();
+}
+
 PartLabel Part::addComponent(
     PartLabel aPartLabel, 
     Location aLocation

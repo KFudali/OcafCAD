@@ -18,6 +18,8 @@ class PartAssemblyTool : public AbstractPartAssemblyTool {
     std::vector<PartLabel> childrenComponents() const override;
     PartLabel parentAssembly() const override;
 
+    PartLabel addEmptyComponent() override;
+
     PartLabel addComponent(
         PartLabel aPartLabel, 
         Location aLocation

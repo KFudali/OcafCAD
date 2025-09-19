@@ -35,6 +35,10 @@ std::vector<PrototypeLabel> PartDocument::prototypes() const {
     return mPrototypeRegistry->prototypeList();
 }
 
+std::vector<PartLabel> PartDocument::topLevelParts() const {
+    return mRootAssembly->topLevelParts();
+}
+
 std::vector<PartLabel> PartDocument::freeParts() const {
     return mRootAssembly->freeParts();
 }
@@ -42,7 +46,6 @@ std::vector<PartLabel> PartDocument::freeParts() const {
 PartLabel PartDocument::addEmptyPart() {
     return mRootAssembly->addEmptyPart();
 }
-
 
 PartLabel PartDocument::addEmptyAssembly() {
     return mRootAssembly->addEmptyAssembly();

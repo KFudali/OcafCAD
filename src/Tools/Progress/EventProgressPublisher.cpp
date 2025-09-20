@@ -1,6 +1,8 @@
 #include "EventProgressPublisher.hpp"
 #include "ProgressEvents.hpp"
 
-void EventProgressPublisher::publishScope(const ProgressRange& aRange) const {
-
+void EventProgressPublisher::publishRange(const ProgressRange& aRange) const {
+    auto message = ProgressMessage(aRange);
+    auto event = ProgressRangeEvent(message);
+    mPublisher->publish(event);
 }

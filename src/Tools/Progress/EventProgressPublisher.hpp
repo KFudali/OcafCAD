@@ -10,7 +10,7 @@ class EventProgressPublisher : public AbstractProgressPublisher {
         std::unique_ptr<MessagePublisher> aMessagePublisher
     ) : mPublisher(std::move(aMessagePublisher)){};
 
-    void publishScope(const ProgressRange& aScope) const override;
+    void publishRange(const ProgressRange& aRange) const override;
     
     private:
     std::unique_ptr<MessagePublisher> mPublisher;

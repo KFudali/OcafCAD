@@ -1,17 +1,22 @@
-#ifndef ProgressScopeEvent_hpp
-#define ProgressScopeEvent_hpp
+#ifndef ProgressEvents_hpp
+#define ProgressEvents_hpp
 
 #include "AbstractEvent.hpp"
+#include "ProgressMessage.hpp"
 #include <string>
 #include <sstream>
 
-
-class ProgressScopeEvent : public AbstractEvent {
+class ProgressRangeEvent : public AbstractEvent {
 public:
-    explicit ProgressScopeEvent(){}
-    virtual ~ProgressScopeEvent() = default;
+    explicit ProgressRangeEvent(const ProgressMessage& aMessage)
+        : mProgressMessage(aMessage) {}
 
-    virtual std::string log() const = 0;
+    std::string log() const override {
+        return "ProgressRangeEvent";
+    }
+    private:
+    ProgressMessage mProgressMessage;
 };
+
 
 #endif

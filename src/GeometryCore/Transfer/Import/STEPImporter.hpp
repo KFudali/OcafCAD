@@ -17,13 +17,16 @@ class STEPImporter : public AbstractImporter {
 
     void importIntoDoc(
         PartDocument& aDestDoc, 
-        AbstractProgressScope& aProgressScope
+        AbstractProgressPublisher& aProgressPublisher
     ) override;
-   
     
     private:
     Handle(TDocStd_Document) initDocument() const;
-    Handle(TDocStd_Document) readSource(AbstractInputSource* aSource) const;
+    void transferSource(
+        Handle(TDocStd_Document) aDestDoc,
+        AbstractProgressPublisher& aProgressPublisher
+    ) const;
+
     std::unique_ptr<AbstractInputSource> mSource;
 };
 

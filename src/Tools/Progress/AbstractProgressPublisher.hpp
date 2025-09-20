@@ -2,25 +2,16 @@
 #define AbstractProgressPublisher_hpp
 
 #include <string>
-#include "ProgressScopeId.hpp"
+#include "ProgressRange.hpp"
 
 class AbstractProgressPublisher {
 public:
     virtual ~AbstractProgressPublisher() = default;
+    virtual void publishScope(const ProgressRange& aScope) const = 0;
+};
 
-    virtual void scopeLaunched(
-        const ProgressScopeId& aScopeId,
-        const std::string& aMessage
-    ) const = 0;
-
-    virtual void scopeAdvanced(
-        const ProgressScopeId& aScopeId,
-        double fraction
-    ) const = 0;
-
-    virtual void scopeFinalized(
-        const ProgressScopeId& aScopeId
-    ) const = 0;
+class IdleProgressPublisher : public AbstractProgressPublisher {
+    void publishScope(const ProgressRange& aScope) const override {};
 };
 
 #endif

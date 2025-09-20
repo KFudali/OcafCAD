@@ -5,7 +5,7 @@
 #include <TDocStd_Document.hxx>
 #include <optional>
 
-#include "AbstractProgressScope.hpp"
+#include "AbstractProgressPublisher.hpp"
 #include "PartDocument.hpp"
 #include "PartDocumentImporterExceptions.hpp"
 class XCAFDoc_ShapeTool;
@@ -16,14 +16,14 @@ class PartDocumentImporter {
     static void import(
         Handle(TDocStd_Document) aSource, 
         PartDocument& aDest,
-        AbstractProgressScope& aProgressScope
+        AbstractProgressPublisher& aProgressPublisher
     );
 
     protected:
     PartDocumentImporter(
         Handle(TDocStd_Document) aSource, 
         PartDocument& aDest,
-        AbstractProgressScope& aProgressScope
+        AbstractProgressPublisher& aProgressPublisher
     ); 
     void import();
 
@@ -50,7 +50,7 @@ class PartDocumentImporter {
     Handle(XCAFDoc_ShapeTool) mShapeTool;
     Handle(XCAFDoc_ColorTool) mColorTool;
     PartDocument& mDest;
-    AbstractProgressScope& mProgressScope;
+    AbstractProgressPublisher& mProgressScope;
 };
 
 #endif

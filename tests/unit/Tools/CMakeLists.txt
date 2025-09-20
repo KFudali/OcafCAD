@@ -1,3 +1,4 @@
+add_subdirectory(MathUtils)
 add_subdirectory(Messaging)
 add_subdirectory(Progress)
 
@@ -6,6 +7,7 @@ add_executable(utTools
 )
 
 target_link_libraries(utTools PRIVATE
+    utMathUtils
     utMessaging
     utProgress
     GTest::gtest_main

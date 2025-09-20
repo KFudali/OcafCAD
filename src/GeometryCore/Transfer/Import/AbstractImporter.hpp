@@ -2,12 +2,12 @@
 #define AbstractImporter_hpp
 
 #include "PartDocument.hpp"
-#include "AbstractProgressScope.hpp"
+#include "AbstractProgressPublisher.hpp"
 
 class AbstractImporter{
     virtual void importIntoDoc(
         PartDocument& aDestDoc,
-        AbstractProgressScope& aProgressScope
+        AbstractProgressPublisher& aProgressPublisher
     ) = 0;
 };
 

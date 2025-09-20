@@ -2,16 +2,15 @@
 #include <STEPCAFControl_Reader.hxx>
 #include <XCAFApp_Application.hxx>
 
+#include "PartDocumentImporter.hpp"
 
 void STEPImporter::importIntoDoc(
     PartDocument& aDestDoc, 
-    AbstractProgressScope& aProgressScope
+    AbstractProgressPublisher& aProgressPublisher
 ) {
     auto occDoc = initDocument();
-    transferSourceToOccDoc(mSource, occDoc, aProgressScope);
-    PartDocument::(occDoc, aDestDoc)
-
-
+    transferSource(occDoc, aProgressScope);
+    PartDocumentImporter::import(occDoc, aDestDoc, aProgressScope);
 }
 
 Handle(TDocStd_Document) STEPImporter::initDocument() const{
@@ -22,9 +21,8 @@ Handle(TDocStd_Document) STEPImporter::initDocument() const{
 }
 
 void STEPImporter::transferSource(
-    AbstractInputSource* aSource,
     Handle(TDocStd_Document) aDestDoc,
-    AbstractProgressScope& aProgressScope
+    AbstractProgressPublisher& aProgressPublisher
 ) const {
     std::string firstLine;
     std::getline(mSource->stream(), firstLine);
@@ -46,6 +44,6 @@ void STEPImporter::transferSource(
             "CAF reader did not return Done"
         );
     }
-    OccProgressScopeWrapper progressWrapper(aProgressScope);
-    reader.Transfer(aDestDoc, progressWrapper);
+    // OccProgressScopeWrapper progressWrapper(aProgressScope);
+    reader.Transfer(aDestDoc);
 }

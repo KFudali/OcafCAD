@@ -9,21 +9,21 @@
 void PartDocumentImporter::import(
     Handle(TDocStd_Document) aSrc, 
     PartDocument& aDest,
-    AbstractProgressScope& aProgressScope
+    AbstractProgressPublisher& aProgressPublisher
 ){
-    PartDocumentImporter importer(aSrc, aDest, aProgressScope);
+    PartDocumentImporter importer(aSrc, aDest, aProgressPublisher);
     importer.import();
 }
 
 PartDocumentImporter::PartDocumentImporter(
     Handle(TDocStd_Document) aSource,
     PartDocument& aDest,
-    AbstractProgressScope& aProgressScope
+    AbstractProgressPublisher& aProgressPublisher
 ) : mSrc(aSource), 
     mShapeTool(XCAFDoc_DocumentTool::ShapeTool(aSource->Main())),
     mColorTool(XCAFDoc_DocumentTool::ColorTool(aSource->Main())),
     mDest(aDest), 
-    mProgressScope(aProgressScope) {}
+    mProgressScope(aProgressPublisher) {}
 
 void PartDocumentImporter::import() {
     TDF_LabelSequence topLevelLabels;

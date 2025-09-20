@@ -1,25 +1,23 @@
 #include <gmock/gmock.h>
 
+#include "AbstractProgressPublisher.hpp"
 #include "PartDocumentImporter.hpp"
 #include "StubPartDocument.hpp" 
-#include "StubProgressScope.hpp"
 #include "ImportTestDoc.hpp"
 
 class DocumentImportTest : public ::testing::Test {
 
     void SetUp() {
         dest = std::make_unique<PartDocument>(StubPartDocument::partDocument());
-        progress = std::move(progressFactory.scope());
     }
     protected:
+    IdleProgressPublisher progress;
     std::unique_ptr<PartDocument> dest;
-    std::unique_ptr<AbstractProgressScope> progress;
-    StubProgressScopeFactory progressFactory;
 };
 
 TEST_F(DocumentImportTest, TestOneAssemblyWithTwoPrototypes){
     auto source = OneAssemblyWithTwoPrototypesDoc();
-    PartDocumentImporter::import(source.doc, *dest, *progress);
+    PartDocumentImporter::import(source.doc, *dest, progress);
     EXPECT_EQ(dest->prototypes().size(), 3);
     auto freeParts = dest->freeParts();
     EXPECT_EQ(freeParts.size(), 1);
@@ -36,7 +34,7 @@ TEST_F(DocumentImportTest, TestOneAssemblyWithTwoPrototypes){
 
 TEST_F(DocumentImportTest, TestTwoAssembliesWithPrototypeImport){
     auto source = TwoAssembliesWithSamePrototypeDoc();
-    PartDocumentImporter::import(source.doc, *dest, *progress);
+    PartDocumentImporter::import(source.doc, *dest, progress);
     EXPECT_EQ(dest->prototypes().size(), 3);
     auto freeParts = dest->freeParts();
     EXPECT_EQ(freeParts.size(), 2);
@@ -58,8 +56,7 @@ TEST_F(DocumentImportTest, TestTwoAssembliesWithPrototypeImport){
 
 TEST_F(DocumentImportTest, TestTwoAssembliesWithSubAssemblyImport){
     auto source = TwoAssembliesWithSameSubAssembly();
-    PartDocumentImporter::import(source.doc, *dest, *progress);
-    dest->save("C:/Users/kryst/Documents/Repositories/OcafCAD/tests/unit/OcafKernel/DocumentImport/destDoc.xml");
+    PartDocumentImporter::import(source.doc, *dest, progress);
     
     EXPECT_EQ(dest->prototypes().size(), 5);
     ASSERT_EQ(dest->topLevelParts().size(), 3);

@@ -17,19 +17,27 @@ void OccProgressIndicator::Show(
 std::unique_ptr<ProgressRange> OccProgressIndicator::rangeFromOccScope(
     const Message_ProgressScope& aScope
 ){
-    Fraction weight(1.0f);
-    auto range = std::make_unique<ProgressRange>();
-    auto rangePtr = range.get();
-    for (
-        const Message_ProgressScope* scope = &aScope;
-        scope != nullptr;
-        scope = scope->Parent())
-    {
-        applyScopeDataToRange(scope, rangePtr);
-        rangePtr = &rangePtr->newChild(Fraction(0.0));
+    std::vector<const Message_ProgressScope*> scopes;
+    for (const Message_ProgressScope* scope = &aScope; 
+        scope; 
+        scope = scope->Parent()
+    ) {
+        scopes.push_back(scope);
     }
-    return std::move(range);
+    std::reverse(scopes.begin(), scopes.end());
+
+    auto range = std::make_unique<ProgressRange>();
+    ProgressRange* current = range.get();
+    for (const auto* scope : scopes) {
+        applyScopeDataToRange(scope, current);
+        if (scope != scopes.back()) {
+            current = &current->newChild(Fraction(0.0));
+        }
+    }
+
+    return range;
 }
+
 
 void OccProgressIndicator::applyScopeDataToRange(
     const Message_ProgressScope* aScope,

@@ -10,4 +10,5 @@ target_link_libraries(Progress
 
 target_include_directories(Progress
     PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}
+    PUBLIC  ${CMAKE_CURRENT_SOURCE_DIR}
 )

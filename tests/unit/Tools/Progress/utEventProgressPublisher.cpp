@@ -50,8 +50,8 @@ bool verifyProgressRanges(const ProgressRangeEvent& event) {
 
 TEST_F(EventProgressPublisherTest, PublishesNestedEvent) {
     ProgressRange root("RootTask");
-    auto& sub1 = root.newChild("SubTask1", Fraction(0.0f));
-    auto& sub2 = sub1.newChild("SubTask2", Fraction(0.0f));
+    auto& sub1 = root.newChild(Fraction(0.0f), "SubTask1");
+    auto& sub2 = sub1.newChild(Fraction(0.0f), "SubTask2");
 
     root.setTo(Fraction(0.1f));
     sub1.setTo(Fraction(0.2f));

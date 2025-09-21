@@ -73,12 +73,12 @@ void ProgressRange::finalizeAndClearChild() {
 ProgressRange& ProgressRange::newChild(
     const std::string& aLabel
 ) {
-    return newChild(aLabel, mRemainingWeight);
+    return newChild(mRemainingWeight, aLabel);
 }
 
 ProgressRange& ProgressRange::newChild(
-    const std::string& aLabel,
-    const Fraction& aWeight
+    const Fraction& aWeight,
+    const std::string& aLabel
 ) {
     if (mChild){
         throw std::logic_error("Child already exists, only one child per range permitted. Clear child first.");

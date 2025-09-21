@@ -15,8 +15,8 @@ TEST(ProgressMessageTest, CreatesSingleRangeView) {
 
 TEST(ProgressMessageTest, CreatesChainOfRanges) {
     ProgressRange root("RootTask");
-    auto& sub1 = root.newChild("SubTask1", Fraction(0.5f));
-    auto& sub2 = sub1.newChild("SubTask2", Fraction(0.5f));
+    auto& sub1 = root.newChild(Fraction(0.5f), "SubTask1");
+    auto& sub2 = sub1.newChild(Fraction(0.5f), "SubTask2");
 
     sub2.setTo(Fraction(0.8f));
 

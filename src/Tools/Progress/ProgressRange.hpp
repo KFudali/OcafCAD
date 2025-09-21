@@ -9,7 +9,7 @@
 
 class ProgressRange {
     public:
-    ProgressRange(const std::string& aLabel);
+    ProgressRange(const std::string& aLabel = "Progress");
 
     void setLabel(const std::string& aNewLabel);
     void setTo(const Fraction& aFraction);
@@ -33,11 +33,11 @@ class ProgressRange {
 
     inline bool finalized() const {return mFinalized;}
     ProgressRange& newChild(
-        const std::string& aLabel,
-        const Fraction& aWeight
+        const Fraction& aWeight,
+        const std::string& aLabel = "Progress"
     );
     ProgressRange& newChild(
-        const std::string& aLabel
+        const std::string& aLabel = "Progress"
     );
 
     void finalizeAndClearChild();

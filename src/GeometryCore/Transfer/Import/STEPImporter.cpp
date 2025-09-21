@@ -3,14 +3,15 @@
 #include <XCAFApp_Application.hxx>
 
 #include "PartDocumentImporter.hpp"
+#include "OccProgressIndicator.hpp"
 
 void STEPImporter::importIntoDoc(
     PartDocument& aDestDoc, 
     AbstractProgressPublisher& aProgressPublisher
 ) {
     auto occDoc = initDocument();
-    transferSource(occDoc, aProgressScope);
-    PartDocumentImporter::import(occDoc, aDestDoc, aProgressScope);
+    transferSource(occDoc, aProgressPublisher);
+    PartDocumentImporter::import(occDoc, aDestDoc, aProgressPublisher);
 }
 
 Handle(TDocStd_Document) STEPImporter::initDocument() const{
@@ -44,6 +45,6 @@ void STEPImporter::transferSource(
             "CAF reader did not return Done"
         );
     }
-    // OccProgressScopeWrapper progressWrapper(aProgressScope);
-    reader.Transfer(aDestDoc);
+    OccProgressIndicator progressIndicator(aProgressPublisher);
+    reader.Transfer(aDestDoc, progressIndicator.Start());
 }

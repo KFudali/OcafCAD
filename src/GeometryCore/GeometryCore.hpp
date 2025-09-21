@@ -10,7 +10,10 @@ class GeometryCore {
     public:
     GeometryCore();
 
+    void import(AbstractImporter& aImporter, AbstractProgressPublisher& aPublisher);
     void import(AbstractImporter& aImporter);
+   
+    void clear();
 
     private:
     std::unique_ptr<OcafKernel> mOcafKernel;

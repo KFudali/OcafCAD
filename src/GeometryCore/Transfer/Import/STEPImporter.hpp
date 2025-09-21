@@ -12,8 +12,8 @@ class TDocStd_Document;
 class STEPImporter : public AbstractImporter {
     public:
     STEPImporter(
-        std::unique_ptr<AbstractInputSource> aSource
-    ) : mSource(std::move(aSource)) {}
+        std::shared_ptr<AbstractInputSource> aSource
+    ) : mSource(aSource) {}
 
     void importIntoDoc(
         PartDocument& aDestDoc, 
@@ -27,7 +27,7 @@ class STEPImporter : public AbstractImporter {
         AbstractProgressPublisher& aProgressPublisher
     ) const;
 
-    std::unique_ptr<AbstractInputSource> mSource;
+    std::shared_ptr<AbstractInputSource> mSource;
 };
 
 #endif

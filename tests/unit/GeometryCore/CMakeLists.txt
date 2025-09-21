@@ -1,3 +1,4 @@
+add_subdirectory(Fixtures)
 add_subdirectory(Transfer)
 
 add_executable(utGeometryCore

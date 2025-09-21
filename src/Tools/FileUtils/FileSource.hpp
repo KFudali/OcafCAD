@@ -4,7 +4,7 @@
 #include "AbstractInputSource.hpp"
 #include <fstream>
 
-class FileSource : AbstractInputSource {
+class FileSource : public AbstractInputSource {
     public:
     FileSource(
         const std::string& aPath

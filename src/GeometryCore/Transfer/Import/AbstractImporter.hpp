@@ -5,6 +5,7 @@
 #include "AbstractProgressPublisher.hpp"
 
 class AbstractImporter{
+    public:
     virtual void importIntoDoc(
         PartDocument& aDestDoc,
         AbstractProgressPublisher& aProgressPublisher

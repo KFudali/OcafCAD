@@ -6,8 +6,8 @@ TEST(ProgressRangeTest, ConstructionAndLabel) {
     EXPECT_TRUE(root.currentProgress().isZero());
     EXPECT_EQ(root.label(), "Root");
     EXPECT_FALSE(root.finalized());
-    EXPECT_FALSE(root.parentRange());
-    EXPECT_EQ(root.childrenRanges().size(), 0);
+    EXPECT_FALSE(root.parent());
+    EXPECT_EQ(root.child(), std::nullopt);
 }
 
 TEST(ProgressRangeTest, AdvanceTo) {
@@ -74,19 +74,20 @@ TEST(ProgressRangeTest, ResetBehavior) {
 TEST(ProgressRangeTest, SubrangeCreationAndWeight) {
     ProgressRange root("Root");
 
-    auto& child1 = root.createSubRange("Child1", Fraction(0.6f));
+    auto& child1 = root.newChild("Child1", Fraction(0.6f));
     EXPECT_FLOAT_EQ(root.remainingWeight().value(), 0.4f);
     EXPECT_FLOAT_EQ(child1.currentProgress().value(), 0.0f);
     EXPECT_FLOAT_EQ(child1.weightInParent().value(), 0.6f);
+    root.finalizeAndClearChild();
 
-    auto& child2 = root.createSubRange("Child2");
+    auto& child2 = root.newChild("Child2");
     EXPECT_FLOAT_EQ(root.remainingWeight().value(), 0.0f);
     EXPECT_FLOAT_EQ(child2.weightInParent().value(), 0.4f);
 }
 
 TEST(ProgressRangeTest, ParentProgressPropagation) {
     ProgressRange root("Root");
-    auto& child = root.createSubRange("Child", Fraction(0.5f));
+    auto& child = root.newChild("Child", Fraction(0.5f));
 
     child.advanceBy(Fraction(0.5f));
     EXPECT_FLOAT_EQ(root.currentProgress().value(), 0.25f);
@@ -98,7 +99,7 @@ TEST(ProgressRangeTest, ParentProgressPropagation) {
 
 TEST(ProgressRangeTest, ParentProgressRetractOnSetToAndReset) {
     ProgressRange root("Root");
-    auto& child = root.createSubRange("Child");
+    auto& child = root.newChild("Child");
 
     child.advanceBy(Fraction(0.5f));
     EXPECT_FLOAT_EQ(root.currentProgress().value(), 0.5f);
@@ -108,4 +109,28 @@ TEST(ProgressRangeTest, ParentProgressRetractOnSetToAndReset) {
 
     child.reset();
     EXPECT_FLOAT_EQ(root.currentProgress().value(), 0.0f);
+}
+
+TEST(ProgressRangeTest, NewChildThrowsIfChildAlreadyExists) {
+    ProgressRange root("Root");
+
+    auto& child1 = root.newChild("Child1", Fraction(0.5f));
+    EXPECT_EQ(child1.label(), "Child1");
+
+    EXPECT_THROW({
+        root.newChild("Child2", Fraction(0.5f));
+    }, std::logic_error);
+}
+
+TEST(ProgressRangeTest, ClearChildFinalizesAndRemovesChild) {
+    ProgressRange root("Root");
+
+    auto& child = root.newChild("Child", Fraction(0.0f));
+    EXPECT_TRUE(root.child().has_value());
+    EXPECT_FALSE(child.finalized());
+
+    root.finalizeAndClearChild();
+
+    EXPECT_FALSE(root.child().has_value());
+    EXPECT_FALSE(root.finalized());
 }

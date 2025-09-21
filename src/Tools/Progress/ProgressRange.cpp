@@ -49,39 +49,49 @@ void ProgressRange::reset() {
     advanceByFloat(-mProgressFraction.value());
     mProgressFraction = Fraction(0.0f);
     mRemainingWeight = Fraction(1.0f);
-    for (const auto& child : mChildren) {
-        child->reset();
+    if(mChild){
+        mChild->reset();
     }
     mFinalized = false;
 }
 
 void ProgressRange::finalize() {
     mFinalized = true;
-    for (const auto& child : mChildren) {
-        child->finalize();
+    if(mChild){
+        mChild->finalize();
     }
     advanceParentBy(mProgressFraction.toGo());
 }
 
-ProgressRange& ProgressRange::createSubRange(
-    const std::string& aLabel
-) {
-    return createSubRange(aLabel, mRemainingWeight);
+void ProgressRange::finalizeAndClearChild() {
+    if (mChild){
+        mChild->finalize();
+        mChild.reset();
+    }
 }
 
-ProgressRange& ProgressRange::createSubRange(
+ProgressRange& ProgressRange::newChild(
+    const std::string& aLabel
+) {
+    return newChild(aLabel, mRemainingWeight);
+}
+
+ProgressRange& ProgressRange::newChild(
     const std::string& aLabel,
     const Fraction& aWeight
 ) {
+    if (mChild){
+        throw std::logic_error("Child already exists, only one child per range permitted. Clear child first.");
+    }
     auto weight = aWeight;
     if (aWeight > mRemainingWeight) {
         weight = mRemainingWeight;
     }
    
-    auto child = std::unique_ptr<ProgressRange>(
+    mChild = std::unique_ptr<ProgressRange>(
         new ProgressRange(this, aLabel, weight)
     );
-    mChildren.push_back(std::move(child));
     mRemainingWeight = mRemainingWeight - aWeight;
-    return *mChildren.back();
+    return *mChild;
 }
+

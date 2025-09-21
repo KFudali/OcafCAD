@@ -23,27 +23,24 @@ class ProgressRange {
     inline Fraction weightInParent() const {return mWeightInParent;};
     inline std::string label() const {return mLabel;};
 
-    inline std::optional<std::reference_wrapper<ProgressRange>> parentRange() const {
+    inline std::optional<std::reference_wrapper<ProgressRange>> parent() const {
         if (mParent) return *mParent; return std::nullopt;
     }
 
-    inline std::vector<std::reference_wrapper<ProgressRange>> childrenRanges() const {
-        std::vector<std::reference_wrapper<ProgressRange>> result;
-        for (const auto& child : mChildren) {
-            result.push_back(*child);
-        }
-        return result;
+    inline std::optional<std::reference_wrapper<ProgressRange>> child() const {
+        if (mChild) return *mChild; return std::nullopt;
     }
 
     inline bool finalized() const {return mFinalized;}
-
-    ProgressRange& createSubRange(
+    ProgressRange& newChild(
         const std::string& aLabel,
         const Fraction& aWeight
     );
-    ProgressRange& createSubRange(
+    ProgressRange& newChild(
         const std::string& aLabel
     );
+
+    void finalizeAndClearChild();
     
     private: 
     ProgressRange(
@@ -63,7 +60,7 @@ class ProgressRange {
     const Fraction mWeightInParent = Fraction(1.0);
     
     ProgressRange* mParent = nullptr;
-    std::vector<std::unique_ptr<ProgressRange>> mChildren;
+    std::unique_ptr<ProgressRange> mChild;
 };
 
 #endif

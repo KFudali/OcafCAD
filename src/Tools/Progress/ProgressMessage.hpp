@@ -17,7 +17,7 @@ public:
     explicit ProgressMessage(const ProgressRange& aRange)
         : progressRanges(getViewChainFromRange(aRange)) {}
 
-    const std::vector<ProgressRangeView> progressRanges;
+    std::vector<ProgressRangeView> progressRanges;
 
 private:
     static std::vector<ProgressRangeView> getViewChainFromRange(
@@ -28,14 +28,13 @@ private:
 
         while (current) {
             ranges.push_back(ProgressRangeView(*current));
-            auto parent = current->parentRange();
-            if (parent) {
-                current = &parent->get();
+            auto child = current->child();
+            if (child) {
+                current = &child->get();
             } else {
                 current = nullptr;
             }
         }
-        std::reverse(ranges.begin(), ranges.end());
         return ranges;
     }
 };

@@ -4,5 +4,5 @@
 void EventProgressPublisher::publishRange(const ProgressRange& aRange) const {
     auto message = ProgressMessage(aRange);
     auto event = ProgressRangeEvent(message);
-    mPublisher->publish(event);
+    mBus->publish<ProgressRangeEvent>(event);
 }

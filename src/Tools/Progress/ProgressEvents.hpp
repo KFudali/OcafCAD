@@ -9,13 +9,13 @@
 class ProgressRangeEvent : public AbstractEvent {
 public:
     explicit ProgressRangeEvent(const ProgressMessage& aMessage)
-        : mProgressMessage(aMessage) {}
+        : progressMessage(aMessage) {}
 
     std::string log() const override {
         return "ProgressRangeEvent";
     }
-    private:
-    ProgressMessage mProgressMessage;
+
+    ProgressMessage progressMessage;
 };
 
 

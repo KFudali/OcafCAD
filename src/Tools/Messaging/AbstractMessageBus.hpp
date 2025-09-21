@@ -45,9 +45,6 @@ public:
         publishImpl(std::type_index(typeid(EventType)), std::any(message));
     }
 
-
-
-
 protected:
     virtual std::unique_ptr<AbstractSubscription> subscribeImpl(
         std::type_index type, 

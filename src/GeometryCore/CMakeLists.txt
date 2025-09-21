@@ -1,5 +1,4 @@
 add_subdirectory(Transfer)
-add_subdirectory(Utils)
 
 add_library(GeometryCore
     GeometryCore.cpp

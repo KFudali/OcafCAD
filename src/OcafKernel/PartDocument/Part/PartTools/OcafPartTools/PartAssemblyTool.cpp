@@ -57,13 +57,23 @@ PartLabel PartAssemblyTool::addEmptyComponent(){
     return PartLabel(label);
 }
 
+
+bool PartAssemblyTool::expandToAssembly() {
+    bool expanded = mShapeTool->Expand(mPartLabel.label());
+    if (expanded){
+        return true;
+    }
+    return isAssembly();
+}
+
 PartLabel PartAssemblyTool::addComponent(
     PrototypeLabel aProtoLabel, 
     Location aLocation
 ) {
     if (!isAssembly()) {
-        return PartLabel();
+        expandToAssembly();
     }
+
     auto proto = mShapeTool->GetShape(aProtoLabel.label());
     auto label = mShapeTool->AddComponent(
         mPartLabel.label(), proto
@@ -78,9 +88,11 @@ PartLabel PartAssemblyTool::addComponent(
     Location aLocation
 ) {
     if (!isAssembly()) {
-        return PartLabel();
+        if(!expandToAssembly()){
+            return PartLabel();
+        }
     }
-
+    
     TDF_Label protoLabel;
     mShapeTool->GetReferredShape(aPartLabel.label(), protoLabel);
     if (protoLabel.IsNull()) {

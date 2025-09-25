@@ -15,6 +15,7 @@ class PrototypeRegistry {
     ~PrototypeRegistry() = default;
 
     PrototypeLabel addPrototype(PartPrototype aShape);
+    PrototypeLabel addAssemblyPrototype(PartPrototype aShape);
     bool removePrototype(PrototypeLabel aPrototypeLabel);
 
     std::vector<PrototypeLabel> prototypeList() const; 

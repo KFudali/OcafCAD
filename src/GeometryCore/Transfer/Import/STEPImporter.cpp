@@ -5,6 +5,7 @@
 #include "PartDocumentImporter.hpp"
 #include "OccProgressIndicator.hpp"
 
+
 void STEPImporter::importIntoDoc(
     PartDocument& aDestDoc, 
     AbstractProgressPublisher& aProgressPublisher
@@ -25,12 +26,6 @@ void STEPImporter::transferSource(
     Handle(TDocStd_Document) aDestDoc,
     AbstractProgressPublisher& aProgressPublisher
 ) const {
-    std::string firstLine;
-    std::getline(mSource->stream(), firstLine);
-    if (firstLine.find("ISO-10303-21") == std::string::npos) {
-        std::string msg = "File is missing ISO-10303-21 header";
-        throw STEPImporterExceptions::CouldNotReadSTEPFile(msg);
-    }
     STEPCAFControl_Reader reader;
     reader.SetColorMode(true);
     reader.SetNameMode(true);

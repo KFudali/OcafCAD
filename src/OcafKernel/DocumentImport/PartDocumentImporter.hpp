@@ -35,6 +35,7 @@ class PartDocumentImporter {
         std::optional<PartLabel> aDestParent = std::nullopt
     );
     PrototypeLabel importPartPrototype(TDF_Label aPartLabel);
+    PrototypeLabel importAssemblyPrototype(TDF_Label aAssemblyLabel);
     void importPartComponents(
         TDF_Label aSrcCompLabel, 
         PartLabel aDestParentLabel

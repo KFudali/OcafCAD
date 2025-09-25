@@ -31,6 +31,8 @@ PartLabel Part::addEmptyComponent() {
     return mPartTools.assembly().addEmptyComponent();
 }
 
+bool Part::expandToAssembly(){return mPartTools.assembly().expandToAssembly();};    
+
 PartLabel Part::addComponent(
     PartLabel aPartLabel, 
     Location aLocation

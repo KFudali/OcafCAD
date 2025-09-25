@@ -15,7 +15,8 @@ class AbstractPartAssemblyTool{
     virtual PartLabel parentAssembly() const = 0;
 
     virtual PartLabel addEmptyComponent() = 0;   
- 
+
+    virtual bool expandToAssembly() = 0;    
     virtual PartLabel addComponent(
         PartLabel aPartLabel, 
         Location aLocation

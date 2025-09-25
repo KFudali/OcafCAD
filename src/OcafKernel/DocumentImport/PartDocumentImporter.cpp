@@ -94,7 +94,8 @@ void PartDocumentImporter::importPart(
     TDF_Label aPartLabel,
     std::optional<PartLabel> aDestParentLabel
 ) {
-    auto partProtoLabel = importPartPrototype(aPartLabel);
+    PrototypeLabel partProtoLabel;
+    partProtoLabel = importPartPrototype(aPartLabel);
     PartLabel destPartLabel;
     auto loc = mShapeTool->GetLocation(aPartLabel);
     if (aDestParentLabel){
@@ -110,6 +111,11 @@ void PartDocumentImporter::importPart(
 
 PrototypeLabel PartDocumentImporter::importPartPrototype(TDF_Label aPartLabel){
     PrototypeLabel partProtoLabel; 
+    if (isAssembly(aPartLabel)){
+        PartPrototype proto = mShapeTool->GetShape(aPartLabel);
+        return mDest.addAssemblyPrototype(proto);
+    }
+
     if (isPrototype(aPartLabel)){
         return importPrototype(aPartLabel);
     } 
@@ -124,6 +130,9 @@ PrototypeLabel PartDocumentImporter::importPartPrototype(TDF_Label aPartLabel){
     return partProtoLabel;
 }
 
+PrototypeLabel PartDocumentImporter::importAssemblyPrototype(TDF_Label aPartLabel){
+    return mDest.addAssemblyPrototype(TopoDS_Shape());
+}
 
 void PartDocumentImporter::importPartComponents(
     TDF_Label aSrcCompLabel,

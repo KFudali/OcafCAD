@@ -34,6 +34,8 @@ class Part{
 
     PartLabel addEmptyComponent();
 
+    bool expandToAssembly();    
+
     PartLabel addComponent(
         PartLabel aPartLabel, 
         Location aLocation

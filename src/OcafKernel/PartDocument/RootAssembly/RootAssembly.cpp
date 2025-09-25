@@ -48,7 +48,6 @@ std::vector<PartLabel> RootAssembly::topLevelParts() const {
     }
     return parts;
 }
-
 PartLabel RootAssembly::addPart(
     PrototypeLabel aPrototypeLabel, 
     Location aLocation
@@ -58,7 +57,6 @@ PartLabel RootAssembly::addPart(
         aPrototypeLabel.label(),
         aLocation
     );
-    mShapeTool->Expand(label);
     return PartLabel(label);
 };
 

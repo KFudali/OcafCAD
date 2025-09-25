@@ -25,6 +25,7 @@ class PartDocument {
     PartLabel addEmptyAssembly(); 
     PartLabel addPart(PrototypeLabel aPrototype, Location aLocation); 
     PrototypeLabel addPrototype(PartPrototype aPrototype);
+    PrototypeLabel addAssemblyPrototype(PartPrototype aPrototype);
     
     std::vector<PrototypeLabel> prototypes() const;
     std::vector<PartLabel> topLevelParts() const; 

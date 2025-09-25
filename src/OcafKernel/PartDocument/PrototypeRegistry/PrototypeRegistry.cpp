@@ -13,6 +13,14 @@ PrototypeLabel PrototypeRegistry::addPrototype(PartPrototype aShape){
     return PrototypeLabel(label);
 };
 
+PrototypeLabel PrototypeRegistry::addAssemblyPrototype(PartPrototype aShape){
+    TDF_Label label = mShapeTool->FindShape(aShape, false);
+    if (label.IsNull()){
+        label = mShapeTool->NewShape();
+    }
+    return PrototypeLabel(label);
+};
+
 bool PrototypeRegistry::removePrototype(PrototypeLabel aPrototypeLabel) {
     if (!aPrototypeLabel.isValid()) {
         return false;

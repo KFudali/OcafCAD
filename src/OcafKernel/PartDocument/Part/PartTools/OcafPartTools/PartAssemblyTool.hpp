@@ -20,6 +20,8 @@ class PartAssemblyTool : public AbstractPartAssemblyTool {
 
     PartLabel addEmptyComponent() override;
 
+    bool expandToAssembly() override;
+
     PartLabel addComponent(
         PartLabel aPartLabel, 
         Location aLocation

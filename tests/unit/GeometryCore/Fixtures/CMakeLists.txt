@@ -10,5 +10,5 @@ target_include_directories(GeometryCoreFixtures
 )
 
 target_compile_definitions(GeometryCoreFixtures 
-    INTERFACE TESTS_DATA_DIR="${TESTS_DATA_DIR}"
+    INTERFACE TEST_DATA_DIR="${TEST_DATA_DIR}"
 )

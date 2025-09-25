@@ -31,6 +31,10 @@ PrototypeLabel PartDocument::addPrototype(PartPrototype aPrototype) {
     return mPrototypeRegistry->addPrototype(aPrototype);
 }
 
+PrototypeLabel PartDocument::addAssemblyPrototype(PartPrototype aPrototype) {
+    return mPrototypeRegistry->addAssemblyPrototype(aPrototype);
+}
+
 std::vector<PrototypeLabel> PartDocument::prototypes() const {
     return mPrototypeRegistry->prototypeList();
 }

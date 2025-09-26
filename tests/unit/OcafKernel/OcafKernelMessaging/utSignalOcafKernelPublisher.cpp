@@ -6,7 +6,7 @@
 #include "SignalMessageBus.hpp"
 #include "SignalOcafKernelPublisher.hpp"
 
-struct MockSubscriber {
+struct MockKernelEventSubscriber {
     MOCK_METHOD(void, onPrototypeAdded, (const PrototypeAddedEvent&), ());
     MOCK_METHOD(void, onPrototypeRemoved, (const PrototypeRemovedEvent&), ());
     MOCK_METHOD(void, onPartAdded, (const PartAddedEvent&), ());
@@ -33,12 +33,12 @@ class SignalOcafKernelPublisherTest : public ::testing::Test {
 };
 
 TEST_F(SignalOcafKernelPublisherTest, PrototypeEventsArePublished) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared< MockKernelEventSubscriber>();
     auto addedSub = mMessageBus->subscribe<PrototypeAddedEvent>(
-        subscriber, &MockSubscriber::onPrototypeAdded
+        subscriber, & MockKernelEventSubscriber::onPrototypeAdded
     );
     auto removedSub = mMessageBus->subscribe<PrototypeRemovedEvent>(
-        subscriber, &MockSubscriber::onPrototypeRemoved
+        subscriber, & MockKernelEventSubscriber::onPrototypeRemoved
     );
     DocLabel label;
     EXPECT_CALL(
@@ -55,18 +55,18 @@ TEST_F(SignalOcafKernelPublisherTest, PrototypeEventsArePublished) {
 }
 
 TEST_F(SignalOcafKernelPublisherTest, PartEventsArePublished) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared< MockKernelEventSubscriber>();
     auto addedSub = mMessageBus->subscribe<PartAddedEvent>(
-        subscriber, &MockSubscriber::onPartAdded
+        subscriber, & MockKernelEventSubscriber::onPartAdded
     );
     auto removedSub = mMessageBus->subscribe<PartRemovedEvent>(
-        subscriber, &MockSubscriber::onPartRemoved
+        subscriber, & MockKernelEventSubscriber::onPartRemoved
     );
     auto locChangedSub = mMessageBus->subscribe<PartLocationChangedEvent>(
-        subscriber, &MockSubscriber::onPartLocationChanged
+        subscriber, & MockKernelEventSubscriber::onPartLocationChanged
     );
     auto attrChangedSub = mMessageBus->subscribe<PartMarkerAttributeChanged>(
-        subscriber, &MockSubscriber::onPartMarkerAttributeChanged
+        subscriber, & MockKernelEventSubscriber::onPartMarkerAttributeChanged
     );
 
     DocLabel partLabel;
@@ -101,12 +101,12 @@ TEST_F(SignalOcafKernelPublisherTest, PartEventsArePublished) {
 }
 
 TEST_F(SignalOcafKernelPublisherTest, ComponentAssemblyEventsArePublished) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared< MockKernelEventSubscriber>();
     auto addedSub = mMessageBus->subscribe<ComponentAddedToAssemblyEvent>(
-        subscriber, &MockSubscriber::onComponentAddedToAssembly
+        subscriber, & MockKernelEventSubscriber::onComponentAddedToAssembly
     );
     auto removedSub = mMessageBus->subscribe<ComponentRemovedFromAssemblyEvent>(
-        subscriber, &MockSubscriber::onComponentRemovedFromAssembly
+        subscriber, & MockKernelEventSubscriber::onComponentRemovedFromAssembly
     );
 
     DocLabel compLabel;

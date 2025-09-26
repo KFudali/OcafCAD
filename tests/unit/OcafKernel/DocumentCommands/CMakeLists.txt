@@ -8,6 +8,6 @@ target_sources(utDocumentCommands INTERFACE
 target_link_libraries(utDocumentCommands INTERFACE
     OcafKernelFixtures
     DocumentCommands
-    GTest::gtest_main
+    
     GTest::gmock_main
 )

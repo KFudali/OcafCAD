@@ -24,7 +24,7 @@ class StubEventC : public StubEventA {
     bool operator==(const StubEventC& aOther) const {return this->mId == aOther.mId;}
 };
 
-struct MockSubscriber {
+struct MockMessageBusSubscriber {
     MOCK_METHOD(int, mockHandleA, (const StubEventA&), ());
     MOCK_METHOD(int, mockHandleB, (const StubEventB&), ());
     MOCK_METHOD(int, mockHandleC, (const StubEventC&), ());
@@ -36,18 +36,18 @@ class SignalMessageBusTest : public ::testing::Test{
 };
 
 TEST_F(SignalMessageBusTest, BusCallsMethodThatIsSubscribedToEvent){
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared<MockMessageBusSubscriber>();
 
     auto connectionA = testBus.subscribe<StubEventA>(
-        subscriber, &MockSubscriber::mockHandleA
+        subscriber, &MockMessageBusSubscriber::mockHandleA
     );
 
     auto connectionB = testBus.subscribe<StubEventB>(
-        subscriber, &MockSubscriber::mockHandleB
+        subscriber, &MockMessageBusSubscriber::mockHandleB
     );
 
     auto connectionC = testBus.subscribe<StubEventC>(
-        subscriber, &MockSubscriber::mockHandleC
+        subscriber, &MockMessageBusSubscriber::mockHandleC
     );
     
     StubEventA eventA(1);
@@ -62,18 +62,18 @@ TEST_F(SignalMessageBusTest, BusCallsMethodThatIsSubscribedToEvent){
 }
 
 TEST_F(SignalMessageBusTest, BusDoesNotCallNotSubscribedMethods){
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared<MockMessageBusSubscriber>();
 
     auto connectionA = testBus.subscribe<StubEventA>(
-        subscriber, &MockSubscriber::mockHandleA
+        subscriber, &MockMessageBusSubscriber::mockHandleA
     );
 
     auto connectionB = testBus.subscribe<StubEventB>(
-        subscriber, &MockSubscriber::mockHandleB
+        subscriber, &MockMessageBusSubscriber::mockHandleB
     );
 
     auto connectionC = testBus.subscribe<StubEventC>(
-        subscriber, &MockSubscriber::mockHandleC
+        subscriber, &MockMessageBusSubscriber::mockHandleC
     );
     
     StubEventA eventA(123);
@@ -84,9 +84,9 @@ TEST_F(SignalMessageBusTest, BusDoesNotCallNotSubscribedMethods){
 }
 
 TEST_F(SignalMessageBusTest, BusCallsMethodOnEachPublish){
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared<MockMessageBusSubscriber>();
     auto connectionA = testBus.subscribe<StubEventA>(
-        subscriber, &MockSubscriber::mockHandleA
+        subscriber, &MockMessageBusSubscriber::mockHandleA
     );
     StubEventA eventA(123);
     EXPECT_CALL(*subscriber, mockHandleA(eventA)).Times(3);
@@ -97,9 +97,9 @@ TEST_F(SignalMessageBusTest, BusCallsMethodOnEachPublish){
 }
 
 TEST_F(SignalMessageBusTest, BusDoesNotCallMethodIfSubIsDisconnected){
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared<MockMessageBusSubscriber>();
     auto connectionA = testBus.subscribe<StubEventA>(
-        subscriber, &MockSubscriber::mockHandleA
+        subscriber, &MockMessageBusSubscriber::mockHandleA
     );
     StubEventA eventA(123);
     EXPECT_CALL(*subscriber, mockHandleA(::testing::_)).Times(0);
@@ -111,9 +111,9 @@ TEST_F(SignalMessageBusTest, BusDoesNotCallMethodIfSubIsDisconnected){
 
 TEST_F(SignalMessageBusTest, BusHandlesPublishIfReceiverWasDestroyed) {
     {
-        auto subscriber = std::make_shared<MockSubscriber>();
+        auto subscriber = std::make_shared<MockMessageBusSubscriber>();
         auto connectionA = testBus.subscribe<StubEventA>(
-            subscriber, &MockSubscriber::mockHandleA
+            subscriber, &MockMessageBusSubscriber::mockHandleA
         );
         EXPECT_CALL(*subscriber, mockHandleA(::testing::_)).Times(0);
     }

@@ -6,7 +6,7 @@
 #include "ProgressEvents.hpp"
 #include "ProgressRange.hpp"
 
-struct MockSubscriber {
+struct MockProgressSubscriber {
     MOCK_METHOD(void, onProgressRangeEvent, (const ProgressRangeEvent&), ());
 };
 
@@ -25,9 +25,9 @@ TEST_F(EventProgressPublisherTest, PublishesSingleEvent) {
     root.setTo(Fraction(0.1f));
     auto mess = ProgressMessage(root);
     
-    auto mockSubscriber = std::make_shared<MockSubscriber>();
+    auto mockSubscriber = std::make_shared<MockProgressSubscriber>();
     messageBus->subscribe<ProgressRangeEvent>(
-        mockSubscriber, &MockSubscriber::onProgressRangeEvent
+        mockSubscriber, &MockProgressSubscriber::onProgressRangeEvent
     );
 
     EXPECT_CALL(*mockSubscriber, onProgressRangeEvent(::testing::_)).Times(1);
@@ -57,9 +57,9 @@ TEST_F(EventProgressPublisherTest, PublishesNestedEvent) {
     sub1.setTo(Fraction(0.2f));
     sub2.setTo(Fraction(0.3f));
 
-    auto mockSubscriber = std::make_shared<MockSubscriber>();
+    auto mockSubscriber = std::make_shared<MockProgressSubscriber>();
     messageBus->subscribe<ProgressRangeEvent>(
-        mockSubscriber, &MockSubscriber::onProgressRangeEvent
+        mockSubscriber, &MockProgressSubscriber::onProgressRangeEvent
     );
 
     EXPECT_CALL(*mockSubscriber, onProgressRangeEvent(

@@ -10,6 +10,6 @@ target_sources(utPart INTERFACE
 target_link_libraries(utPart INTERFACE
     PartDocument
     OcafKernelFixtures
-    GTest::gtest_main
+    
     GTest::gmock_main
 )

@@ -8,6 +8,6 @@ target_sources(utOcafKernelMessaging INTERFACE
 target_link_libraries(utOcafKernelMessaging INTERFACE
     OcafKernelMessaging
     OcafKernelFixtures
-    GTest::gtest_main
+    
     GTest::gmock_main
 )

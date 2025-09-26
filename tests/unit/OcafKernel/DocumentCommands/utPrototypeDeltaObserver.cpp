@@ -3,7 +3,7 @@
 #include "PrototypeEvents.hpp"
 #include "StubPartPrototypes.hpp"
 
-struct MockSubscriber {
+struct MockProtoEventSubscriber {
     MOCK_METHOD(void, onPrototypeAdded, (const PrototypeAddedEvent&), ());
     MOCK_METHOD(void, onPrototypeRemoved, (const PrototypeRemovedEvent&), ());
 };
@@ -18,10 +18,10 @@ class PrototypeDeltaObserverTest : public ::testing::Test {
 };
 
 TEST_F(PrototypeDeltaObserverTest, ObserverPublishesOnNewPrototype) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared<MockProtoEventSubscriber>();
 
     auto sub = mKernel->events().subscribe<PrototypeAddedEvent>(
-        subscriber, &MockSubscriber::onPrototypeAdded
+        subscriber, &MockProtoEventSubscriber::onPrototypeAdded
     );
     EXPECT_CALL(*subscriber, onPrototypeAdded(testing::_)).Times(1);
 
@@ -31,10 +31,10 @@ TEST_F(PrototypeDeltaObserverTest, ObserverPublishesOnNewPrototype) {
 }
 
 TEST_F(PrototypeDeltaObserverTest, ObserverPublishesOnUndoNewPrototype) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared<MockProtoEventSubscriber>();
 
     auto sub = mKernel->events().subscribe<PrototypeRemovedEvent>(
-        subscriber, &MockSubscriber::onPrototypeRemoved
+        subscriber, &MockProtoEventSubscriber::onPrototypeRemoved
     );
     mKernel->commands().openCommand();
     mKernel->partDocument().addPrototype(StubPartPrototypes::cube());
@@ -45,10 +45,10 @@ TEST_F(PrototypeDeltaObserverTest, ObserverPublishesOnUndoNewPrototype) {
 }
 
 TEST_F(PrototypeDeltaObserverTest, ObserverPublishesOnRedoNewPrototype) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared<MockProtoEventSubscriber>();
 
     auto sub = mKernel->events().subscribe<PrototypeAddedEvent>(
-        subscriber, &MockSubscriber::onPrototypeAdded
+        subscriber, &MockProtoEventSubscriber::onPrototypeAdded
     );
     mKernel->commands().openCommand();
     mKernel->partDocument().addPrototype(StubPartPrototypes::cube());

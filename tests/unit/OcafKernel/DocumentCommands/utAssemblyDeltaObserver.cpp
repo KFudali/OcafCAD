@@ -3,7 +3,7 @@
 #include "AssemblyEvents.hpp"
 #include "StubPartPrototypes.hpp"
 
-struct MockSubscriber {
+struct MockAssemblyEventSubscriber {
     MOCK_METHOD(void, onComponentAddedToAssembly, 
         (const ComponentAddedToAssemblyEvent&), ()
     );
@@ -28,10 +28,10 @@ class AssemblyDeltaObserverTest : public ::testing::Test {
 };
 
 TEST_F(AssemblyDeltaObserverTest, ObserverPublishesOnComponentAddedToAssembly) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared<MockAssemblyEventSubscriber>();
 
     auto sub = mKernel->events().subscribe<ComponentAddedToAssemblyEvent>(
-        subscriber, &MockSubscriber::onComponentAddedToAssembly
+        subscriber, &MockAssemblyEventSubscriber::onComponentAddedToAssembly
     );
     EXPECT_CALL(*subscriber, onComponentAddedToAssembly(testing::_)).Times(1);
 
@@ -41,10 +41,10 @@ TEST_F(AssemblyDeltaObserverTest, ObserverPublishesOnComponentAddedToAssembly) {
 }
 
 TEST_F(AssemblyDeltaObserverTest, ObserverPublishesOnUndoAddingComponent) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared<MockAssemblyEventSubscriber>();
 
     auto sub = mKernel->events().subscribe<ComponentRemovedFromAssemblyEvent>(
-        subscriber, &MockSubscriber::onComponentRemovedFromAssembly
+        subscriber, &MockAssemblyEventSubscriber::onComponentRemovedFromAssembly
     );
     mKernel->commands().openCommand();
     assembly->addComponent(cubeProtoLabel, Location()); 
@@ -55,10 +55,10 @@ TEST_F(AssemblyDeltaObserverTest, ObserverPublishesOnUndoAddingComponent) {
 }
 
 TEST_F(AssemblyDeltaObserverTest, ObserverPublishesOnRedoAddingComponent) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared<MockAssemblyEventSubscriber>();
 
     auto sub = mKernel->events().subscribe<ComponentAddedToAssemblyEvent>(
-        subscriber, &MockSubscriber::onComponentAddedToAssembly
+        subscriber, &MockAssemblyEventSubscriber::onComponentAddedToAssembly
     );
     mKernel->commands().openCommand();
     assembly->addComponent(cubeProtoLabel, Location()); 

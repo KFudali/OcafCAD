@@ -6,6 +6,6 @@ target_sources(utMathUtils INTERFACE ${utMathUtilsSources})
 
 target_link_libraries(utMathUtils INTERFACE
     MathUtils
-    GTest::gtest_main
+    
     GTest::gmock_main
 )

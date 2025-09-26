@@ -8,6 +8,6 @@ target_sources(utDocumentImport INTERFACE
 target_link_libraries(utDocumentImport INTERFACE
     OcafKernelFixtures
     DocumentImport
-    GTest::gtest_main
+    
     GTest::gmock_main
 )

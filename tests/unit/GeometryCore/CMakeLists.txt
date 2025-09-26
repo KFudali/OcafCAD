@@ -1,19 +1,24 @@
 add_subdirectory(Fixtures)
 add_subdirectory(Transfer)
 
-add_executable(utGeometryCore
-    utRunGeometryCore.cpp
-)
+add_library(utGeometryCoreLib INTERFACE)
 
-target_link_libraries(utGeometryCore PRIVATE
+target_link_libraries(utGeometryCoreLib INTERFACE
     GeometryCore
     utTransfer
-    GTest::gtest_main
+    
     GTest::gmock_main
 )
 
-target_compile_definitions(utGeometryCore PRIVATE
+target_compile_definitions(utGeometryCoreLib INTERFACE
     TEST_DATA_DIR="${testDataDir}"
+)
+
+add_executable(utGeometryCore
+    utRunGeometryCore.cpp
+)
+target_link_libraries(utGeometryCore
+    PRIVATE utGeometryCoreLib
 )
 
 include(GoogleTest)

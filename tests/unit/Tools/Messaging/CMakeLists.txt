@@ -6,6 +6,6 @@ target_sources(utMessaging INTERFACE ${utMessagingSources})
 
 target_link_libraries(utMessaging INTERFACE
     Messaging
-    GTest::gtest_main
+    
     GTest::gmock_main
 )

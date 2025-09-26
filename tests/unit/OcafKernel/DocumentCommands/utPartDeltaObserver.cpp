@@ -3,7 +3,7 @@
 #include "PartEvents.hpp"
 #include "StubPartPrototypes.hpp"
 
-struct MockSubscriber {
+struct  MockPartEventSubscriber {
     MOCK_METHOD(void, onPartAdded, (const PartAddedEvent&), ());
     MOCK_METHOD(void, onPartRemoved, (const PartRemovedEvent&), ());
 };
@@ -21,9 +21,9 @@ class PartDeltaObserverTest : public ::testing::Test {
 };
 
 TEST_F(PartDeltaObserverTest, ObserverPublishesOnNewPart) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared< MockPartEventSubscriber>();
     auto sub = mKernel->events().subscribe<PartAddedEvent>(
-        subscriber, &MockSubscriber::onPartAdded
+        subscriber, & MockPartEventSubscriber::onPartAdded
     );
     EXPECT_CALL(*subscriber, onPartAdded(testing::_)).Times(1);
 
@@ -33,10 +33,10 @@ TEST_F(PartDeltaObserverTest, ObserverPublishesOnNewPart) {
 }
 
 TEST_F(PartDeltaObserverTest, ObserverPublishesOnUndoNewPart) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared< MockPartEventSubscriber>();
 
     auto sub = mKernel->events().subscribe<PartRemovedEvent>(
-        subscriber, &MockSubscriber::onPartRemoved
+        subscriber, & MockPartEventSubscriber::onPartRemoved
     );
     mKernel->commands().openCommand();
     mKernel->partDocument().addPart(cubeProtoLabel, Location());
@@ -47,10 +47,10 @@ TEST_F(PartDeltaObserverTest, ObserverPublishesOnUndoNewPart) {
 }
 
 TEST_F(PartDeltaObserverTest, ObserverPublishesOnRedoNewPart) {
-    auto subscriber = std::make_shared<MockSubscriber>();
+    auto subscriber = std::make_shared< MockPartEventSubscriber>();
 
     auto sub = mKernel->events().subscribe<PartAddedEvent>(
-        subscriber, &MockSubscriber::onPartAdded
+        subscriber, & MockPartEventSubscriber::onPartAdded
     );
     mKernel->commands().openCommand();
     mKernel->partDocument().addPart(cubeProtoLabel, Location());

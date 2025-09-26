@@ -6,6 +6,6 @@ target_sources(utOccTools INTERFACE ${utOccToolsSources})
 
 target_link_libraries(utOccTools INTERFACE
     OccTools
-    GTest::gtest_main
+    
     GTest::gmock_main
 )

@@ -6,6 +6,6 @@ target_sources(utProgress INTERFACE ${utProgressSources})
 
 target_link_libraries(utProgress INTERFACE
     Progress
-    GTest::gtest_main
+    
     GTest::gmock_main
 )

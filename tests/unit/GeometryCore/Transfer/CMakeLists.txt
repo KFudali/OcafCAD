@@ -9,6 +9,6 @@ target_link_libraries(utTransfer INTERFACE
     Transfer
     GeometryCoreFixtures
     OcafKernelFixtures
-    GTest::gtest_main
+    
     GTest::gmock_main
 )

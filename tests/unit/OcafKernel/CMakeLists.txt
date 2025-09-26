@@ -4,21 +4,24 @@ add_subdirectory(OcafKernelMessaging)
 add_subdirectory(DocumentCommands)
 add_subdirectory(DocumentImport)
 
-add_executable(utOcafKernel
-    utRunOcafKernel.cpp
-)
-
-target_link_libraries(utOcafKernel PRIVATE
+add_library(utOcafKernelLib INTERFACE)
+target_link_libraries(utOcafKernelLib INTERFACE
     utPart
     utOcafKernelMessaging
     utDocumentCommands
     utDocumentImport
-    GTest::gtest_main
     GTest::gmock_main
 )
 
-target_compile_definitions(utOcafKernel PRIVATE
+target_compile_definitions(utOcafKernelLib INTERFACE
     TEST_DATA_DIR="${testDataDir}"
+)
+
+add_executable(utOcafKernel
+    utRunOcafKernel.cpp
+)
+target_link_libraries(utOcafKernel 
+    PRIVATE utOcafKernelLib
 )
 
 include(GoogleTest)

@@ -22,7 +22,7 @@ TEST_F(STEPImporterTest, ImportCubeSTEPFile) {
     auto free = destDoc->freeParts();
     auto protos = destDoc->prototypes();
 
-    ASSERT_EQ(free.size(), 0);
+    ASSERT_EQ(free.size(), 1);
     ASSERT_EQ(protos.size(), 1);   
 }
 

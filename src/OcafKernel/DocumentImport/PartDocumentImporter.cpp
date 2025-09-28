@@ -46,7 +46,7 @@ void PartDocumentImporter::importLabel(TDF_Label aLabel) {
         );
     }
     if (isPrototype(aLabel)){
-        importPrototype(aLabel);
+        importPrototypeAsPart(aLabel);
         return;
     } else {
         importPart(aLabel);
@@ -80,14 +80,9 @@ bool PartDocumentImporter::isAssembly(TDF_Label aLabel) const {
     return mShapeTool->IsAssembly(aLabel);
 }
 
-PrototypeLabel PartDocumentImporter::importPrototype(TDF_Label aProtoLabel) {
-    PartPrototype proto = mShapeTool->GetShape(aProtoLabel);
-    if (proto.IsNull()){
-        throw PartDocumentImporterExceptions::CouldNotGetShapeFromLabel(
-            "GetShape returns Null shape"
-        );
-    }
-    return mDest.addPrototype(proto);
+void PartDocumentImporter::importPrototypeAsPart(TDF_Label aProtoLabel) {
+    auto protoLabel = importPrototype(aProtoLabel);
+    mDest.addPart(protoLabel, Location());
 }
 
 void PartDocumentImporter::importPart(
@@ -107,6 +102,16 @@ void PartDocumentImporter::importPart(
     if (isAssembly(aPartLabel)){
         importPartComponents(aPartLabel, destPartLabel);
     }
+}
+
+PrototypeLabel PartDocumentImporter::importPrototype(TDF_Label aProtoLabel) {
+    PartPrototype proto = mShapeTool->GetShape(aProtoLabel);
+    if (proto.IsNull()){
+        throw PartDocumentImporterExceptions::CouldNotGetShapeFromLabel(
+            "GetShape returns Null shape"
+        );
+    }
+    return mDest.addPrototype(proto);
 }
 
 PrototypeLabel PartDocumentImporter::importPartPrototype(TDF_Label aPartLabel){

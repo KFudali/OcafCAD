@@ -61,8 +61,8 @@ TEST_F(DocumentImportTest, TestTwoAssembliesWithSubAssemblyImport){
     EXPECT_EQ(dest->prototypes().size(), 3);
     ASSERT_EQ(dest->topLevelParts().size(), 2);
     
-    Part partA = Part(dest->topLevelParts()[1]);
-    Part partB = Part(dest->topLevelParts()[2]);
+    Part partA = Part(dest->topLevelParts()[0]);
+    Part partB = Part(dest->topLevelParts()[1]);
     EXPECT_TRUE(partA.isAssembly());
     EXPECT_TRUE(partB.isAssembly());
 

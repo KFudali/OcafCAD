@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include "SignalMessageBus.hpp"
+#include "SignalSubscription.hpp"
 
 class StubEventA : public AbstractEvent {
     protected:
@@ -140,4 +141,41 @@ TEST_F(SignalMessageBusTest, BusCallsSubscribedLambdas) {
 
     EXPECT_EQ(callCount, 1);
     EXPECT_EQ(lastValue, 456);
+}
+
+TEST_F(SignalMessageBusTest, SignalSubscriptionDisconnectsOnDestruction) {
+    boost::signals2::signal<void()> sig;
+    bool disconnected = false;
+
+    {
+        auto connection = sig.connect([&]() { disconnected = true; });
+        SignalSubscription sub(std::move(connection));
+
+        EXPECT_TRUE(sig.num_slots() == 1);
+
+        EXPECT_TRUE(sub.disconnect());
+        EXPECT_TRUE(sig.num_slots() == 0);
+
+        EXPECT_FALSE(sub.disconnect());
+    }
+
+    EXPECT_EQ(sig.num_slots(), 0);
+}
+
+TEST_F(SignalMessageBusTest, BusCallsMethodOnRawPtrReceiver) {
+    struct RawReceiver {
+        int lastValue = 0;
+        void onEvent(const StubEventA& e) const {
+            const_cast<RawReceiver*>(this)->lastValue = e.id();
+        }
+    };
+
+    RawReceiver receiver;
+
+    auto sub = testBus.subscribe<StubEventA>(&receiver, &RawReceiver::onEvent);
+
+    StubEventA eventA(42);
+    testBus.publish(eventA);
+
+    EXPECT_EQ(receiver.lastValue, 42);
 }

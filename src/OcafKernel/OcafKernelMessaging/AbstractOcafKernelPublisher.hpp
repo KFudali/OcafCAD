@@ -18,7 +18,7 @@ class AbstractOcafKernelPublisher{
     virtual void publishPartLocationChanged(
         DocLabel aLabel
     ) const = 0;
-    virtual void publishPartMarkerAttributeChanged(
+    virtual void publishPartAttributeChanged(
         DocLabel aLabel, AttributeType aAttribtueEnum
     ) const = 0;
 

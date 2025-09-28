@@ -15,7 +15,7 @@ public:
     virtual void onPartAdded(PartLabel label) = 0;
     virtual void onPartRemoved(PartLabel label) = 0;
     virtual void onPartLocationChanged(PartLabel label) = 0;
-    virtual void onPartMarkerAttributeChanged(
+    virtual void onPartAttributeChanged(
         PartLabel label, AttributeType attributeEnum
     ) = 0;
 

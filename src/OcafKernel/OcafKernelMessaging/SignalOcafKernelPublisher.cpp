@@ -25,10 +25,10 @@ void SignalOcafKernelPublisher::publishPartLocationChanged(DocLabel label) const
     mMessageBus.publish<PartLocationChangedEvent>(PartLocationChangedEvent(label));
 }
 
-void SignalOcafKernelPublisher::publishPartMarkerAttributeChanged(
+void SignalOcafKernelPublisher::publishPartAttributeChanged(
     DocLabel label, AttributeType attributeEnum
 ) const {
-    mMessageBus.publish<PartMarkerAttributeChanged>(PartMarkerAttributeChanged(label, attributeEnum));
+    mMessageBus.publish<PartAttributeChanged>(PartAttributeChanged(label, attributeEnum));
 }
 
 void SignalOcafKernelPublisher::publishComponentAddedToAssembly(DocLabel compLabel) const {

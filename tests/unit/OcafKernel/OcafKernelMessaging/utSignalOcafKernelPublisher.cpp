@@ -13,7 +13,7 @@ struct MockKernelEventSubscriber {
     MOCK_METHOD(void, onPartRemoved, (const PartRemovedEvent&), ());
     MOCK_METHOD(void, onPartLocationChanged, (const PartLocationChangedEvent&),
                 ());
-    MOCK_METHOD(void, onPartMarkerAttributeChanged, (const PartMarkerAttributeChanged&),
+    MOCK_METHOD(void, onPartAttributeChanged, (const PartAttributeChanged&),
                 ());
     MOCK_METHOD(void, onComponentAddedToAssembly,
                 (const ComponentAddedToAssemblyEvent&), ());
@@ -65,8 +65,8 @@ TEST_F(SignalOcafKernelPublisherTest, PartEventsArePublished) {
     auto locChangedSub = mMessageBus->subscribe<PartLocationChangedEvent>(
         subscriber, & MockKernelEventSubscriber::onPartLocationChanged
     );
-    auto attrChangedSub = mMessageBus->subscribe<PartMarkerAttributeChanged>(
-        subscriber, & MockKernelEventSubscriber::onPartMarkerAttributeChanged
+    auto attrChangedSub = mMessageBus->subscribe<PartAttributeChanged>(
+        subscriber, & MockKernelEventSubscriber::onPartAttributeChanged
     );
 
     DocLabel partLabel;
@@ -86,10 +86,10 @@ TEST_F(SignalOcafKernelPublisherTest, PartEventsArePublished) {
         .Times(1);
     EXPECT_CALL(
         *subscriber, 
-        onPartMarkerAttributeChanged(
+        onPartAttributeChanged(
             testing::AllOf(
-                testing::Field(&PartMarkerAttributeChanged::label, partLabel),
-                testing::Field(&PartMarkerAttributeChanged::attributeEnum, attr)
+                testing::Field(&PartAttributeChanged::label, partLabel),
+                testing::Field(&PartAttributeChanged::attributeEnum, attr)
             )
         ))
         .Times(1);
@@ -97,7 +97,7 @@ TEST_F(SignalOcafKernelPublisherTest, PartEventsArePublished) {
     mPublisher->publishPartAdded(partLabel);
     mPublisher->publishPartRemoved(partLabel);
     mPublisher->publishPartLocationChanged(partLabel);
-    mPublisher->publishPartMarkerAttributeChanged(partLabel, attr);
+    mPublisher->publishPartAttributeChanged(partLabel, attr);
 }
 
 TEST_F(SignalOcafKernelPublisherTest, ComponentAssemblyEventsArePublished) {

@@ -36,13 +36,13 @@ public:
     };
 };
 
-class PartMarkerAttributeChanged : public BaseOcafKernelEvent {
+class PartAttributeChanged : public BaseOcafKernelEvent {
     public:
-    PartMarkerAttributeChanged(DocLabel label, AttributeType attributeEnum)
+    PartAttributeChanged(DocLabel label, AttributeType attributeEnum)
         : label(label), attributeEnum(attributeEnum) {}
 
     std::string log() const {
-        return "PartMarkerAttributeChangedEvent, label: " + label.toString();
+        return "PartAttributeChangedEvent, label: " + label.toString();
     };
 
     DocLabel label;

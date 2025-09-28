@@ -24,6 +24,30 @@ public:
     ) {
         return mMessageBus.subscribe<EventType>(obj, memFunc);
     }
+
+    template<EventConcept EventType, typename HandleOwner>
+    std::unique_ptr<AbstractSubscription> subscribe(
+        HandleOwner* obj,
+        void (HandleOwner::*memFunc)(const EventType&)
+    ) {
+        auto handler = [obj, memFunc](const EventType& event) {
+            std::invoke(memFunc, obj, event);
+        };
+        return mMessageBus.subscribe<EventType, HandleOwner>(handler);
+    }   
+
+    template<EventConcept EventType, typename HandleOwner>
+    std::unique_ptr<AbstractSubscription> subscribe(
+        const HandleOwner* obj,
+        void (HandleOwner::*memFunc)(const EventType&) const
+    ) {
+        auto handler = [obj, memFunc](const EventType& event) {
+            std::invoke(memFunc, obj, event);
+        };
+        return mMessageBus.subscribe<EventType>(handler);
+    }
+
+
     private:
     AbstractMessageBus& mMessageBus;
 

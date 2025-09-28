@@ -18,7 +18,7 @@ class SignalOcafKernelPublisher : public AbstractOcafKernelPublisher {
     void publishPartAdded(DocLabel label) const override;
     void publishPartRemoved(DocLabel label) const override;
     void publishPartLocationChanged(DocLabel label) const override;
-    void publishPartMarkerAttributeChanged(
+    void publishPartAttributeChanged(
         DocLabel label, AttributeType attributeEnum
     ) const override;
 

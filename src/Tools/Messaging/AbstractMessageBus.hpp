@@ -40,6 +40,31 @@ public:
         return subscribe<EventType>(handler);
     }
 
+    template<EventConcept EventType, typename HandleOwner>
+    [[nodiscard]]
+    std::unique_ptr<AbstractSubscription> subscribe(
+        HandleOwner* obj,
+        void (HandleOwner::*memFunc)(const EventType&)
+    ) {
+        auto handler = [obj, memFunc](const EventType& event) {
+            std::invoke(memFunc, obj, event);
+        };
+        return subscribe<EventType>(handler);
+    }   
+
+    template<EventConcept EventType, typename HandleOwner>
+    [[nodiscard]]
+    std::unique_ptr<AbstractSubscription> subscribe(
+        const HandleOwner* obj,
+        void (HandleOwner::*memFunc)(const EventType&) const
+    ) {
+        auto handler = [obj, memFunc](const EventType& event) {
+            std::invoke(memFunc, obj, event);
+        };
+        return subscribe<EventType>(handler);
+    }
+
+
     template<EventConcept EventType>
     void publish(const EventType& message) const {
         publishImpl(std::type_index(typeid(EventType)), std::any(message));

@@ -4,24 +4,24 @@
 #include "Part.hpp"
 
 class PartView {
-
-    PartView(std::shared_ptr<const Part> aPart) : mPart(aPart) {};
+    public:
+    PartView(const PartLabel& aPartLabel) : mPart(Part(aPartLabel)) {};
     ~PartView() = default;    
 
-    ColoRGBA color() const {return mPart->color();};
-    std::string name() const {return mPart->name();};
-    Location location() const {return mPart->location();};
+    ColorRGBA color() const {return mPart.color();};
+    std::string name() const {return mPart.name();};
+    Location location() const {return mPart.location();};
 
-    PartPrototype prototype() const {return mPart->prototype();};
+    PartPrototype prototype() const {return mPart.prototype();};
 
-    bool isAssembly() const {return mPart->isAssembly();};
-    bool isComponent() const {return mPart->isComponent();};
+    bool isAssembly() const {return mPart.isAssembly();};
+    bool isComponent() const {return mPart.isComponent();};
 
-    PartId parentAssembly() const {return mPart->parentAssembly();};
-    std::vector<PartId> childrenComponents() const {return mPart->childrenComponents();};
+    PartLabel parentAssembly() const {return mPart.parentAssembly();};
+    std::vector<PartLabel> childrenComponents() const {return mPart.childrenComponents();};
 
     private:
-    std::shared_ptr<const Part> mPart;
+    Part mPart;
 };
 
 #endif

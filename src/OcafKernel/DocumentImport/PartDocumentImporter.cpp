@@ -27,7 +27,7 @@ PartDocumentImporter::PartDocumentImporter(
 
 void PartDocumentImporter::import() {
     TDF_LabelSequence topLevelLabels;
-    mShapeTool->GetShapes(topLevelLabels);
+    mShapeTool->GetFreeShapes(topLevelLabels);
     for (auto label : topLevelLabels) {
         try {
             importLabel(label);

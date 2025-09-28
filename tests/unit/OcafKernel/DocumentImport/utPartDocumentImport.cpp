@@ -58,8 +58,8 @@ TEST_F(DocumentImportTest, TestTwoAssembliesWithSubAssemblyImport){
     auto source = TwoAssembliesWithSameSubAssembly();
     PartDocumentImporter::import(source.doc, *dest, progress);
     
-    EXPECT_EQ(dest->prototypes().size(), 6);
-    ASSERT_EQ(dest->topLevelParts().size(), 3);
+    EXPECT_EQ(dest->prototypes().size(), 3);
+    ASSERT_EQ(dest->topLevelParts().size(), 2);
     
     Part partA = Part(dest->topLevelParts()[1]);
     Part partB = Part(dest->topLevelParts()[2]);

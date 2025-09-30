@@ -8,7 +8,7 @@
 #include "PartEvents.hpp"
 #include "AssemblyEvents.hpp"
 
-class GeometryEventSource : public std::enable_shared_from_this<GeometryEventSource>{
+class GeometryEventSource {
     public:
     GeometryEventSource(
         MessageSubscriber& aKernelEvents
@@ -16,7 +16,7 @@ class GeometryEventSource : public std::enable_shared_from_this<GeometryEventSou
 
     virtual bool appendObserver(GeometryObserver* aObserver);
     virtual bool removeObserver(GeometryObserver* aObserver);
-    virtual MessageSubscriber& messageSubscriber() {return mKernelEvents;};
+    virtual MessageSubscriber& bus() {return mKernelEvents;};
 
     private:
 

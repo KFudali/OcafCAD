@@ -5,6 +5,8 @@
 
 class GeometryObserver {
     public:
+    virtual ~GeometryObserver() = default;
+
     virtual void onPartAdded(const DocLabel& aLabel) {};
     virtual void onPartRemoved(const DocLabel& aLabel) {};
     virtual void onPartModified() {}; // To be implemented

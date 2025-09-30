@@ -5,6 +5,7 @@ target_sources(itGeometryCoreLib INTERFACE ${itGeometryCoreSources})
 
 target_link_libraries(itGeometryCoreLib INTERFACE
     GeometryCore
+    GeometryCoreFixtures
     GTest::gmock_main
 )
 target_compile_definitions(itGeometryCoreLib INTERFACE

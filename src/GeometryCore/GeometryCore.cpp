@@ -9,12 +9,14 @@ void GeometryCore::import(
     AbstractImporter& aImporter,
     AbstractProgressPublisher& aPublisher
 ) {
+    mOcafKernel->commands().openCommand();
     aImporter.importIntoDoc(mOcafKernel->partDocument(), aPublisher);
+    mOcafKernel->commands().commitCommand();
 }
 
 void GeometryCore::import(
     AbstractImporter& aImporter
 ) {
     auto publisher = IdleProgressPublisher();
-    aImporter.importIntoDoc(mOcafKernel->partDocument(), publisher);
+    import(aImporter, publisher);
 }

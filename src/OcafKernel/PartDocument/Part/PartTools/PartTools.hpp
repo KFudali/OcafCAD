@@ -7,14 +7,16 @@
 #include "AbstractPartGeometryTool.hpp"
 
 class PartTools {
-    public:
+public:
     PartTools(
         std::unique_ptr<AbstractPartGeometryTool> aGeometryTool,
         std::unique_ptr<AbstractPartAssemblyTool> aAssemblyTool,
         std::unique_ptr<AbstractPartAttributeTool> aAttributesTool
-    ) : mGeometryTool(std::move(aGeometryTool)),
-        mAssemblyTool(std::move(aAssemblyTool)),
-        mAttributesTool(std::move(aAttributesTool)) {}
+    )
+        : mGeometryTool(std::move(aGeometryTool)),
+          mAssemblyTool(std::move(aAssemblyTool)),
+          mAttributesTool(std::move(aAttributesTool)) {}
+
     ~PartTools() = default;
 
     inline AbstractPartGeometryTool& geometry() const {
@@ -27,10 +29,9 @@ class PartTools {
         return *mAttributesTool;
     };
 
-    private:    
+private:
     std::unique_ptr<AbstractPartGeometryTool> mGeometryTool;
     std::unique_ptr<AbstractPartAssemblyTool> mAssemblyTool;
     std::unique_ptr<AbstractPartAttributeTool> mAttributesTool;
 };
-
 #endif

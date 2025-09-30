@@ -2,23 +2,37 @@
 #include "PartAssemblyTool.hpp"
 #include "PartAttributeTool.hpp"
 #include "PartGeometryTool.hpp"
-
 #include <stdexcept>
 
 Part::Part(PartLabel aPartLabel)
-  : mPartLabel(aPartLabel),
-    mPartTools(
-        std::make_unique<PartGeometryTool>(aPartLabel),
-        std::make_unique<PartAssemblyTool>(aPartLabel),
-        std::make_unique<PartAttributeTool>(aPartLabel)
-    ) {
-        if (!mPartTools.attributes().hasColor()){
-            setColor(Part::defaultPartColor);
-        }
-        if (!mPartTools.attributes().hasName()){
-            setName(Part::defaultPartName);
-        }
+    : mPartLabel(aPartLabel),
+      mPartTools(
+          std::make_unique<PartGeometryTool>(aPartLabel),
+          std::make_unique<PartAssemblyTool>(aPartLabel),
+          std::make_unique<PartAttributeTool>(aPartLabel)) 
+{
+    if (!mPartTools.attributes().hasColor()) {
+        setColor(Part::defaultPartColor);
     }
+    if (!mPartTools.attributes().hasName()) {
+        setName(Part::defaultPartName);
+    }
+}
+
+Part::Part(const Part& other)
+    : mPartLabel(other.mPartLabel),
+      mPartTools(
+          std::make_unique<PartGeometryTool>(other.mPartLabel),
+          std::make_unique<PartAssemblyTool>(other.mPartLabel),
+          std::make_unique<PartAttributeTool>(other.mPartLabel)) 
+{
+    if (!mPartTools.attributes().hasColor()) {
+        setColor(Part::defaultPartColor);
+    }
+    if (!mPartTools.attributes().hasName()) {
+        setName(Part::defaultPartName);
+    }
+}
 
 bool Part::isAssembly() const {
     return mPartTools.assembly().isAssembly();

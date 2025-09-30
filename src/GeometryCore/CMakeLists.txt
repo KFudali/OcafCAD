@@ -16,6 +16,7 @@ target_link_libraries(GeometryCore PUBLIC
     View
 )
 
-target_include_directories(GeometryCore PRIVATE
-    ${BOOST_DIR}
+target_include_directories(GeometryCore 
+    PRIVATE ${BOOST_DIR}
+    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 )

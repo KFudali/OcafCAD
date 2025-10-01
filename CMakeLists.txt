@@ -10,6 +10,7 @@ include(cmake/find_vtk.cmake)
 include(cmake/find_occt.cmake)
 include(cmake/find_boost.cmake)
 include(cmake/find_gtest.cmake)
+include(cmake/find_netgen.cmake)
 
 add_subdirectory(src)
 if(BUILD_TESTS)

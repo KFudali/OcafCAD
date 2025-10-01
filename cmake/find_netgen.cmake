@@ -1,0 +1,5 @@
+find_package(Netgen REQUIRED)
+if (NETGEN_VERSION)
+    MESSAGE(STATUS "Netgen found version: ${NETGEN_VERSION_MAJOR}.${NETGEN_VERSION_MINOR}.${NETGEN_VERSION_PATCH}")
+    set(Netgen_LIBRARIES nglib ngcore)
+endif()

@@ -1,6 +1,7 @@
-add_subdirectory(Tools)
 add_subdirectory(GeometryCore)
+add_subdirectory(MeshCore)
 add_subdirectory(OcafKernel)
+add_subdirectory(Tools)
 
 add_executable(utAll
     utRun.cpp

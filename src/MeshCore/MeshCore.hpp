@@ -4,7 +4,7 @@
 class MeshCore {
     public:
 
-    MeshObject createMeshObject(const GeometryObject& aGeoObject);
+    // MeshObject createMeshObject(const GeometryObject& aGeoObject);
 
     private:
 

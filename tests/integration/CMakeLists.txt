@@ -1,4 +1,7 @@
+add_subdirectory(Fixtures)
+
 add_subdirectory(GeometryCore)
+add_subdirectory(MeshCore)
 
 add_executable(itAll
     itRun.cpp
@@ -6,6 +9,7 @@ add_executable(itAll
 
 target_link_libraries(itAll PRIVATE
     itGeometryCoreLib
+    itMeshCoreLib
 )
 
 include(GoogleTest)

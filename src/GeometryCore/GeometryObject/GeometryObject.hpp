@@ -13,9 +13,9 @@ class GeometryObject {
     inline PartPrototype rootShape() const {return mSourcePart.prototype();};
 
     SubShapeIdList points() const;
-    SubShapeIdList edges() const;    
+    SubShapeIdList edges() const;
     SubShapeIdList faces() const;
-    SubShapeIdList volumes() const;    
+    SubShapeIdList volumes() const;
 
     PartPrototype getSubShape(const SubShapeId& aShapeId) const;
     PartPrototype getTypedSubShape(const TypedSubShapeId& aShapeId) const;

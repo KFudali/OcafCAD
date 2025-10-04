@@ -4,11 +4,15 @@
 #include <vtkSmartPointer.h>
 #include <vtkUnstructuredGrid.h>
 #include <vtkPolyData.h>
+#include <vtkPoints.h>
 
 class Mesh {
 public:
     Mesh() = default;
 
+    void setPoints(vtkSmartPointer<vtkPoints> aPoints) {
+        mPoints = aPoints;
+    }
     void setBoundaryMesh(vtkSmartPointer<vtkPolyData> aBoundaryMesh) {
         mBoundaryMesh = aBoundaryMesh;
     }
@@ -29,6 +33,7 @@ public:
 private:
     vtkSmartPointer<vtkUnstructuredGrid> mInternalMesh;
     vtkSmartPointer<vtkPolyData> mBoundaryMesh;
+    vtkSmartPointer<vtkPoints> mPoints;
 };
 
 #endif

@@ -7,6 +7,7 @@
 #include <occgeom.hpp>
 #include <meshing.hpp>
 
+#include "NetgenToVTK.hpp"
 bool NetgenMeshEngine::generateSurfaceMesh(const MeshObject& aMeshObject) const {
     auto shape = aMeshObject.geometry().rootShape();
     auto geometry = std::make_shared<netgen::OCCGeometry>(shape);
@@ -14,6 +15,7 @@ bool NetgenMeshEngine::generateSurfaceMesh(const MeshObject& aMeshObject) const 
     meshPtr->SetGeometry(geometry);
     auto params = netgen::MeshingParameters();
     geometry->GenerateMesh(meshPtr, params);
+    NetgenToVTK::transfer(*meshPtr, aMeshObject.mesh());
     return true;
 }
 

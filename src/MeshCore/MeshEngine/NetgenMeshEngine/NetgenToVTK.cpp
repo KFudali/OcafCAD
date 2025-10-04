@@ -80,17 +80,11 @@ std::vector<vtkIdType> computeOffsets(const ElemContainer& elems)
 
     return offsets;
 }
-template <typename ElemContainer>
-size_t computeTotalConnectivityFromOffsets(
-	const std::vector<vtkIdType>& offsets, const ElemContainer& elems
-)
-{
-    size_t n = elems.size();
-    if (n == 0) return 0;
-    return offsets.back() + 1 + elems.back().GetNP();
-}
 
-vtkSmartPointer<vtkCellArray> copySurfaceConnectivity(const netgen::Mesh& aSource) {
+vtkSmartPointer<vtkPolyData> copySurfaceConnectivity(
+    const netgen::Mesh& aSource,
+    vtkSmartPointer<vtkPoints> points
+) {
     const auto& sourceElems = aSource.SurfaceElements();
     size_t nElems = sourceElems.Size();
     if (nElems == 0) return vtkSmartPointer<vtkCellArray>::New();
@@ -119,6 +113,9 @@ vtkSmartPointer<vtkCellArray> copySurfaceConnectivity(const netgen::Mesh& aSourc
 
     vtkSmartPointer<vtkCellArray> cells = vtkSmartPointer<vtkCellArray>::New();
     cells->SetData(offsetsVTK, connVTK);
+    vtkSmartPointer<vtkPolyData> polyData = vtkSmartPointer<vtkPolyData>::New();
+    polyData->SetPoints(points);
+    polyData->SetPolys(cells);
 
     return cells;
 }
@@ -180,7 +177,11 @@ vtkSmartPointer<vtkUnstructuredGrid> copyVolumeConnectivity(
 
 bool NetgenToVTK::transfer(const netgen::Mesh& aSource, Mesh& aDest) {
 	auto points = copyPoints(aSource);
-	auto surfaceCells = copySurfaceConnectivity(aSource);
+	auto surfaceCells = copySurfaceConnectivity(aSource, points);
 	auto volumeGrid = copyVolumeConnectivity(aSource, points);
+    auto num = points->GetNumberOfPoints();
+    aDest.setPoints(points);
+    aDest.setBoundaryMesh(surfaceCells);
+    aDest.setInternalMesh(volumeGrid);
 	return true;
 }

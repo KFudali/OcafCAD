@@ -1,5 +1,6 @@
 add_library(NetgenMeshEngine
     NetgenMeshEngine.cpp
+    NetgenToVTK.cpp
 )
 
 target_link_libraries(NetgenMeshEngine

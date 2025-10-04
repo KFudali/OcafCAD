@@ -87,7 +87,7 @@ vtkSmartPointer<vtkPolyData> copySurfaceConnectivity(
 ) {
     const auto& sourceElems = aSource.SurfaceElements();
     size_t nElems = sourceElems.Size();
-    if (nElems == 0) return vtkSmartPointer<vtkCellArray>::New();
+    if (nElems == 0) return vtkSmartPointer<vtkPolyData>::New();
 
     vtkSmartPointer<vtkIdTypeArray> offsetsVTK = vtkSmartPointer<vtkIdTypeArray>::New();
     offsetsVTK->SetNumberOfValues(nElems);
@@ -117,7 +117,7 @@ vtkSmartPointer<vtkPolyData> copySurfaceConnectivity(
     polyData->SetPoints(points);
     polyData->SetPolys(cells);
 
-    return cells;
+    return polyData;
 }
 
 inline unsigned char MapCellType(int typ) {
@@ -180,6 +180,8 @@ bool NetgenToVTK::transfer(const netgen::Mesh& aSource, Mesh& aDest) {
 	auto surfaceCells = copySurfaceConnectivity(aSource, points);
 	auto volumeGrid = copyVolumeConnectivity(aSource, points);
     auto num = points->GetNumberOfPoints();
+    auto numSurf = surfaceCells->GetNumberOfCells();
+    auto numVol = volumeGrid->GetNumberOfCells();
     aDest.setPoints(points);
     aDest.setBoundaryMesh(surfaceCells);
     aDest.setInternalMesh(volumeGrid);

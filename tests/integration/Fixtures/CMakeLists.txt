@@ -5,6 +5,7 @@ target_link_libraries(IntegrationFixtures INTERFACE
     MeshCore
     OcafKernelFixtures
     GeometryCoreFixtures
+    MeshCoreFixtures
 )
 
 target_include_directories(IntegrationFixtures INTERFACE

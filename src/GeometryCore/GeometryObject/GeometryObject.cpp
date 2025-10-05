@@ -40,7 +40,7 @@ SubShapeId GeometryObject::getSubShapeId(const PartPrototype& aPartPrototype) co
     return SubShapeId{idInParent};
 }
 
-static SubShapeIdList collectSubShapes(const Part& sourcePart, const ShapeType& type) {
+static TypedSubShapeIdList collectSubShapes(const Part& sourcePart, const ShapeType& type) {
     TopTools_IndexedMapOfShape subShapes;
     TopExp::MapShapes(sourcePart.prototype(), type, subShapes);
 
@@ -50,21 +50,21 @@ static SubShapeIdList collectSubShapes(const Part& sourcePart, const ShapeType& 
         ids.push_back(i);
     }
 
-    return SubShapeIdList{sourcePart.partLabel(), std::move(ids)};
+    return TypedSubShapeIdList{sourcePart.partLabel(), std::move(ids), type};
 }
 
-SubShapeIdList GeometryObject::points() const {
+TypedSubShapeIdList GeometryObject::points() const {
     return collectSubShapes(mSourcePart, TopAbs_VERTEX);
 }
 
-SubShapeIdList GeometryObject::edges() const {
+TypedSubShapeIdList GeometryObject::edges() const {
     return collectSubShapes(mSourcePart, TopAbs_EDGE);
 }
 
-SubShapeIdList GeometryObject::faces() const {
+TypedSubShapeIdList GeometryObject::faces() const {
     return collectSubShapes(mSourcePart, TopAbs_FACE);
 }
 
-SubShapeIdList GeometryObject::volumes() const {
+TypedSubShapeIdList GeometryObject::volumes() const {
     return collectSubShapes(mSourcePart, TopAbs_SOLID);
 }

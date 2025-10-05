@@ -1,9 +1,9 @@
-#ifndef PartDocumentImporterExceptions_hpp
-#define PartDocumentImporterExceptions_hpp
+#ifndef GeometryDocImporterExceptions_hpp
+#define GeometryDocImporterExceptions_hpp
 
 #include <stdexcept>
 
-namespace PartDocumentImporterExceptions {
+namespace GeometryDocImporterExceptions {
 
 class CouldNotReadLabel : public std::runtime_error {
 public:

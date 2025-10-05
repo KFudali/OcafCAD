@@ -1,7 +1,7 @@
 #include <gmock/gmock.h>
 
 #include "AbstractProgressPublisher.hpp"
-#include "PartDocumentImporter.hpp"
+#include "GeometryDocImporter.hpp"
 #include "StubPartDocument.hpp" 
 #include "ImportTestDoc.hpp"
 
@@ -17,7 +17,7 @@ class DocumentImportTest : public ::testing::Test {
 
 TEST_F(DocumentImportTest, TestOneAssemblyWithTwoPrototypes){
     auto source = OneAssemblyWithTwoPrototypesDoc();
-    PartDocumentImporter::import(source.doc, *dest, progress);
+    GeometryDocImporter::import(source.doc, *dest, progress);
     EXPECT_EQ(dest->prototypes().size(), 3);
     auto freeParts = dest->freeParts();
     EXPECT_EQ(freeParts.size(), 1);
@@ -34,7 +34,7 @@ TEST_F(DocumentImportTest, TestOneAssemblyWithTwoPrototypes){
 
 TEST_F(DocumentImportTest, TestTwoAssembliesWithPrototypeImport){
     auto source = TwoAssembliesWithSamePrototypeDoc();
-    PartDocumentImporter::import(source.doc, *dest, progress);
+    GeometryDocImporter::import(source.doc, *dest, progress);
     EXPECT_EQ(dest->prototypes().size(), 3);
     auto freeParts = dest->freeParts();
     EXPECT_EQ(freeParts.size(), 2);
@@ -56,7 +56,7 @@ TEST_F(DocumentImportTest, TestTwoAssembliesWithPrototypeImport){
 
 TEST_F(DocumentImportTest, TestTwoAssembliesWithSubAssemblyImport){
     auto source = TwoAssembliesWithSameSubAssembly();
-    PartDocumentImporter::import(source.doc, *dest, progress);
+    GeometryDocImporter::import(source.doc, *dest, progress);
     
     EXPECT_EQ(dest->prototypes().size(), 3);
     ASSERT_EQ(dest->topLevelParts().size(), 2);

@@ -30,3 +30,40 @@ private:
 };
 
 #endif
+
+Backend
+Backend.hpp
+GeometryCore
+MeshCore
+SolutionCore
+OcafKernel
+    DocumentCommands
+    DocumentDelta
+    DocumentTools
+        DocLabels
+        DocAttribute
+    GeometryDocument
+        GeometryDocument.hpp
+        RootAssembly
+        ShapeRegistry
+        GeometryTransfer
+        GeoDocTools
+            GeometryLabels
+            GeometryAttributes
+        GeometryDeltaEventsPublisher
+    MeshDocument
+        MeshDocument.hpp
+        RootMeshStorage
+        GlobalMeshParameters
+        LocalMeshParameters
+        MeshDocTools
+            MeshLabels
+            MeshAttributes
+        MeshDeltaEventsPublisher
+
+PartAttributes
+    name
+    color
+    layer
+
+MeshAttributes

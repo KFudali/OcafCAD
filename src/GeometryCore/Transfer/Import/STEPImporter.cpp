@@ -2,7 +2,7 @@
 #include <STEPCAFControl_Reader.hxx>
 #include <XCAFApp_Application.hxx>
 
-#include "PartDocumentImporter.hpp"
+#include "GeometryDocImporter.hpp"
 #include "OccProgressIndicator.hpp"
 
 
@@ -12,7 +12,7 @@ void STEPImporter::importIntoDoc(
 ) {
     auto occDoc = initDocument();
     transferSource(occDoc, aProgressPublisher);
-    PartDocumentImporter::import(occDoc, aDestDoc, aProgressPublisher);
+    GeometryDocImporter::import(occDoc, aDestDoc, aProgressPublisher);
 }
 
 Handle(TDocStd_Document) STEPImporter::initDocument() const{

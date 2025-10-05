@@ -1,6 +1,4 @@
 #include "PartAttributeTool.hpp"
-#include <TDataStd_Name.hxx>
-#include <Standard_Handle.hxx>
 
 PartAttributeTool::PartAttributeTool(PartLabel aPartLabel)
 :   mPartLabel(aPartLabel),
@@ -29,26 +27,23 @@ ColorRGBA PartAttributeTool::color() const {
 }
 
 bool PartAttributeTool::setName(const std::string& aName) {
-    try {
-        TDataStd_Name::Set(mPartLabel.label(), aName.c_str());
-        return true;
-    } catch (...) {
+    if (name() == aName){
         return false;
     }
+    TDataStd_Name::Set(mPartLabel.label(), aName.c_str());
+    return true;
 }
 
 bool PartAttributeTool::setColor(const ColorRGBA& aColor) {
-    try {
-        Quantity_Color color(
-            aColor.GetRGB().Red(), 
-            aColor.GetRGB().Green(), 
-            aColor.GetRGB().Blue(), 
-            Quantity_TOC_RGB
-        );
-        mColorTool->SetColor(mPartLabel.label(), color, XCAFDoc_ColorGen);
-        return true;
-    } catch (...) {
+    if (color() == aColor){
         return false;
     }
+    Quantity_Color color(
+        aColor.GetRGB().Red(), 
+        aColor.GetRGB().Green(), 
+        aColor.GetRGB().Blue(), 
+        Quantity_TOC_RGB
+    );
+    mColorTool->SetColor(mPartLabel.label(), color, XCAFDoc_ColorGen);
+    return true;
 }
-

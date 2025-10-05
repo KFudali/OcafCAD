@@ -1,9 +1,29 @@
-ShapePrototype - PartShape
-    Currently the part returns PartPrototype through fetching referred shape from ocaf.
-There is no clear way to return modified, located shape of the part from Part class,
-other than using its PartLabel. I think the Part interface could expose fetching
-something like ShapePrototype (which would always be top-level TopoDS_Shape) and
-something like PartShape which would be the ShapePrototype after all assembly level
-transformations. This would require specifying ShapePrototype and PartShape wrappers.
-
-
+Backend
+Backend.hpp
+GeometryCore
+MeshCore
+SolutionCore
+OcafKernel
+    DocumentCommands
+    DocumentDelta
+    DocumentTools
+        DocLabels
+        DocAttribute
+    GeometryDocument
+        GeometryDocument.hpp
+        RootAssembly
+        ShapeRegistry
+        GeometryTransfer
+        GeoDocTools
+            GeometryLabels
+            GeometryAttributes
+        GeometryDeltaEventsPublisher
+    MeshDocument
+        MeshDocument.hpp
+        RootMeshStorage
+        GlobalMeshParameters
+        LocalMeshParameters
+        MeshDocTools
+            MeshLabels
+            MeshAttributes
+        MeshDeltaEventsPublisher

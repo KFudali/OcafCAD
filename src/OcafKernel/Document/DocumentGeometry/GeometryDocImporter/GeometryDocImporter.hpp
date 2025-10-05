@@ -1,5 +1,5 @@
-#ifndef PartDocumentImport_hpp
-#define PartDocumentImport_hpp
+#ifndef GeometryDocImporter_hpp
+#define GeometryDocImporter_hpp
 
 #include <Standard_Handle.hxx>
 #include <TDocStd_Document.hxx>
@@ -7,11 +7,11 @@
 
 #include "AbstractProgressPublisher.hpp"
 #include "PartDocument.hpp"
-#include "PartDocumentImporterExceptions.hpp"
+#include "GeometryDocImporterExceptions.hpp"
 class XCAFDoc_ShapeTool;
 class XCAFDoc_ColorTool;
 
-class PartDocumentImporter {
+class GeometryDocImporter {
     public:
     static void import(
         Handle(TDocStd_Document) aSource, 
@@ -20,7 +20,7 @@ class PartDocumentImporter {
     );
 
     protected:
-    PartDocumentImporter(
+    GeometryDocImporter(
         Handle(TDocStd_Document) aSource, 
         PartDocument& aDest,
         AbstractProgressPublisher& aProgressPublisher

@@ -52,7 +52,7 @@ class Part{
     std::vector<PartLabel> childrenComponents() const;
     PartLabel parentAssembly() const;
 
-    private:
+    protected:
     PartLabel mPartLabel;
     PartTools mPartTools;
 };

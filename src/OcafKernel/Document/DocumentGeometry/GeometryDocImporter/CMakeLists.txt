@@ -1,7 +1,7 @@
 add_library(DocumentImport)
 
 target_sources(DocumentImport
-    PUBLIC PartDocumentImporter.cpp
+    PUBLIC GeometryDocImporter.cpp
 )
 
 target_link_libraries(DocumentImport

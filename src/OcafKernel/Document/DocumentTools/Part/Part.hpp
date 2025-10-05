@@ -4,7 +4,9 @@
 #include <Standard_Handle.hxx>
 
 #include "PartLabel.hpp"
-#include "PtototypeLabel.hpp"
+#include "PrototypeLabel.hpp"
+#include "PartPrototype.hpp"
+#include "Location.hpp"
 
 #include "PartAttributeTool.hpp"
 
@@ -17,13 +19,13 @@ class Part {
     Part(const PartLabel& aPartLabel);
     
     virtual ~Part() = default;
-    Part(const Part& other);
+    // Part(const Part& other);
 
     inline PartLabel partLabel() const {return mPartLabel;}; 
     PartPrototype prototype() const;
     Location location() const;
 
-    inline PartAttributeTool& attributes() const {return mAttributes;};
+    inline PartAttributeTool& attributes() {return mAttributes;};
 
     bool isAssembly() const;
     bool isComponent() const;    

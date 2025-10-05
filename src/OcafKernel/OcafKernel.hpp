@@ -1,32 +1,23 @@
 #ifndef OcafKernel_hpp
 #define OcafKernel_hpp
 
-#include <memory>
-
-#include "PartDocument.hpp"
-#include "AbstractDocCommandStack.hpp"
-
+#include "MainDocument.hpp"
+#include "CommandStack.hpp"
 #include "AbstractMessageBus.hpp"
-#include "MessageSubscriber.hpp"
-#include "AbstractOcafKernelPublisher.hpp"
-#include "AbstractDeltaObserver.hpp"
+#include "DeltaObservers.hpp"
 
-class OcafKernel{
+class OcafKernel {
     public:
     OcafKernel();
-   
-    PartDocument& partDocument(){ return *mPartDocument; };
-    AbstractDocCommandStack& commands() {return *mCommandStack; };
-    MessageSubscriber& events() {return *mSubscriber;};
-    
-    private:
-    std::unique_ptr<PartDocument> mPartDocument;
-    std::unique_ptr<AbstractDocCommandStack> mCommandStack;
 
-    std::unique_ptr<AbstractMessageBus> mInternalMessageBus;
-    std::unique_ptr<MessageSubscriber> mSubscriber;
-    std::unique_ptr<AbstractOcafKernelPublisher> mPublisher;
-    std::unique_ptr<AbstractDeltaObserver> mDeltaObserver;
+
+    private:
+    std::unique_ptr<AbstractMessageBus> mMessageBus;
+    
+    std::unique_ptr<MainDocument> mDocument;
+    std::unique_ptr<CommandStack> mCommandStack;
+
+    std::unique_ptr<DeltaObservers> mDeltaObservers; 
 
 };
 

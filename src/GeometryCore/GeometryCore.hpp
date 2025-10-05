@@ -21,7 +21,7 @@ class GeometryCore {
 
     GeometryView* view() const {return mView.get();}    
     GeometryEventSource* events() const {return mEvents.get();}    
-    AbstractDocCommandStack& commands() const {return mOcafKernel->commands();}
+    AbstractCommandStack& commands() const {return mOcafKernel->commands();}
 
     private:
     std::unique_ptr<OcafKernel> mOcafKernel;

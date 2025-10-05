@@ -4,13 +4,13 @@ GeometryPart::GeometryPart(const PartLabel& aPartLabel)
   : Part(aPartLabel){}
 
 bool GeometryPart::setPrototype(const PartPrototype& aPrototype) {
-    mShapeTool->SetShape(mLabel.label(), aPrototype);
+    mShapeTool->SetShape(mPartLabel.label(), aPrototype);
     return true;
 }
 
 bool GeometryPart::setLocation(const Location& aLocation) {
     TDF_Label refLabel;
-    mShapeTool->SetLocation(mLabel.label(), aLocation, refLabel);
+    mShapeTool->SetLocation(mPartLabel.label(), aLocation, refLabel);
     return false; 
 };
 

@@ -1,9 +1,18 @@
 #include "PartAttributeTool.hpp"
+#include <TDataStd_Name.hxx>
 
-PartAttributeTool::PartAttributeTool(PartLabel aPartLabel)
+PartAttributeTool::PartAttributeTool(const PartLabel& aPartLabel)
 :   mPartLabel(aPartLabel),
     mColorTool(XCAFDoc_DocumentTool::ColorTool(aPartLabel.label())),
     mShapeTool(XCAFDoc_DocumentTool::ShapeTool(aPartLabel.label())) {}
+
+bool PartAttributeTool::hasName() const {
+    Handle(TDataStd_Name) nameAttr;
+    return mPartLabel.label().FindAttribute(TDataStd_Name::GetID(), nameAttr);
+}
+bool PartAttributeTool::hasColor() const {
+    return mColorTool->IsSet(mPartLabel.label(), XCAFDoc_ColorGen);
+}
 
 std::string PartAttributeTool::name() const {
     Handle(TDataStd_Name) nameAttr;

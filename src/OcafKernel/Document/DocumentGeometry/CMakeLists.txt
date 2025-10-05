@@ -1,4 +1,3 @@
-add_subdirectory(DocGeometryEvents)
 add_subdirectory(GeometryDocImporter)
 add_subdirectory(GeometryPart)
 add_subdirectory(PrototypeRegistry)

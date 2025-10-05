@@ -13,8 +13,6 @@
 #include "PartPrototype.hpp"
 #include "PrototypeLabel.hpp"
 
-
-
 class DocumentGeometry {
     public:
     DocumentGeometry(Handle(TDocStd_Document) aDoc);

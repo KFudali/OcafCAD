@@ -1,6 +1,6 @@
 #include <gmock/gmock.h>
 
-#include "DocCommandStack.hpp"
+#include "CommandStack.hpp"
 #include "StubPartDocument.hpp"
 #include "StubPartPrototypes.hpp"
 #include "AbstractDeltaObserver.hpp"
@@ -11,18 +11,18 @@ public:
     MOCK_METHOD(bool, processDelta, (Handle(TDF_Delta) aDelta), (const, override));
 };
 
-class DocCommandStackTest : public ::testing::Test{
+class CommandStackTest : public ::testing::Test{
     protected:
     void SetUp(){
         mPartDocument = std::make_unique<PartDocument>(StubPartDocument::partDocument());
-        mCommands = std::make_unique<DocCommandStack>(mPartDocument->data());
+        mCommands = std::make_unique<CommandStack>(mPartDocument->data());
     }
     std::unique_ptr<PartDocument> mPartDocument;
-    std::unique_ptr<AbstractDocCommandStack> mCommands;
+    std::unique_ptr<AbstractCommandStack> mCommands;
 };
 
 
-TEST_F(DocCommandStackTest, CommandStackDoesNotAttachObserverWithSetDocument) {
+TEST_F(CommandStackTest, CommandStackDoesNotAttachObserverWithSetDocument) {
     MockDeltaObserver observer;
 
     EXPECT_CALL(observer, setDocument(testing::_))
@@ -32,7 +32,7 @@ TEST_F(DocCommandStackTest, CommandStackDoesNotAttachObserverWithSetDocument) {
     EXPECT_FALSE(appended);
 }
 
-TEST_F(DocCommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnCommit){
+TEST_F(CommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnCommit){
     MockDeltaObserver observer;
     EXPECT_CALL(observer, setDocument(testing::_))
         .WillRepeatedly(testing::Return(true));
@@ -47,7 +47,7 @@ TEST_F(DocCommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnCommit)
 }
 
 
-TEST_F(DocCommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnUndo){
+TEST_F(CommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnUndo){
     MockDeltaObserver observer;
     EXPECT_CALL(observer, setDocument(testing::_))
         .WillRepeatedly(testing::Return(true));
@@ -64,7 +64,7 @@ TEST_F(DocCommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnUndo){
 }
 
 
-TEST_F(DocCommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnRedo){
+TEST_F(CommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnRedo){
     MockDeltaObserver observer;
     EXPECT_CALL(observer, setDocument(testing::_))
         .WillRepeatedly(testing::Return(true));
@@ -83,7 +83,7 @@ TEST_F(DocCommandStackTest, CommandStackCallsProcessDeltaOnAllObserversOnRedo){
     mCommands->redo();
 }
 
-TEST_F(DocCommandStackTest, MultipleObserversGetNotifiedOnCommit){
+TEST_F(CommandStackTest, MultipleObserversGetNotifiedOnCommit){
     MockDeltaObserver observer_a;
     MockDeltaObserver observer_b;
     EXPECT_CALL(observer_a, setDocument(testing::_))
@@ -104,7 +104,7 @@ TEST_F(DocCommandStackTest, MultipleObserversGetNotifiedOnCommit){
     mCommands->commitCommand();
 }
 
-TEST_F(DocCommandStackTest, RemovedObserverDoesNotgetNotified){
+TEST_F(CommandStackTest, RemovedObserverDoesNotgetNotified){
     MockDeltaObserver observer;
     EXPECT_CALL(observer, setDocument(testing::_))
         .WillRepeatedly(testing::Return(true));
@@ -120,7 +120,7 @@ TEST_F(DocCommandStackTest, RemovedObserverDoesNotgetNotified){
 }
 
 
-TEST_F(DocCommandStackTest, SameObserverCannotBeAddedTwice){
+TEST_F(CommandStackTest, SameObserverCannotBeAddedTwice){
     MockDeltaObserver observer;
     EXPECT_CALL(observer, setDocument(testing::_))
         .WillRepeatedly(testing::Return(true));

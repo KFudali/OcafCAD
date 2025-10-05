@@ -2,36 +2,31 @@
 #include <XCAFDoc_ShapeTool.hxx>
 #include <XCAFDoc_DocumentTool.hxx>
 #include <TDF_LabelSequence.hxx>
+#include <TDataStd_Name.hxx>
+#include "DocLabelUtils.hpp"
 
-bool hasName() const {
-    Handle(TDataStd_Name) nameAttr;
-    return mPartLabel.label().FindAttribute(TDataStd_Name::GetID(), nameAttr);
-}
-bool hasColor() const {
-    return mColorTool->IsSet(mPartLabel.label(), XCAFDoc_ColorGen);
-}
 
 Part::Part(const PartLabel& aPartLabel)
   : mPartLabel(aPartLabel),
     mAttributes(PartAttributeTool(aPartLabel)),
     mShapeTool(XCAFDoc_DocumentTool::ShapeTool(aPartLabel.label()))
 {
-    if (hasColor()) {
-        setColor(Part::defaultPartColor);
+    if (mAttributes.hasColor()) {
+        mAttributes.setColor(Part::defaultPartColor);
     }
-    if (hasName()) {
-        setName(Part::defaultPartName);
+    if (mAttributes.hasName()) {
+        mAttributes.setName(Part::defaultPartName);
     }
 }
 
 PartPrototype Part::prototype() const {    
     TDF_Label prototypeLabel;
-    mShapeTool->GetReferredShape(mLabel.label(), prototypeLabel);
+    mShapeTool->GetReferredShape(mPartLabel.label(), prototypeLabel);
     return mShapeTool->GetShape(prototypeLabel);
 }
 
-Location PartGeometryTool::location() const {
-    return mShapeTool->GetLocation(mLabel.label());
+Location Part::location() const {
+    return mShapeTool->GetLocation(mPartLabel.label());
 }
 
 bool Part::isAssembly() const {
@@ -45,7 +40,7 @@ bool Part::isComponent() const {
         return false;
     }
     auto parent = parentAssembly();
-    return !DocLabelUtils::isRootAssemblyLabel(parent);
+    return !DocLabelUtils::isRootAssemblyLabel(parent.label());
 }
 
 std::vector<PartLabel> Part::childrenComponents() const {

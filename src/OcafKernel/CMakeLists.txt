@@ -1,22 +1,19 @@
-add_subdirectory(PartDocument)
-add_subdirectory(DocumentImport)
-add_subdirectory(OcafKernelMessaging)
-add_subdirectory(DocumentCommands)
+add_subdirectory(CommandStack)
+add_subdirectory(Document)
+add_subdirectory(Events)
 
 add_library(OcafKernel
     OcafKernel.cpp
 )
 
 target_link_libraries(OcafKernel
-    PRIVATE ${OpenCASCADE_LIBRARIES}
-    PUBLIC PartDocument
-    PUBLIC DocumentImport
-    PUBLIC DocumentCommands
-    PUBLIC OcafKernelMessaging
     PUBLIC Tools
+    PUBLIC CommandStack
+    PUBLIC Document
+    PUBLIC Events
+    PRIVATE DocumentDeltaObservers
 )
 
 target_include_directories(OcafKernel
-    PRIVATE ${BOOST_DIR}
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 )

@@ -11,16 +11,6 @@ DocumentGeometry::DocumentGeometry(Handle(TDocStd_Document) aDoc) : mDoc(aDoc) {
     mPrototypeRegistry = std::make_unique<PrototypeRegistry>(mDoc);
 } 
 
-// bool DocumentGeometry::save(const std::string& aFilePath) const {
-//     TCollection_ExtendedString xmlPath(aFilePath.c_str());
-//     XmlXCAFDrivers::DefineFormat(mApp);
-//     XmlDrivers::DefineFormat(mApp);
-//     if (mApp->SaveAs(mDoc, xmlPath) == PCDM_StoreStatus::PCDM_SS_OK) {
-//         return true;
-//     }
-//     return false;
-// }
-
 PartLabel DocumentGeometry::addPart(PrototypeLabel aPrototype, Location aLocation){
     return mRootAssembly->addPart(aPrototype, aLocation);
 }

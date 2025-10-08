@@ -1,8 +1,11 @@
+add_subdirectory(CommonOccFixtures)
+add_subdirectory(DocumentFixtures)
+
 add_library(OcafKernelFixtures INTERFACE)
 
 target_link_libraries(OcafKernelFixtures INTERFACE
-   OcafKernel
-   Tools
+    CommonOccFixtures
+    DocumentFixtures
 )
 
 target_include_directories(OcafKernelFixtures INTERFACE

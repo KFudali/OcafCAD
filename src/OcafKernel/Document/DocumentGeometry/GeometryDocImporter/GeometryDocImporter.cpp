@@ -4,11 +4,13 @@
 #include <XCAFDoc_ShapeTool.hxx>
 #include <XCAFDoc_ColorTool.hxx>
 #include <TDF_LabelSequence.hxx>
+
 #include "DocLabel.hpp"
+#include "GeometryPart.hpp"
 
 void GeometryDocImporter::import(
     Handle(TDocStd_Document) aSrc, 
-    PartDocument& aDest,
+    DocumentGeometry& aDest,
     AbstractProgressPublisher& aProgressPublisher
 ){
     GeometryDocImporter importer(aSrc, aDest, aProgressPublisher);
@@ -17,7 +19,7 @@ void GeometryDocImporter::import(
 
 GeometryDocImporter::GeometryDocImporter(
     Handle(TDocStd_Document) aSource,
-    PartDocument& aDest,
+    DocumentGeometry& aDest,
     AbstractProgressPublisher& aProgressPublisher
 ) : mSrc(aSource), 
     mShapeTool(XCAFDoc_DocumentTool::ShapeTool(aSource->Main())),
@@ -94,7 +96,7 @@ void GeometryDocImporter::importPart(
     PartLabel destPartLabel;
     auto loc = mShapeTool->GetLocation(aPartLabel);
     if (aDestParentLabel){
-        auto parent = Part(*aDestParentLabel);
+        auto parent = GeometryPart(*aDestParentLabel);
         destPartLabel = parent.addComponent(partProtoLabel, loc);
     } else {
         destPartLabel = mDest.addPart(partProtoLabel, loc);

@@ -5,9 +5,10 @@
 #include <TDocStd_Document.hxx>
 #include <optional>
 
+#include "DocumentGeometry.hpp"
 #include "AbstractProgressPublisher.hpp"
-#include "PartDocument.hpp"
-#include "GeometryDocImporterExceptions.hpp"
+#include "GeometryDocImportExceptions.hpp"
+
 class XCAFDoc_ShapeTool;
 class XCAFDoc_ColorTool;
 
@@ -15,14 +16,14 @@ class GeometryDocImporter {
     public:
     static void import(
         Handle(TDocStd_Document) aSource, 
-        PartDocument& aDest,
+        DocumentGeometry& aDest,
         AbstractProgressPublisher& aProgressPublisher
     );
 
     protected:
     GeometryDocImporter(
         Handle(TDocStd_Document) aSource, 
-        PartDocument& aDest,
+        DocumentGeometry& aDest,
         AbstractProgressPublisher& aProgressPublisher
     ); 
     void import();
@@ -55,7 +56,7 @@ class GeometryDocImporter {
     Handle(TDocStd_Document) mSrc;
     Handle(XCAFDoc_ShapeTool) mShapeTool;
     Handle(XCAFDoc_ColorTool) mColorTool;
-    PartDocument& mDest;
+    DocumentGeometry& mDest;
     AbstractProgressPublisher& mProgressScope;
 };
 

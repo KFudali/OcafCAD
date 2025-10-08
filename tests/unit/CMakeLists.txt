@@ -1,5 +1,3 @@
-add_subdirectory(GeometryCore)
-add_subdirectory(MeshCore)
 add_subdirectory(OcafKernel)
 add_subdirectory(Tools)
 
@@ -8,9 +6,9 @@ add_executable(utAll
 )
 
 target_link_libraries(utAll PRIVATE
-    utToolsLib
-    utOcafKernelLib
-    utGeometryCoreLib
+    utTools
+    utOcafKernel
+    GTest::gmock_main
 )
 
 include(GoogleTest)

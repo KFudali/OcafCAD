@@ -5,7 +5,7 @@ target_sources(PrototypeRegistry PRIVATE
 )
 
 target_link_libraries(PrototypeRegistry
-    PUBLIC PartDocTools
+    PUBLIC DocumentTools
     PRIVATE RootAssembly
 )
 

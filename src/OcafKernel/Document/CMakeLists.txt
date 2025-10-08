@@ -8,7 +8,6 @@ add_library(Document
 
 target_link_libraries(Document PUBLIC
     ${OpenCASCADE_LIBRARIES}
-    DocumentCommands
     DocumentGeometry
     DocumentMesh
     DocumentTools

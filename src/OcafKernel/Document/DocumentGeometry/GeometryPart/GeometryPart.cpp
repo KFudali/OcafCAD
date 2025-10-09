@@ -36,6 +36,11 @@ PartLabel GeometryPart::addComponent(
     PrototypeLabel aProtoLabel, 
     Location aLocation
 ) {
+    if (!isAssembly()) {
+        if(!expandToAssembly()){
+            return PartLabel();
+        }
+    }
     auto proto = mShapeTool->GetShape(aProtoLabel.label());
     auto label = mShapeTool->AddComponent(
         mPartLabel.label(), proto
@@ -49,6 +54,11 @@ PartLabel GeometryPart::addComponent(
     PartLabel aPartLabel,
     Location aLocation
 ) {
+    if (!isAssembly()) {
+        if(!expandToAssembly()){
+            return PartLabel();
+        }
+    }
     TDF_Label protoLabel;
     mShapeTool->GetReferredShape(aPartLabel.label(), protoLabel);
     if (protoLabel.IsNull()) {

@@ -24,9 +24,6 @@ class GeometryPart : public Part {
         Location aLocation
     );
     bool removeComponent(PartLabel aPartLabel);
-
-    private:
-    PartLabel mPartLabel;
 };
 
 

@@ -19,7 +19,6 @@ class Part {
     Part(const PartLabel& aPartLabel);
     
     virtual ~Part() = default;
-    // Part(const Part& other);
 
     inline PartLabel partLabel() const {return mPartLabel;}; 
     PartPrototype prototype() const;

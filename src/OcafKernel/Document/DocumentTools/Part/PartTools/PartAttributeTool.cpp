@@ -36,17 +36,11 @@ ColorRGBA PartAttributeTool::color() const {
 }
 
 bool PartAttributeTool::setName(const std::string& aName) {
-    if (name() == aName){
-        return false;
-    }
     TDataStd_Name::Set(mPartLabel.label(), aName.c_str());
     return true;
 }
 
 bool PartAttributeTool::setColor(const ColorRGBA& aColor) {
-    if (color() == aColor){
-        return false;
-    }
     Quantity_Color color(
         aColor.GetRGB().Red(), 
         aColor.GetRGB().Green(), 

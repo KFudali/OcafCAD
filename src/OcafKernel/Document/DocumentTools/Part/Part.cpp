@@ -11,10 +11,10 @@ Part::Part(const PartLabel& aPartLabel)
     mAttributes(PartAttributeTool(aPartLabel)),
     mShapeTool(XCAFDoc_DocumentTool::ShapeTool(aPartLabel.label()))
 {
-    if (mAttributes.hasColor()) {
+    if (!mAttributes.hasColor()) {
         mAttributes.setColor(Part::defaultPartColor);
     }
-    if (mAttributes.hasName()) {
+    if (!mAttributes.hasName()) {
         mAttributes.setName(Part::defaultPartName);
     }
 }
@@ -40,7 +40,7 @@ bool Part::isComponent() const {
         return false;
     }
     auto parent = parentAssembly();
-    return !DocLabelUtils::isRootAssemblyLabel(parent.label());
+    return parent.isValid();
 }
 
 std::vector<PartLabel> Part::childrenComponents() const {

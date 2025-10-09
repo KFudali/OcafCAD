@@ -1,9 +1,11 @@
 #ifndef StubOccDocument_hpp
-#define StubOccDoucment_hpp
+#define StubOccDocument_hpp
 
 #include <Standard_Handle.hxx>
 #include <XCAFApp_Application.hxx>
 #include <TDocStd_Document.hxx>
+
+
 
 class StubOccDocument {
     public: 

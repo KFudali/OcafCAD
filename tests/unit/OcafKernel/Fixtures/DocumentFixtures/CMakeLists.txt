@@ -2,6 +2,7 @@ add_library(DocumentFixtures INTERFACE)
 
 target_link_libraries(DocumentFixtures INTERFACE
     CommonOccFixtures
+    ToolsFixtures
     Document
 )
 

@@ -1,3 +1,4 @@
+add_subdirectory(Fixtures)
 add_subdirectory(MathUtils)
 add_subdirectory(Messaging)
 add_subdirectory(OccTools)

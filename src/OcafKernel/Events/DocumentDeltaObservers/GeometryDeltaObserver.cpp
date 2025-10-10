@@ -22,7 +22,7 @@ void GeometryDeltaObserver::onAddition(Handle(TDF_DeltaOnAddition) aDelta) {
     }
     else if (aDelta->Attribute()->IsKind(STANDARD_TYPE(PartMarkerAttribute))) {
         mMessagePublisher.publish(PartAddedEvent(DocLabel(label)));
-
+        if (label.IsNull()) {return;}
         if (!DocLabelUtils::isRootAssemblyLabel(label.Father())) {
             mMessagePublisher.publish(ComponentAddedToAssemblyEvent(DocLabel(label)));
         }
@@ -38,7 +38,7 @@ void GeometryDeltaObserver::onRemoval(Handle(TDF_DeltaOnRemoval) aDelta) {
     }
     else if (aDelta->Attribute()->IsKind(STANDARD_TYPE(PartMarkerAttribute))) {
         mMessagePublisher.publish(PartRemovedEvent(DocLabel(label)));
-
+        if (label.IsNull()) {return;}
         if (!DocLabelUtils::isRootAssemblyLabel(label.Father())) {
             mMessagePublisher.publish(ComponentRemovedFromAssemblyEvent(DocLabel(label)));
         }

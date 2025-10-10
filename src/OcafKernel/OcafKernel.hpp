@@ -10,6 +10,9 @@ class OcafKernel {
     public:
     OcafKernel();
 
+    inline MainDocument& doc() {return *mDocument;}
+    inline CommandStack& commands() {return *mCommandStack;}
+    inline AbstractMessageBus& events() {return *mMessageBus;}
 
     private:
     std::unique_ptr<AbstractMessageBus> mMessageBus;

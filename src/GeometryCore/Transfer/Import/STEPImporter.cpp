@@ -7,7 +7,7 @@
 
 
 void STEPImporter::importIntoDoc(
-    PartDocument& aDestDoc, 
+    DocumentGeometry& aDestDoc, 
     AbstractProgressPublisher& aProgressPublisher
 ) {
     auto occDoc = initDocument();

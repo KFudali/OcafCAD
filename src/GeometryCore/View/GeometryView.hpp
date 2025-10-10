@@ -1,21 +1,21 @@
 #ifndef GeometryView_hpp
 #define GeometryView_hpp
 
-#include "PartView.hpp"
-#include "PartDocument.hpp"
+#include "DocumentGeometry.hpp"
 #include "GeometryObject.hpp"
+#include "GeometryPart.hpp"
 
 class GeometryView {
     public:
 
-    GeometryView(const PartDocument& aPartDocument);
+    GeometryView(const DocumentGeometry& aDocumentGeometry);
 
     std::vector<PartLabel> topLevelPartLabels() const;
-    std::vector<PartView> topLevelParts() const;
+    std::vector<GeometryPart> topLevelParts() const;
     std::vector<GeometryObject> geometryObjects() const;
 
     private:
-    const PartDocument& mPartDocument;
+    const DocumentGeometry& mDocumentGeometry;
 };
 
 #endif

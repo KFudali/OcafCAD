@@ -16,7 +16,7 @@ class STEPImporter : public AbstractImporter {
     ) : mSource(aSource) {}
 
     void importIntoDoc(
-        PartDocument& aDestDoc, 
+        DocumentGeometry& aDestDoc, 
         AbstractProgressPublisher& aProgressPublisher
     ) override;
     

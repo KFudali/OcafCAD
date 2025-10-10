@@ -1,13 +1,13 @@
 #ifndef AbstractImporter_hpp
 #define AbstractImporter_hpp
 
-#include "PartDocument.hpp"
+#include "DocumentGeometry.hpp"
 #include "AbstractProgressPublisher.hpp"
 
 class AbstractImporter{
     public:
     virtual void importIntoDoc(
-        PartDocument& aDestDoc,
+        DocumentGeometry& aDestDoc,
         AbstractProgressPublisher& aProgressPublisher
     ) = 0;
 };

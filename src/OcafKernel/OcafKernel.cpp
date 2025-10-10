@@ -6,8 +6,8 @@ OcafKernel::OcafKernel() {
     mDocument = std::make_unique<MainDocument>(app);
     mCommandStack = std::make_unique<CommandStack>(mDocument->data());
     mMessageBus = std::make_unique<SignalMessageBus>();
+    mMessageSubscriber = std::make_unique<MessageSubscriber>(*mMessageBus);
 
     mDeltaObservers = std::make_unique<DeltaObservers>(*mMessageBus);
     mCommandStack->appendDeltaObserver(mDeltaObservers->geometry());    
-
 }

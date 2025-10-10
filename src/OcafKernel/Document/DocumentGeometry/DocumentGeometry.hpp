@@ -1,5 +1,5 @@
-#ifndef PartDocument_hpp
-#define PartDocument_hpp
+#ifndef DocumentGeometry_hpp
+#define DocumentGeometry_hpp
 
 #include <Standard_Handle.hxx>
 #include <TDocStd_Document.hxx>

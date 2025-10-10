@@ -9,7 +9,7 @@
 
 class GeometryCore {
     public:
-    GeometryCore();
+    GeometryCore(OcafKernel& aOcafKernel);
 
     void import(
         AbstractImporter& aImporter, 
@@ -21,10 +21,9 @@ class GeometryCore {
 
     GeometryView* view() const {return mView.get();}    
     GeometryEventSource* events() const {return mEvents.get();}    
-    AbstractCommandStack& commands() const {return mOcafKernel->commands();}
 
     private:
-    std::unique_ptr<OcafKernel> mOcafKernel;
+    DocumentGeometry& mDocumentGeometry;
     std::unique_ptr<GeometryView> mView;
     std::unique_ptr<GeometryEventSource> mEvents;
 };

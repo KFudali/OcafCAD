@@ -10,8 +10,8 @@ target_link_libraries(OcafKernel
     PUBLIC Tools
     PUBLIC CommandStack
     PUBLIC Document
-    PUBLIC Events
-    PRIVATE DocumentDeltaObservers
+    PUBLIC OcafKernelEvents
+    PUBLIC DocumentDeltaObservers
 )
 
 target_include_directories(OcafKernel

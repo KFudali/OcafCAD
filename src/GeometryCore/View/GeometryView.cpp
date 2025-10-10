@@ -2,29 +2,29 @@
 #include <algorithm>
 
 GeometryView::GeometryView(
-    const PartDocument& aPartDocument
-) : mPartDocument(aPartDocument){}
+    const DocumentGeometry& aDocumentGeometry
+) : mDocumentGeometry(aDocumentGeometry){}
 
 std::vector<PartLabel> GeometryView::topLevelPartLabels() const {
-    return mPartDocument.topLevelParts();
+    return mDocumentGeometry.topLevelParts();
 }
 
-std::vector<PartView> GeometryView::topLevelParts() const {
-    auto partLabels = mPartDocument.topLevelParts();
-    std::vector<PartView> partViews;
-    partViews.reserve(partLabels.size());
+std::vector<GeometryPart> GeometryView::topLevelParts() const {
+    auto partLabels = mDocumentGeometry.topLevelParts();
+    std::vector<GeometryPart> geometryParts;
+    geometryParts.reserve(partLabels.size());
 
     std::transform(partLabels.begin(), partLabels.end(),
-        std::back_inserter(partViews),
+        std::back_inserter(geometryParts),
         [](const PartLabel& label) {
-            return PartView(label);
+            return GeometryPart(label);
     });
-    return partViews;
+    return geometryParts;
 }
 
 
 std::vector<GeometryObject> GeometryView::geometryObjects() const {
-    auto partLabels = mPartDocument.topLevelParts();
+    auto partLabels = mDocumentGeometry.topLevelParts();
     std::vector<GeometryObject> geoObjects;
     geoObjects.reserve(partLabels.size());
 

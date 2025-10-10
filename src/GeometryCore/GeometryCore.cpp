@@ -1,17 +1,16 @@
 #include "GeometryCore.hpp"
 
-GeometryCore::GeometryCore() 
-  : mOcafKernel(std::make_unique<OcafKernel>()),
-    mView(std::make_unique<GeometryView>(mOcafKernel->partDocument())),
-    mEvents(std::make_unique<GeometryEventSource>(mOcafKernel->events())) {}
+GeometryCore::GeometryCore(
+    OcafKernel& aOcafKernel
+) : mDocumentGeometry(aOcafKernel.doc().geometry()),
+    mView(std::make_unique<GeometryView>(aOcafKernel.doc().geometry())),
+    mEvents(std::make_unique<GeometryEventSource>(aOcafKernel.events())) {}
 
 void GeometryCore::import(
     AbstractImporter& aImporter,
     AbstractProgressPublisher& aPublisher
 ) {
-    mOcafKernel->commands().openCommand();
-    aImporter.importIntoDoc(mOcafKernel->partDocument(), aPublisher);
-    mOcafKernel->commands().commitCommand();
+    aImporter.importIntoDoc(mDocumentGeometry, aPublisher);
 }
 
 void GeometryCore::import(

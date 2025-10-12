@@ -7,6 +7,7 @@
 class GeometryCoreFixture : public OcafKernelFixture {
     protected:
     void SetUp () {
+        OcafKernelFixture::SetUp();
         geometryCore = std::make_unique<GeometryCore>(
             *kernel
         );

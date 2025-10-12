@@ -6,6 +6,8 @@ MainDocument::MainDocument(Handle(XCAFApp_Application) aApp)
  : mApp(aApp) {
     mApp->NewDocument("XmlXCAF", mDoc);
     mApp->InitDocument(mDoc);
+    mGeometry = std::make_unique<DocumentGeometry>(mDoc);
+    mMesh = std::make_unique<DocumentMesh>();
 }
 
 bool MainDocument::save(const std::string& aSaveFilePath) const {

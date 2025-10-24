@@ -8,63 +8,63 @@
 #include "TopTools_IndexedMapOfShape.hxx"
 #include <stdexcept>
 
-PartPrototype GeometryObject::getSubShape(const SubShapeId& aShapeId) const {
-    TopTools_IndexedMapOfShape subShapes;
-    TopExp::MapShapes(mSourcePart.prototype(), subShapes);
+// PartPrototype GeometryObject::getSubShape(const SubShapeId& aShapeId) const {
+//     TopTools_IndexedMapOfShape subShapes;
+//     TopExp::MapShapes(mSourcePart.prototype(), subShapes);
 
-    if (aShapeId.idInParent <= 0 || aShapeId.idInParent > subShapes.Extent()) {
-        throw std::out_of_range("Invalid SubShapeId index.");
-    }
+//     if (aShapeId.idInParent <= 0 || aShapeId.idInParent > subShapes.Extent()) {
+//         throw std::out_of_range("Invalid SubShapeId index.");
+//     }
 
-    return subShapes.FindKey(aShapeId.idInParent);
-}
+//     return subShapes.FindKey(aShapeId.idInParent);
+// }
 
-PartPrototype GeometryObject::getTypedSubShape(const TypedSubShapeId& aShapeId) const {
-    TopTools_IndexedMapOfShape subShapes;
-    TopExp::MapShapes(mSourcePart.prototype(), aShapeId.shapeType, subShapes);
-    if (aShapeId.idInParent <= 0 || aShapeId.idInParent > subShapes.Extent()) {
-        throw std::out_of_range("Invalid SubShapeId index.");
-    }
-    return subShapes.FindKey(aShapeId.idInParent);
-}
+// PartPrototype GeometryObject::getTypedSubShape(const TypedSubShapeId& aShapeId) const {
+//     TopTools_IndexedMapOfShape subShapes;
+//     TopExp::MapShapes(mSourcePart.prototype(), aShapeId.shapeType, subShapes);
+//     if (aShapeId.idInParent <= 0 || aShapeId.idInParent > subShapes.Extent()) {
+//         throw std::out_of_range("Invalid SubShapeId index.");
+//     }
+//     return subShapes.FindKey(aShapeId.idInParent);
+// }
 
-SubShapeId GeometryObject::getSubShapeId(const PartPrototype& aPartPrototype) const {
-    TopTools_IndexedMapOfShape subShapes;
-    TopExp::MapShapes(mSourcePart.prototype(), subShapes);
-    int idInParent = subShapes.FindIndex(aPartPrototype);
+// SubShapeId GeometryObject::getSubShapeId(const PartPrototype& aPartPrototype) const {
+//     TopTools_IndexedMapOfShape subShapes;
+//     TopExp::MapShapes(mSourcePart.prototype(), subShapes);
+//     int idInParent = subShapes.FindIndex(aPartPrototype);
 
-    if (idInParent == 0) {
-        throw std::runtime_error("Shape not found in parent.");
-    }
+//     if (idInParent == 0) {
+//         throw std::runtime_error("Shape not found in parent.");
+//     }
 
-    return SubShapeId{idInParent};
-}
+//     return SubShapeId{idInParent};
+// }
 
-static TypedSubShapeIdList collectSubShapes(const Part& sourcePart, const ShapeType& type) {
-    TopTools_IndexedMapOfShape subShapes;
-    TopExp::MapShapes(sourcePart.prototype(), type, subShapes);
+// static TypedSubShapeIdList collectSubShapes(const Part& sourcePart, const ShapeType& type) {
+//     TopTools_IndexedMapOfShape subShapes;
+//     TopExp::MapShapes(sourcePart.prototype(), type, subShapes);
 
-    std::vector<int> ids;
-    ids.reserve(subShapes.Extent());
-    for (int i = 1; i <= subShapes.Extent(); ++i) {
-        ids.push_back(i);
-    }
+//     std::vector<int> ids;
+//     ids.reserve(subShapes.Extent());
+//     for (int i = 1; i <= subShapes.Extent(); ++i) {
+//         ids.push_back(i);
+//     }
 
-    return TypedSubShapeIdList{sourcePart.partLabel(), std::move(ids), type};
-}
+//     return TypedSubShapeIdList{sourcePart.partLabel(), std::move(ids), type};
+// }
 
-TypedSubShapeIdList GeometryObject::points() const {
-    return collectSubShapes(mSourcePart, TopAbs_VERTEX);
-}
+// TypedSubShapeIdList GeometryObject::points() const {
+//     return collectSubShapes(mSourcePart, TopAbs_VERTEX);
+// }
 
-TypedSubShapeIdList GeometryObject::edges() const {
-    return collectSubShapes(mSourcePart, TopAbs_EDGE);
-}
+// TypedSubShapeIdList GeometryObject::edges() const {
+//     return collectSubShapes(mSourcePart, TopAbs_EDGE);
+// }
 
-TypedSubShapeIdList GeometryObject::faces() const {
-    return collectSubShapes(mSourcePart, TopAbs_FACE);
-}
+// TypedSubShapeIdList GeometryObject::faces() const {
+//     return collectSubShapes(mSourcePart, TopAbs_FACE);
+// }
 
-TypedSubShapeIdList GeometryObject::volumes() const {
-    return collectSubShapes(mSourcePart, TopAbs_SOLID);
-}
+// TypedSubShapeIdList GeometryObject::volumes() const {
+//     return collectSubShapes(mSourcePart, TopAbs_SOLID);
+// }

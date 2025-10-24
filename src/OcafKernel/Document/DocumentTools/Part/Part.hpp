@@ -9,6 +9,7 @@
 #include "Location.hpp"
 
 #include "PartAttributeTool.hpp"
+#include "PartSubShapeTool.hpp"
 
 class XCAFDoc_ShapeTool;
 class Part {
@@ -25,6 +26,7 @@ class Part {
     Location location() const;
 
     inline PartAttributeTool& attributes() {return mAttributes;};
+    inline PartSubShapeTool& subShapes() {return mSubShapes;};
 
     bool isAssembly() const;
     bool isComponent() const;    
@@ -35,6 +37,7 @@ class Part {
     protected:
     PartLabel mPartLabel;
     PartAttributeTool mAttributes;
+    PartSubShapeTool mSubShapes;
     Handle(XCAFDoc_ShapeTool) mShapeTool;
 };
 

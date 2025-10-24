@@ -9,6 +9,7 @@
 Part::Part(const PartLabel& aPartLabel)
   : mPartLabel(aPartLabel),
     mAttributes(PartAttributeTool(aPartLabel)),
+    mSubShapes(PartSubShapeTool(aPartLabel)),
     mShapeTool(XCAFDoc_DocumentTool::ShapeTool(aPartLabel.label()))
 {
     if (!mAttributes.hasColor()) {

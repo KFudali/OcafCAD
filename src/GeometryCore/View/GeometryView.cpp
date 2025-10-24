@@ -31,7 +31,7 @@ std::vector<GeometryObject> GeometryView::geometryObjects() const {
     std::transform(partLabels.begin(), partLabels.end(),
         std::back_inserter(geoObjects),
         [](const PartLabel& label) {
-            return GeometryObject(label);
+            return GeometryObject();
     });
     return geoObjects;
 }

@@ -1,19 +1,20 @@
 #ifndef LocalSizing_hpp
 #define LocalSizing_hpp
 
-#include "ShapeIds.hpp"
+#include "SubShapeId.hpp"
+#include "ShapeType.hpp"
 
-template <ShapeType T>
+template <int T>
 struct LocalSizing {
     TypedSubShapeId target;
     float minSize, maxSize;
 
-    LocalSizing(int id, float min, float max)
-        : target{id, T}, minSize(min), maxSize(max) {}
+    LocalSizing(const TypedSubShapeId& id, float min, float max)
+        : target(id), minSize(min), maxSize(max) {}
 };
 
-using EdgeSizing   = LocalSizing<ShapeType::TopAbs_EDGE>;
-using FaceSizing   = LocalSizing<ShapeType::TopAbs_FACE>;
-using VolumeSizing = LocalSizing<ShapeType::TopAbs_SOLID>;
+using EdgeSizing   = LocalSizing<TopAbs_EDGE>;
+using FaceSizing   = LocalSizing<TopAbs_FACE>;
+using VolumeSizing = LocalSizing<TopAbs_SOLID>;
 
 #endif

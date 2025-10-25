@@ -12,12 +12,12 @@ class GeometryPart : public Part {
     bool setLocation(const Location& aLocation);
     bool setPrototype(const PartPrototype& aName);
     
-    GeometryNamedSelection* addNamedSelection(
+    GeometryNamedSelection addNamedSelection(
         const SubShapeId& aSubShapeId, 
         const std::string& aName
     );
-    std::vector<GeometryNamedSelection*> namedSelections() const;
-    
+    std::vector<GeometryNamedSelection> namedSelections() const;
+    TDF_Label namedSelectionTreeLabel() const;
     PartLabel addEmptyComponent();
 
     bool expandToAssembly();

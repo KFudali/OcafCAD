@@ -1,4 +1,7 @@
 #include "GeometryPart.hpp"
+#include "NamedSelectionTreeMarkerAttribute.hpp"
+#include "GeometryNamedSelectionAttribute.hpp"
+#include <TDF_ChildIterator.hxx>
 
 GeometryPart::GeometryPart(const PartLabel& aPartLabel)
   : Part(aPartLabel){}
@@ -14,7 +17,7 @@ bool GeometryPart::setLocation(const Location& aLocation) {
     return false; 
 };
 
-GeometryNamedSelection* GeometryPart::addNamedSelection(
+GeometryNamedSelection GeometryPart::addNamedSelection(
     const SubShapeId& aSubShapeId, 
     const std::string& aName
 ) {
@@ -27,15 +30,50 @@ GeometryNamedSelection* GeometryPart::addNamedSelection(
     if(subShapeLabel.IsNull()){
         subShapeLabel = mShapeTool->AddSubShape(protoLabel, subShape);
     }
-    mPartLabel.label().FindChild(
-    // Now each part label could have label for named selections. Should each named selection be an attribute, 
-    // or rather another label with NamedSelectionAttribute and ShapeReferencing attribute?
-
+    TDF_Label namedSelectionTree = namedSelectionTreeLabel();
+    GeometryNamedSelection selection(namedSelectionTree, subShapeLabel, aName);
+    return selection;
 }
 
-std::vector<GeometryNamedSelection*> GeometryPart::namedSelections() const {
-    return std::vector<GeometryNamedSelection*>{};
+TDF_Label GeometryPart::namedSelectionTreeLabel() const
+{
+    TDF_Label rootLabel = mPartLabel.label();
+    TDF_Label foundLabel;
+
+    for (TDF_ChildIterator it(rootLabel); it.More(); it.Next()) {
+        TDF_Label child = it.Value();
+        Handle(TDF_Attribute) attr;
+        if (child.FindAttribute(NamedSelectionTreeMarkerAttribute::GetID(), attr)) {
+            foundLabel = child;
+            break;
+        }
+    }
+
+    if (foundLabel.IsNull()) {
+        foundLabel = rootLabel.NewChild();
+        Handle(NamedSelectionTreeMarkerAttribute) marker = 
+            new NamedSelectionTreeMarkerAttribute();
+        foundLabel.AddAttribute(marker);
+    }
+
+    return foundLabel;
 }
+
+std::vector<GeometryNamedSelection> GeometryPart::namedSelections() const
+{
+    std::vector<GeometryNamedSelection> result;
+    TDF_Label treeLabel = namedSelectionTreeLabel();
+    for (TDF_ChildIterator it(treeLabel); it.More(); it.Next()) {
+        TDF_Label child = it.Value();
+
+        Handle(GeometryNamedSelectionAttribute) attr;
+        if (child.FindAttribute(GeometryNamedSelectionAttribute::GetID(), attr)) {
+            result.emplace_back(child);
+        }
+    }
+    return result;
+}
+
 
 PartLabel GeometryPart::addEmptyComponent(){
     auto newEmpty = mShapeTool->NewShape();

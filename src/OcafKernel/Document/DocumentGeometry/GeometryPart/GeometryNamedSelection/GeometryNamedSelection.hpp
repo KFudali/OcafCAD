@@ -6,14 +6,24 @@
 
 class GeometryNamedSelection {
     public:
-    GeometryNamedSelection(const std::string& aName, TDF_Label aSubShapeLabel);
-   
+    GeometryNamedSelection(
+        TDF_Label aParentLabel,
+        TDF_Label aSubShapeLabel,
+        const std::string& aName
+    );
+    GeometryNamedSelection(TDF_Label aNamingLabel);
+    
     std::string name() const; 
     inline TDF_Label label() const {return mLabel;}; 
     
     bool rename(const std::string& aNewName);     
 
-    private:    
+    private:
+    TDF_Label findExistingNamedSelection(
+        const TDF_Label& aParentLabel,
+        const TDF_Label& aSubShapeLabel
+    ) const;
+    
     TDF_Label mLabel;
 };
 

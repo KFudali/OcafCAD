@@ -2,6 +2,7 @@
 #define GeometryPart_hpp
 
 #include "Part.hpp"
+#include "GeometryNamedSelection.hpp"
 
 class GeometryPart : public Part {
     public:
@@ -10,7 +11,13 @@ class GeometryPart : public Part {
     
     bool setLocation(const Location& aLocation);
     bool setPrototype(const PartPrototype& aName);
-
+    
+    GeometryNamedSelection* addNamedSelection(
+        const SubShapeId& aSubShapeId, 
+        const std::string& aName
+    );
+    std::vector<GeometryNamedSelection*> namedSelections() const;
+    
     PartLabel addEmptyComponent();
 
     bool expandToAssembly();

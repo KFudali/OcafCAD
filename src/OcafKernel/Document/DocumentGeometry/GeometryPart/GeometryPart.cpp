@@ -14,6 +14,29 @@ bool GeometryPart::setLocation(const Location& aLocation) {
     return false; 
 };
 
+GeometryNamedSelection* GeometryPart::addNamedSelection(
+    const SubShapeId& aSubShapeId, 
+    const std::string& aName
+) {
+    auto subShape = mSubShapes.subShape(aSubShapeId);
+    TDF_Label protoLabel;
+    auto prototype = mShapeTool->GetReferredShape(mPartLabel.label(), protoLabel);
+
+    TDF_Label subShapeLabel;
+    mShapeTool->FindSubShape(protoLabel, subShape, subShapeLabel);
+    if(subShapeLabel.IsNull()){
+        subShapeLabel = mShapeTool->AddSubShape(protoLabel, subShape);
+    }
+    mPartLabel.label().FindChild(
+    // Now each part label could have label for named selections. Should each named selection be an attribute, 
+    // or rather another label with NamedSelectionAttribute and ShapeReferencing attribute?
+
+}
+
+std::vector<GeometryNamedSelection*> GeometryPart::namedSelections() const {
+    return std::vector<GeometryNamedSelection*>{};
+}
+
 PartLabel GeometryPart::addEmptyComponent(){
     auto newEmpty = mShapeTool->NewShape();
     auto label = mShapeTool->AddComponent(

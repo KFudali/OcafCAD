@@ -1,0 +1,5 @@
+include(cmake/dependencies/find_boost.cmake)
+include(cmake/dependencies/find_gtest.cmake)
+include(cmake/dependencies/find_netgen.cmake)
+include(cmake/dependencies/find_occt.cmake)
+include(cmake/dependencies/find_vtk.cmake)

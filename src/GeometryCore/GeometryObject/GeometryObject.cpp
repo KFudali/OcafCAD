@@ -8,7 +8,7 @@
 #include "TopTools_IndexedMapOfShape.hxx"
 #include <stdexcept>
 
-// PartPrototype GeometryObject::getSubShape(const SubShapeId& aShapeId) const {
+// Shape GeometryObject::getSubShape(const SubShapeId& aShapeId) const {
 //     TopTools_IndexedMapOfShape subShapes;
 //     TopExp::MapShapes(mSourcePart.prototype(), subShapes);
 
@@ -19,7 +19,7 @@
 //     return subShapes.FindKey(aShapeId.idInParent);
 // }
 
-// PartPrototype GeometryObject::getTypedSubShape(const TypedSubShapeId& aShapeId) const {
+// Shape GeometryObject::getTypedSubShape(const TypedSubShapeId& aShapeId) const {
 //     TopTools_IndexedMapOfShape subShapes;
 //     TopExp::MapShapes(mSourcePart.prototype(), aShapeId.shapeType, subShapes);
 //     if (aShapeId.idInParent <= 0 || aShapeId.idInParent > subShapes.Extent()) {
@@ -28,7 +28,7 @@
 //     return subShapes.FindKey(aShapeId.idInParent);
 // }
 
-// SubShapeId GeometryObject::getSubShapeId(const PartPrototype& aPartPrototype) const {
+// SubShapeId GeometryObject::getSubShapeId(const Shape& aPartPrototype) const {
 //     TopTools_IndexedMapOfShape subShapes;
 //     TopExp::MapShapes(mSourcePart.prototype(), subShapes);
 //     int idInParent = subShapes.FindIndex(aPartPrototype);

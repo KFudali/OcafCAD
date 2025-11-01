@@ -12,7 +12,7 @@ class GeometryPartSingleCubeTest : public DocumentGeometryFixture {
         auto cubePartLabel = geoDoc->addPart(cubeProtoLabel, Location());
         cubePart = std::make_unique<GeometryPart>(cubePartLabel);
     }
-    PartPrototype cubePrototype = StubPartPrototypes::cube();
+    Shape cubePrototype = StubPartPrototypes::cube();
     std::unique_ptr<GeometryPart> cubePart;
 };
 

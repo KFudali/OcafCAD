@@ -6,7 +6,7 @@
 #include <TDF_LabelSequence.hxx>
 
 #include "DocLabel.hpp"
-#include "GeometryPart.hpp"
+#include "PartAssemblyTool.hpp"
 
 void GeometryDocImporter::import(
     Handle(TDocStd_Document) aSrc, 
@@ -91,13 +91,14 @@ void GeometryDocImporter::importPart(
     TDF_Label aPartLabel,
     std::optional<PartLabel> aDestParentLabel
 ) {
-    PrototypeLabel partProtoLabel;
+    ShapeLabel partProtoLabel;
     partProtoLabel = importPartPrototype(aPartLabel);
     PartLabel destPartLabel;
     auto loc = mShapeTool->GetLocation(aPartLabel);
     if (aDestParentLabel){
-        auto parent = GeometryPart(*aDestParentLabel);
-        destPartLabel = parent.addComponent(partProtoLabel, loc);
+        auto parent = PartAssemblyTool(*aDestParentLabel).addComponent(
+            partProtoLabel, loc
+        );
     } else {
         destPartLabel = mDest.addPart(partProtoLabel, loc);
     }
@@ -106,8 +107,8 @@ void GeometryDocImporter::importPart(
     }
 }
 
-PrototypeLabel GeometryDocImporter::importPrototype(TDF_Label aProtoLabel) {
-    PartPrototype proto = mShapeTool->GetShape(aProtoLabel);
+ShapeLabel GeometryDocImporter::importPrototype(TDF_Label aProtoLabel) {
+    Shape proto = mShapeTool->GetShape(aProtoLabel);
     if (proto.IsNull()){
         throw GeometryDocImporterExceptions::CouldNotGetShapeFromLabel(
             "GetShape returns Null shape"
@@ -116,10 +117,10 @@ PrototypeLabel GeometryDocImporter::importPrototype(TDF_Label aProtoLabel) {
     return mDest.addPrototype(proto);
 }
 
-PrototypeLabel GeometryDocImporter::importPartPrototype(TDF_Label aPartLabel){
-    PrototypeLabel partProtoLabel; 
+ShapeLabel GeometryDocImporter::importPartPrototype(TDF_Label aPartLabel){
+    ShapeLabel partProtoLabel; 
     if (isAssembly(aPartLabel)){
-        PartPrototype proto = mShapeTool->GetShape(aPartLabel);
+        Shape proto = mShapeTool->GetShape(aPartLabel);
         return mDest.addAssemblyPrototype(proto);
     }
 
@@ -129,7 +130,7 @@ PrototypeLabel GeometryDocImporter::importPartPrototype(TDF_Label aPartLabel){
     TDF_Label referredLabel;
     mShapeTool->GetReferredShape(aPartLabel, referredLabel);
     if (referredLabel.IsNull()){
-        PartPrototype proto = mShapeTool->GetShape(aPartLabel);
+        Shape proto = mShapeTool->GetShape(aPartLabel);
         partProtoLabel = importPrototype(aPartLabel);
     } else {
         partProtoLabel = importPrototype(referredLabel);
@@ -137,7 +138,7 @@ PrototypeLabel GeometryDocImporter::importPartPrototype(TDF_Label aPartLabel){
     return partProtoLabel;
 }
 
-PrototypeLabel GeometryDocImporter::importAssemblyPrototype(TDF_Label aPartLabel){
+ShapeLabel GeometryDocImporter::importAssemblyPrototype(TDF_Label aPartLabel){
     return mDest.addAssemblyPrototype(TopoDS_Shape());
 }
 

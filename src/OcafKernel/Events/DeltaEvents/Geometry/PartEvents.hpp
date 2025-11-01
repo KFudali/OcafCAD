@@ -3,7 +3,7 @@
 
 #include "BaseOcafKernelEvent.hpp"
 #include "DocLabel.hpp"
-#include "PrototypeLabel.hpp"
+#include "ShapeLabel.hpp"
 #include "PartAttributeType.hpp"
 
 class PartAddedEvent : public BaseOcafKernelEvent {

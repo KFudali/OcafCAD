@@ -32,8 +32,8 @@ class BaseOccDoc {
 		return false;
 	}
 
-	PartPrototype sphere = StubPartPrototypes::sphere();
-	PartPrototype cube = StubPartPrototypes::cube();
+	Shape sphere = StubPartPrototypes::sphere();
+	Shape cube = StubPartPrototypes::cube();
     Handle(XCAFApp_Application) app;
 	Handle(TDocStd_Document) doc;
 	Handle(XCAFDoc_ShapeTool) shapeTool;

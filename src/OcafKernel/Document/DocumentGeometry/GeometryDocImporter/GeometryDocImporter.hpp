@@ -29,7 +29,7 @@ class GeometryDocImporter {
     void import();
 
     void importLabel(TDF_Label aLabel);
-    PrototypeLabel importPrototype(TDF_Label aProtoLabel);
+    ShapeLabel importPrototype(TDF_Label aProtoLabel);
     
     void importPrototypeAsPart(
         TDF_Label aProtoLabel
@@ -39,8 +39,8 @@ class GeometryDocImporter {
         std::optional<PartLabel> aDestParent = std::nullopt
     );
 
-    PrototypeLabel importPartPrototype(TDF_Label aPartLabel);
-    PrototypeLabel importAssemblyPrototype(TDF_Label aAssemblyLabel);
+    ShapeLabel importPartPrototype(TDF_Label aPartLabel);
+    ShapeLabel importAssemblyPrototype(TDF_Label aAssemblyLabel);
 
     void importPartComponents(
         TDF_Label aSrcCompLabel, 

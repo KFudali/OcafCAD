@@ -4,22 +4,22 @@
 
 
 #include "RootAssembly.hpp"
-#include "PrototypeRegistry.hpp"
+#include "ShapeRegistry.hpp"
 
 
 #include "PartLabel.hpp"
 #include "GeometryPart.hpp"
-#include "PrototypeLabel.hpp"
+#include "ShapeLabel.hpp"
 
 class RootAssemblyTest : public ::testing::Test {
 protected:
     void SetUp() override {
         rootAssembly = std::make_unique<RootAssembly>(mDoc.doc());
-        registry = std::make_unique<PrototypeRegistry>(mDoc.doc());
+        registry = std::make_unique<ShapeRegistry>(mDoc.doc());
     }
 
     std::unique_ptr<RootAssembly> rootAssembly;
-    std::unique_ptr<PrototypeRegistry> registry;
+    std::unique_ptr<ShapeRegistry> registry;
     StubOccDocument mDoc;
 };
 
@@ -40,7 +40,7 @@ TEST_F(RootAssemblyTest, AddEmptyAssemblyCreatesAssemblyLabel) {
 }
 
 TEST_F(RootAssemblyTest, AddPartFromPrototypeCreatesComponentUnderRoot) {
-    PartPrototype cube = StubPartPrototypes::cube();
+    Shape cube = StubPartPrototypes::cube();
     auto protoLabel = registry->addPrototype(cube);
     ASSERT_TRUE(protoLabel.isValid());
 
@@ -60,7 +60,7 @@ TEST_F(RootAssemblyTest, FreePartsIncludeAddedEmptyPart) {
 }
 
 TEST_F(RootAssemblyTest, TopLevelPartsIncludePrototypeParts) {
-    PartPrototype cube = StubPartPrototypes::cube();
+    Shape cube = StubPartPrototypes::cube();
     auto protoLabel = registry->addPrototype(cube);
     rootAssembly->addPart(protoLabel, Location());
 
@@ -72,7 +72,7 @@ TEST_F(RootAssemblyTest, TopLevelPartsIncludePrototypeParts) {
 TEST_F(RootAssemblyTest, FreePartsDoNotIncludeNestedAssemblyParts) {
     auto assemblyLabel = rootAssembly->addEmptyAssembly();
     ASSERT_TRUE(assemblyLabel.isValid());
-    PartPrototype cube = StubPartPrototypes::cube();
+    Shape cube = StubPartPrototypes::cube();
     auto protoLabel = registry->addPrototype(cube);
     
     auto assembly = GeometryPart(assemblyLabel);

@@ -15,11 +15,11 @@ class GeometryPartCubeSphereAssemblyTest : public DocumentGeometryFixture {
     }
     Location cubeLocation = LocationUtils::fromCoords(1.0, 2.0, 3.0);
     Location sphereLocation = LocationUtils::fromCoords(4.0, 5.0, 6.0);
-    PartPrototype cubePrototype = StubPartPrototypes::cube();
-    PartPrototype spherePrototype = StubPartPrototypes::sphere();
+    Shape cubePrototype = StubPartPrototypes::cube();
+    Shape spherePrototype = StubPartPrototypes::sphere();
 
-    PrototypeLabel cubeProtoLabel;
-    PrototypeLabel sphereProtoLabel;
+    ShapeLabel cubeProtoLabel;
+    ShapeLabel sphereProtoLabel;
     std::unique_ptr<GeometryPart> assemblyPart;
 };
 

@@ -4,7 +4,7 @@ target_sources(DocumentLabels PRIVATE
     DocLabel.cpp
     DocLabelUtils.cpp   
     PartLabel.cpp
-    PrototypeLabel.cpp
+    ShapeLabel.cpp
 )
 
 target_link_libraries(DocumentLabels

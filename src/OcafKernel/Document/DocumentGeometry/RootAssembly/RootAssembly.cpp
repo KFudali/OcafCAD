@@ -47,7 +47,7 @@ std::vector<PartLabel> RootAssembly::topLevelParts() const {
     return parts;
 }
 PartLabel RootAssembly::addPart(
-    PrototypeLabel aPrototypeLabel, 
+    ShapeLabel aPrototypeLabel, 
     Location aLocation
 ){
     TDF_Label label = mShapeTool->AddComponent(

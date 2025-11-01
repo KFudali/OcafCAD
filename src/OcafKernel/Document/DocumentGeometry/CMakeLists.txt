@@ -1,6 +1,6 @@
 add_subdirectory(GeometryDocImporter)
-add_subdirectory(GeometryPart)
-add_subdirectory(PrototypeRegistry)
+add_subdirectory(PartGeometryTools)
+add_subdirectory(ShapeRegistry)
 add_subdirectory(RootAssembly)
 
 add_library(DocumentGeometryCore
@@ -8,8 +8,8 @@ add_library(DocumentGeometryCore
 )
 
 target_link_libraries(DocumentGeometryCore PUBLIC
-    GeometryPart
-    PrototypeRegistry
+    PartGeometryTools
+    ShapeRegistry
     RootAssembly
 )
 

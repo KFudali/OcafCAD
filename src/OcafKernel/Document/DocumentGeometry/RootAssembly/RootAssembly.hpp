@@ -3,7 +3,7 @@
 
 #include "DocLabel.hpp"
 #include "PartLabel.hpp"
-#include "PrototypeLabel.hpp"
+#include "ShapeLabel.hpp"
 #include "Location.hpp"
 
 #include <TDocStd_Document.hxx>
@@ -22,7 +22,7 @@ class RootAssembly {
     void clear(); 
     
     PartLabel addPart(
-        PrototypeLabel aPrototypeLabel, 
+        ShapeLabel aPrototypeLabel, 
         Location aLocation
     );
     PartLabel addEmptyAssembly();

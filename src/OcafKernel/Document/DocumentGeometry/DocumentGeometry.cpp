@@ -8,22 +8,22 @@
 DocumentGeometry::DocumentGeometry(Handle(TDocStd_Document) aDoc) : mDoc(aDoc) {
     mShapeTool->SetAutoNaming(false);
     mRootAssembly = std::make_unique<RootAssembly>(mDoc);
-    mPrototypeRegistry = std::make_unique<PrototypeRegistry>(mDoc);
+    mPrototypeRegistry = std::make_unique<ShapeRegistry>(mDoc);
 } 
 
-PartLabel DocumentGeometry::addPart(PrototypeLabel aPrototype, Location aLocation){
+PartLabel DocumentGeometry::addPart(ShapeLabel aPrototype, Location aLocation){
     return mRootAssembly->addPart(aPrototype, aLocation);
 }
 
-PrototypeLabel DocumentGeometry::addPrototype(PartPrototype aPrototype) {
+ShapeLabel DocumentGeometry::addPrototype(Shape aPrototype) {
     return mPrototypeRegistry->addPrototype(aPrototype);
 }
 
-PrototypeLabel DocumentGeometry::addAssemblyPrototype(PartPrototype aPrototype) {
+ShapeLabel DocumentGeometry::addAssemblyPrototype(Shape aPrototype) {
     return mPrototypeRegistry->addAssemblyPrototype(aPrototype);
 }
 
-std::vector<PrototypeLabel> DocumentGeometry::prototypes() const {
+std::vector<ShapeLabel> DocumentGeometry::prototypes() const {
     return mPrototypeRegistry->prototypeList();
 }
 

@@ -6,12 +6,12 @@
 #include <memory>
 
 #include "RootAssembly.hpp"
-#include "PrototypeRegistry.hpp"
+#include "ShapeRegistry.hpp"
 #include "DocLabel.hpp"
 #include "Part.hpp"
 #include "PartLabel.hpp"
-#include "PartPrototype.hpp"
-#include "PrototypeLabel.hpp"
+#include "Shape.hpp"
+#include "ShapeLabel.hpp"
 
 class DocumentGeometry {
     public:
@@ -22,11 +22,11 @@ class DocumentGeometry {
     
     PartLabel addEmptyPart(); 
     PartLabel addEmptyAssembly(); 
-    PartLabel addPart(PrototypeLabel aPrototype, Location aLocation); 
-    PrototypeLabel addPrototype(PartPrototype aPrototype);
-    PrototypeLabel addAssemblyPrototype(PartPrototype aPrototype);
+    PartLabel addPart(ShapeLabel aPrototype, Location aLocation); 
+    ShapeLabel addPrototype(Shape aPrototype);
+    ShapeLabel addAssemblyPrototype(Shape aPrototype);
     
-    std::vector<PrototypeLabel> prototypes() const;
+    std::vector<ShapeLabel> prototypes() const;
     std::vector<PartLabel> topLevelParts() const; 
     std::vector<PartLabel> freeParts() const; 
    
@@ -35,7 +35,7 @@ class DocumentGeometry {
     Handle(TDocStd_Document) mDoc;
 
     std::unique_ptr<RootAssembly> mRootAssembly;
-    std::unique_ptr<PrototypeRegistry> mPrototypeRegistry;
+    std::unique_ptr<ShapeRegistry> mPrototypeRegistry;
 };
 
 #endif

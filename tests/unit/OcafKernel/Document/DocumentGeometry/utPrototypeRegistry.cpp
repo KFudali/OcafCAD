@@ -3,16 +3,16 @@
 #include "StubOccDocument.hpp"
 #include "StubPartPrototypes.hpp" 
 
-#include "PrototypeRegistry.hpp"
-#include "PrototypeLabel.hpp"
-#include "PartPrototype.hpp"
+#include "ShapeRegistry.hpp"
+#include "ShapeLabel.hpp"
+#include "Shape.hpp"
 
 class PrototypeRegistryTest : public ::testing::Test {
 protected:
     void SetUp() override {
-        registry = std::make_unique<PrototypeRegistry>(mDoc.doc());
+        registry = std::make_unique<ShapeRegistry>(mDoc.doc());
     }
-    std::unique_ptr<PrototypeRegistry> registry;
+    std::unique_ptr<ShapeRegistry> registry;
     StubOccDocument mDoc;
 };
 
@@ -23,9 +23,9 @@ TEST_F(PrototypeRegistryTest, ConstructRegistryInitializesShapeTool) {
 }
 
 TEST_F(PrototypeRegistryTest, AddPrototypeCreatesNewLabel) {
-    PartPrototype cube = StubPartPrototypes::cube();
+    Shape cube = StubPartPrototypes::cube();
 
-    PrototypeLabel label = registry->addPrototype(cube);
+    ShapeLabel label = registry->addPrototype(cube);
     EXPECT_TRUE(label.isValid());
 
     auto allPrototypes = registry->prototypeList();
@@ -34,7 +34,7 @@ TEST_F(PrototypeRegistryTest, AddPrototypeCreatesNewLabel) {
 }
 
 TEST_F(PrototypeRegistryTest, AddPrototypeTwiceDoesNotDuplicate) {
-    PartPrototype cube = StubPartPrototypes::cube();
+    Shape cube = StubPartPrototypes::cube();
 
     auto first = registry->addPrototype(cube);
     auto second = registry->addPrototype(cube);
@@ -48,7 +48,7 @@ TEST_F(PrototypeRegistryTest, AddPrototypeTwiceDoesNotDuplicate) {
 }
 
 TEST_F(PrototypeRegistryTest, AddAssemblyPrototypeCreatesNewLabelAlways) {
-    PartPrototype cube = StubPartPrototypes::cube();
+    Shape cube = StubPartPrototypes::cube();
 
     auto first = registry->addAssemblyPrototype(cube);
     auto second = registry->addAssemblyPrototype(cube);
@@ -59,7 +59,7 @@ TEST_F(PrototypeRegistryTest, AddAssemblyPrototypeCreatesNewLabelAlways) {
 }
 
 TEST_F(PrototypeRegistryTest, RemovePrototypeRemovesSuccessfully) {
-    PartPrototype cube = StubPartPrototypes::cube();
+    Shape cube = StubPartPrototypes::cube();
     auto label = registry->addPrototype(cube);
 
     ASSERT_TRUE(label.isValid());
@@ -71,13 +71,13 @@ TEST_F(PrototypeRegistryTest, RemovePrototypeRemovesSuccessfully) {
 }
 
 TEST_F(PrototypeRegistryTest, RemovePrototypeWithInvalidLabelFails) {
-    PrototypeLabel invalid;
+    ShapeLabel invalid;
     EXPECT_FALSE(registry->removePrototype(invalid));
 }
 
 TEST_F(PrototypeRegistryTest, PrototypeListReflectsAddedPrototypes) {
-    PartPrototype cube = StubPartPrototypes::cube();
-    PartPrototype sphere = StubPartPrototypes::sphere();
+    Shape cube = StubPartPrototypes::cube();
+    Shape sphere = StubPartPrototypes::sphere();
 
     registry->addPrototype(cube);
     registry->addPrototype(sphere);

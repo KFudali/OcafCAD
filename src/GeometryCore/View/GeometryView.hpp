@@ -3,7 +3,7 @@
 
 #include "DocumentGeometry.hpp"
 #include "GeometryObject.hpp"
-#include "GeometryPart.hpp"
+#include "Part.hpp"
 
 class GeometryView {
     public:
@@ -11,7 +11,7 @@ class GeometryView {
     GeometryView(const DocumentGeometry& aDocumentGeometry);
 
     std::vector<PartLabel> topLevelPartLabels() const;
-    std::vector<GeometryPart> topLevelParts() const;
+    std::vector<Part> topLevelParts() const;
     std::vector<GeometryObject> geometryObjects() const;
 
     private:

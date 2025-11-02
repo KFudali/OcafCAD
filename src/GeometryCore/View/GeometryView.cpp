@@ -9,15 +9,15 @@ std::vector<PartLabel> GeometryView::topLevelPartLabels() const {
     return mDocumentGeometry.topLevelParts();
 }
 
-std::vector<GeometryPart> GeometryView::topLevelParts() const {
+std::vector<Part> GeometryView::topLevelParts() const {
     auto partLabels = mDocumentGeometry.topLevelParts();
-    std::vector<GeometryPart> geometryParts;
+    std::vector<Part> geometryParts;
     geometryParts.reserve(partLabels.size());
 
     std::transform(partLabels.begin(), partLabels.end(),
         std::back_inserter(geometryParts),
         [](const PartLabel& label) {
-            return GeometryPart(label);
+            return Part(label);
     });
     return geometryParts;
 }

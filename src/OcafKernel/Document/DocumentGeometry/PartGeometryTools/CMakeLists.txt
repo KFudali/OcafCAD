@@ -6,7 +6,7 @@ add_library(PartGeometryTools
 
 target_link_libraries(PartGeometryTools
     PUBLIC DocumentTools
-    PUBLIC GeometryNamedSelection
+    PUBLIC NamedSelectionLabel
 )
 
 target_include_directories(PartGeometryTools

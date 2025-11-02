@@ -8,8 +8,8 @@ class PartSingleCubeTest : public DocumentGeometryFixture {
     protected:
     void SetUp() {
         DocumentGeometryFixture::SetUp();
-        auto cubeProtoLabel = geoDoc->addShape(cubePrototype);
-        auto cubePartLabel = geoDoc->addPart(cubeProtoLabel, Location());
+        auto cubeShapeLabel = geoDoc->addShape(cubePrototype);
+        auto cubePartLabel = geoDoc->addPart(cubeShapeLabel, Location());
         cubePart = std::make_unique<Part>(cubePartLabel);
     }
     Shape cubePrototype = StubPartPrototypes::cube();

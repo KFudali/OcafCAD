@@ -15,6 +15,7 @@ class PartShapeTool {
 
     Shape shape() const;
     Location location() const;
+    inline Handle(XCAFDoc_ShapeTool) occShapeTool() {return mShapeTool;};
 
     private:
     PartLabel mPartLabel;

@@ -1,12 +1,13 @@
-add_library(GeometryNamedSelection
-    GeometryNamedSelection.cpp
-    GeometryNamedSelectionAttribute.cpp
+add_library(NamedSelectionLabel
+    NamedSelection.cpp
+    NamedSelectionLabel.cpp
+    NamedSelectionAttribute.cpp
 )
 
-target_link_libraries(GeometryNamedSelection
+target_link_libraries(NamedSelectionLabel
     PUBLIC DocumentTools
 )
 
-target_include_directories(GeometryNamedSelection
+target_include_directories(NamedSelectionLabel
     PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 )

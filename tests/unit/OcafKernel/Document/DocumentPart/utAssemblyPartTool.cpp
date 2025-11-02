@@ -10,7 +10,7 @@ class PartAssemblyToolCubeSphereAssemblyTest : public DocumentGeometryFixture {
     protected:
     void SetUp() {
         DocumentGeometryFixture::SetUp();
-        cubeProtoLabel = geoDoc->addShape(cubePrototype);
+        cubeShapeLabel = geoDoc->addShape(cubePrototype);
         sphereProtoLabel = geoDoc->addShape(spherePrototype);
 
         auto assemblyPartLabel = geoDoc->addEmptyAssembly(); 
@@ -21,7 +21,7 @@ class PartAssemblyToolCubeSphereAssemblyTest : public DocumentGeometryFixture {
     Shape cubePrototype = StubPartPrototypes::cube();
     Shape spherePrototype = StubPartPrototypes::sphere();
 
-    ShapeLabel cubeProtoLabel;
+    ShapeLabel cubeShapeLabel;
     ShapeLabel sphereProtoLabel;
     std::unique_ptr<PartAssemblyTool> assemblyTool;
 };
@@ -29,7 +29,7 @@ class PartAssemblyToolCubeSphereAssemblyTest : public DocumentGeometryFixture {
 TEST_F(PartAssemblyToolCubeSphereAssemblyTest, PartCanAddPrototypeLabelAsComponent) {
     ASSERT_TRUE(assemblyTool->isAssembly());
     auto compLabel = assemblyTool->addComponent(
-        cubeProtoLabel, cubeLocation
+        cubeShapeLabel, cubeLocation
     );
     
     ASSERT_TRUE(compLabel.isValid());
@@ -67,7 +67,7 @@ TEST_F(PartAssemblyToolCubeSphereAssemblyTest, AssemblyPartReturnsItsChildrenCom
     ASSERT_TRUE(assemblyTool->isAssembly());
     
     auto cubeCompLabel = assemblyTool->addComponent(
-        cubeProtoLabel, cubeLocation
+        cubeShapeLabel, cubeLocation
     );
     auto sphereCompLabel = assemblyTool->addComponent(
         sphereProtoLabel, sphereLocation
@@ -91,7 +91,7 @@ TEST_F(PartAssemblyToolCubeSphereAssemblyTest, AssemblyPartCanRemoveComponentFro
     ASSERT_TRUE(assemblyTool->isAssembly());
     
     auto cubeCompLabel = assemblyTool->addComponent(
-        cubeProtoLabel, cubeLocation
+        cubeShapeLabel, cubeLocation
     );
     auto sphereCompLabel = assemblyTool->addComponent(
         sphereProtoLabel, sphereLocation
@@ -114,7 +114,7 @@ TEST_F(PartAssemblyToolCubeSphereAssemblyTest, ComponentPartReturnsItsParentAsse
     ASSERT_TRUE(assemblyTool->isAssembly());
     
     auto cubeCompLabel = assemblyTool->addComponent(
-        cubeProtoLabel, cubeLocation
+        cubeShapeLabel, cubeLocation
     );
     auto sphereCompLabel = assemblyTool->addComponent(
         sphereProtoLabel, sphereLocation

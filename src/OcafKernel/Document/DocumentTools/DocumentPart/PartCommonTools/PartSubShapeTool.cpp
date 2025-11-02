@@ -1,5 +1,6 @@
 #include "PartSubShapeTool.hpp"
 
+#include <numeric>
 #include <XCAFDoc_DocumentTool.hxx>
 #include <XCAFDoc_ShapeTool.hxx>
 #include <TopExp.hxx>
@@ -23,33 +24,31 @@ bool PartSubShapeTool::subShapeIdValid(const SubShapeId& aSubShapeId) const
     }
 
     TopTools_IndexedMapOfShape map;
-    TopExp::MapShapes(shape, map);
+    TopExp::MapShapes(shape, aSubShapeId.shapeType(), map);
 
     const int id = aSubShapeId.subId();
     return id > 0 && id <= map.Extent();
 }
 
-
-SubShapeId PartSubShapeTool::subShapeId(const Shape& aPartPrototype) const
+SubShapeId PartSubShapeTool::subShapeId(const Shape& aPartShape) const
 {
     TopoDS_Shape rootShape = mShapeTool->GetShape(mPartLabel.label());
     if (rootShape.IsNull()) {
         return SubShapeId();
     }
-
-    if (aPartPrototype.IsNull()) {
+    if (aPartShape.IsNull()) {
         return SubShapeId();
     }
+    
 
     TopTools_IndexedMapOfShape map;
-    TopExp::MapShapes(rootShape, map);
-
-    int id = map.FindIndex(aPartPrototype);
+    TopExp::MapShapes(rootShape, aPartShape.ShapeType(), map);
+    
+    int id = map.FindIndex(aPartShape);
     if (id == 0) {
         return SubShapeId();
     }
-
-    return SubShapeId(mPartLabel.label(), id);
+    return SubShapeId(mPartLabel.label(), aPartShape.ShapeType(), id);
 }
 
 Shape PartSubShapeTool::subShape(const SubShapeId& aSubShapeId) const
@@ -60,8 +59,8 @@ Shape PartSubShapeTool::subShape(const SubShapeId& aSubShapeId) const
 
     TopoDS_Shape rootShape = mShapeTool->GetShape(mPartLabel.label());
     TopTools_IndexedMapOfShape map;
-    TopExp::MapShapes(rootShape, map);
-
+    TopExp::MapShapes(rootShape, aSubShapeId.shapeType(), map);
+    
     const int idx = aSubShapeId.subId();
     TopoDS_Shape sub = map.FindKey(idx);
     return sub;
@@ -69,23 +68,15 @@ Shape PartSubShapeTool::subShape(const SubShapeId& aSubShapeId) const
 
 SubShapeIdList PartSubShapeTool::subShapesOfType(const ShapeType& aShapeType) const
 {
-
     TopoDS_Shape rootShape = mShapeTool->GetShape(mPartLabel.label());
     if (rootShape.IsNull()) {
         return SubShapeIdList();
     }
 
     TopTools_IndexedMapOfShape map;
-    TopExp::MapShapes(rootShape, map);
+    TopExp::MapShapes(rootShape, aShapeType, map);
     std::vector<int> subIds(map.Extent());
+    std::iota(subIds.begin(), subIds.end(), 1); 
 
-    for (int i = 1; i <= map.Extent(); ++i) {
-        const TopoDS_Shape& s = map.FindKey(i);
-        if (s.ShapeType() == static_cast<TopAbs_ShapeEnum>(aShapeType)) {
-            subIds.emplace_back(i);
-        }
-    }
-
-    return SubShapeIdList(mPartLabel, subIds);
+    return SubShapeIdList(mPartLabel, aShapeType, subIds);
 }
-

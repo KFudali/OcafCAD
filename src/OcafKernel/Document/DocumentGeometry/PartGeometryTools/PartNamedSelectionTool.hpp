@@ -8,24 +8,24 @@
 
 #include "PartLabel.hpp"
 #include "SubShapeId.hpp"
-#include "GeometryNamedSelection.hpp"
+#include "NamedSelection.hpp"
 
 class XCAFDoc_ShapeTool;
 class PartNamedSelectionTool {
     public:
     PartNamedSelectionTool(const PartLabel& aPartLabel);
 
-    std::vector<GeometryNamedSelection> namedSelections() const;
-    TDF_Label namedSelectionTreeLabel() const;
+    std::vector<NamedSelection> namedSelections() const;
 
-    GeometryNamedSelection addNamedSelection(
+    NamedSelection addNamedSelection(
         const SubShapeId& aSubShapeId, 
         const std::string& aName
     );
 
-    bool removeNamedSelection(const GeometryNamedSelection& aNamedSelection);
+    bool removeNamedSelection(const NamedSelection& aNamedSelection);
 
     private:
+    TDF_Label namedSelectionTreeLabel() const;
     PartLabel mPartLabel;
     Handle(XCAFDoc_ShapeTool) mShapeTool;
 };

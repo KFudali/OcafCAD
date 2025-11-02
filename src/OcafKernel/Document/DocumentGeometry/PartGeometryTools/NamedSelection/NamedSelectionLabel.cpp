@@ -1,20 +1,21 @@
-#include "GeometryNamedSelection.hpp"
-#include "GeometryNamedSelectionAttribute.hpp"
+#include "NamedSelectionLabel.hpp"
+#include "NamedSelectionAttribute.hpp"
+
 
 #include <TDF_Label.hxx>
 #include <TDF_Attribute.hxx>
 #include <TDF_ChildIterator.hxx>
 #include <TDF_Reference.hxx>
 
-GeometryNamedSelection::GeometryNamedSelection(
+NamedSelectionLabel::NamedSelectionLabel(
     TDF_Label aParentLabel,
     TDF_Label aSubShapeLabel,
     const std::string& aName
 ){
     auto namingLabel = findExistingNamedSelection(aParentLabel, aSubShapeLabel);
     if (!namingLabel.IsNull()){
-        Handle(GeometryNamedSelectionAttribute) attr;
-        if (!namingLabel.FindAttribute(GeometryNamedSelectionAttribute::GetID(), attr)) {
+        Handle(NamedSelectionAttribute) attr;
+        if (!namingLabel.FindAttribute(NamedSelectionAttribute::GetID(), attr)) {
             throw std::runtime_error("Naming label should have selection attr.");
         }
         attr->SetName(aName.c_str());
@@ -23,9 +24,9 @@ GeometryNamedSelection::GeometryNamedSelection(
     }
 
     mLabel =  aParentLabel.NewChild();
-    Handle(GeometryNamedSelectionAttribute) attr;
-    if (!mLabel.FindAttribute(GeometryNamedSelectionAttribute::GetID(), attr)) {
-        attr = new GeometryNamedSelectionAttribute();
+    Handle(NamedSelectionAttribute) attr;
+    if (!mLabel.FindAttribute(NamedSelectionAttribute::GetID(), attr)) {
+        attr = new NamedSelectionAttribute();
         attr->SetName(TCollection_ExtendedString(aName.c_str()));
         mLabel.AddAttribute(attr);
     }
@@ -43,14 +44,14 @@ GeometryNamedSelection::GeometryNamedSelection(
     }
 }
 
-GeometryNamedSelection::GeometryNamedSelection(TDF_Label aNamingLabel)
+NamedSelectionLabel::NamedSelectionLabel(TDF_Label aNamingLabel)
 {
     if (aNamingLabel.IsNull()) {
         throw std::runtime_error("Named selection label is null");
     }
-    Handle(GeometryNamedSelectionAttribute) nameAttr;
-    if (!aNamingLabel.FindAttribute(GeometryNamedSelectionAttribute::GetID(), nameAttr)) {
-        throw std::runtime_error("Label does not contain a GeometryNamedSelectionAttribute");
+    Handle(NamedSelectionAttribute) nameAttr;
+    if (!aNamingLabel.FindAttribute(NamedSelectionAttribute::GetID(), nameAttr)) {
+        throw std::runtime_error("Label does not contain a NamedSelectionAttribute");
     }
     Handle(TDF_Reference) refAttr;
     if (!aNamingLabel.FindAttribute(TDF_Reference::GetID(), refAttr)) {
@@ -60,7 +61,7 @@ GeometryNamedSelection::GeometryNamedSelection(TDF_Label aNamingLabel)
     mLabel = aNamingLabel;
 }
 
-TDF_Label GeometryNamedSelection::findExistingNamedSelection(
+TDF_Label NamedSelectionLabel::findExistingNamedSelection(
     const TDF_Label& aParentLabel,
     const TDF_Label& aSubShapeLabel
 ) const{
@@ -76,13 +77,12 @@ TDF_Label GeometryNamedSelection::findExistingNamedSelection(
     return TDF_Label();
 }
 
-
-std::string GeometryNamedSelection::name() const {
+std::string NamedSelectionLabel::name() const {
     if (mLabel.IsNull()) {
         return "";
     }
-    Handle(GeometryNamedSelectionAttribute) attr;
-    if (mLabel.FindAttribute(GeometryNamedSelectionAttribute::GetID(), attr)) {
+    Handle(NamedSelectionAttribute) attr;
+    if (mLabel.FindAttribute(NamedSelectionAttribute::GetID(), attr)) {
         auto occName = attr->GetName();
         Standard_Integer utf8Len = occName.LengthOfCString();
         Standard_PCharacter utf8CString = new char[utf8Len];
@@ -92,15 +92,21 @@ std::string GeometryNamedSelection::name() const {
     return "";
 }
 
-bool GeometryNamedSelection::rename(const std::string& aNewName) {
+bool NamedSelectionLabel::rename(const std::string& aNewName) {
     if (mLabel.IsNull()) {
         return false;
     }
-    Handle(GeometryNamedSelectionAttribute) attr;
-    if (!mLabel.FindAttribute(GeometryNamedSelectionAttribute::GetID(), attr)) {
+    Handle(NamedSelectionAttribute) attr;
+    if (!mLabel.FindAttribute(NamedSelectionAttribute::GetID(), attr)) {
         return false;
     }
 
     attr->Set(TCollection_ExtendedString(aNewName.c_str()));
     return true;
+}
+
+TDF_Label NamedSelectionLabel::referredLabel() const {
+    Handle(TDF_Reference) refAttr;
+    mLabel.FindAttribute(TDF_Reference::GetID(), refAttr);
+    return refAttr->Get();
 }

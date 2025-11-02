@@ -20,7 +20,7 @@ add_executable(utOcafKernelRun
     utRunOcafKernel.cpp
 )
 target_link_libraries(utOcafKernelRun 
-    PRIVATE utOcafKernelLib
+    PRIVATE utOcafKernel
 )
 
 include(GoogleTest)

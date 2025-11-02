@@ -6,10 +6,10 @@
 
 template <int T>
 struct LocalSizing {
-    TypedSubShapeId target;
+    SubShapeId target;
     float minSize, maxSize;
 
-    LocalSizing(const TypedSubShapeId& id, float min, float max)
+    LocalSizing(const SubShapeId& id, float min, float max)
         : target(id), minSize(min), maxSize(max) {}
 };
 

@@ -23,7 +23,7 @@ add_executable(utToolsRun
 )
 
 target_link_libraries(utToolsRun PRIVATE
-    utToolsLib
+    utTools
 )
 
 include(GoogleTest)

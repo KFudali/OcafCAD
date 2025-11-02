@@ -15,7 +15,7 @@ class MeshObjectTest : public ::testing::Test {
 TEST_F(MeshObjectTest, AssignLocalMeshSizing) {
 
     auto faceIdList = cubeObject->geometry().faces();
-    TypedSubShapeId faceId = TypedSubShapeId(
+    SubShapeId faceId = SubShapeId(
         faceIdList.idsInParent[0], faceIdList.shapeType
     );
     cubeObject->localSettings().addFaceSizing(faceId, 0.1, 1.);

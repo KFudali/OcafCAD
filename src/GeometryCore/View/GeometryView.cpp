@@ -22,7 +22,6 @@ std::vector<Part> GeometryView::topLevelParts() const {
     return geometryParts;
 }
 
-
 std::vector<GeometryObject> GeometryView::geometryObjects() const {
     auto partLabels = mDocumentGeometry.topLevelParts();
     std::vector<GeometryObject> geoObjects;
@@ -31,7 +30,7 @@ std::vector<GeometryObject> GeometryView::geometryObjects() const {
     std::transform(partLabels.begin(), partLabels.end(),
         std::back_inserter(geoObjects),
         [](const PartLabel& label) {
-            return GeometryObject();
+            return GeometryObject(label);
     });
     return geoObjects;
 }

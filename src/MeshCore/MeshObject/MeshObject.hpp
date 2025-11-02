@@ -14,6 +14,8 @@ class MeshObject {
         mLocalSettings(std::make_unique<LocalMeshSettings>()),
         mGlobalSettings(std::make_unique<GlobalMeshSettings>()),
         mMesh(std::make_unique<Mesh>()) {}
+    
+
     inline const GeometryObject& geometry() const {return *mGeometryObject;};
     inline LocalMeshSettings& localSettings() const {return *mLocalSettings;}
     inline GlobalMeshSettings& globalSettings() const {return *mGlobalSettings;}

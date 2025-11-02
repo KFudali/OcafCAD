@@ -46,12 +46,13 @@ bool PartAttributeTool::setName(const std::string& aName) {
 }
 
 bool PartAttributeTool::setColor(const ColorRGBA& aColor) {
-    Quantity_Color color(
+    Quantity_Color colorRGB(
         aColor.GetRGB().Red(), 
         aColor.GetRGB().Green(), 
         aColor.GetRGB().Blue(), 
         Quantity_TOC_RGB
     );
-    mColorTool->SetColor(mPartLabel.label(), color, XCAFDoc_ColorGen);
+    Quantity_ColorRGBA colorRGBA(colorRGB, aColor.Alpha());
+    mColorTool->SetColor(mPartLabel.label(), colorRGBA, XCAFDoc_ColorGen);
     return true;
 }

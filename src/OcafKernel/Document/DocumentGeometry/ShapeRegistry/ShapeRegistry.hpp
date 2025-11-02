@@ -15,7 +15,7 @@ class ShapeRegistry {
     ShapeRegistry(Handle(TDocStd_Document) aDoc);
     ~ShapeRegistry() = default;
 
-    ShapeLabel addPrototype(Shape aShape);
+    ShapeLabel addShape(Shape aShape);
     ShapeLabel addAssemblyPrototype(Shape aShape);
     bool removePrototype(ShapeLabel aPrototypeLabel);
 

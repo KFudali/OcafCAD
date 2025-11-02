@@ -1,40 +1,47 @@
 #ifndef Part_hpp
 #define Part_hpp
 
-#include <Standard_Handle.hxx>
+#include <string>
+
 
 #include "PartLabel.hpp"
-#include "ShapeLabel.hpp"
+
 #include "Shape.hpp"
 #include "Location.hpp"
 #include "ColorRGBA.hpp"
 
-#include "PartSubShapeTool.hpp"
+
 #include "PartShapeTool.hpp"
+#include "PartSubShapeTool.hpp"
+#include "PartAssemblyTool.hpp"
 #include "PartAttributeTool.hpp"
 
-class XCAFDoc_ShapeTool;
 class Part {
     public:
-    inline static ColorRGBA defaultPartColor = ColorRGBA();
-    inline static std::string defaultPartName = "PartName";
+    inline static std::string defaultName = "DefaultPartName";
+    inline static ColorRGBA defaultColor = ColorRGBA{0.5, 0.5, 0.5, 1.0};
     
     Part(const PartLabel& aPartLabel);
-    virtual ~Part() = default;
+    ~Part() = default;
 
-    Shape shape() const;
-    Location location() const;
+    inline PartLabel label() const {return mPartLabel;}
 
-    PartSubShapeTool& subShapes() const;    
-    PartSubShapeTool& attributes() const;    
+    inline Shape shape() const {return mShapeTool.shape(); }
+    inline Location location() const {return mShapeTool.location(); }
 
-    protected:
+    inline bool isAssembly() const {return mAssemblyTool.isAssembly();};
+    inline bool isComponent() const {return mAssemblyTool.isComponent();};    
+
+    inline PartSubShapeTool& subShapes() {return mSubShapeTool;} 
+    inline PartAssemblyTool& assembly() {return mAssemblyTool;} 
+    inline PartAttributeTool& attributes() {return mAttributeTool;} 
+
+    private:
     PartLabel mPartLabel;
-    Handle(XCAFDoc_ShapeTool) mShapeTool;
-
-    PartAttributeTool mAttributes;
-    PartSubShapeTool mSubShapes;
-    PartShapeTool mShapes;
+    PartShapeTool mShapeTool;
+    PartSubShapeTool mSubShapeTool;
+    PartAssemblyTool mAssemblyTool;
+    PartAttributeTool mAttributeTool;
 };
 
 #endif

@@ -22,6 +22,7 @@ class PartNamedSelectionTool {
         const SubShapeId& aSubShapeId, 
         const std::string& aName
     );
+
     bool removeNamedSelection(const GeometryNamedSelection& aNamedSelection);
 
     private:

@@ -1,11 +1,12 @@
 add_library(PartCommonTools
     PartAttributeTool.cpp
+    PartAssemblyTool.cpp
     PartSubShapeTool.cpp
     PartShapeTool.cpp
 )
 
 target_link_libraries(PartCommonTools
-    PUBLIC DocumentTools
+    PUBLIC DocumentLabels
     PUBLIC PartAttributes
     PUBLIC Shapes
 )

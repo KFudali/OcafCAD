@@ -14,7 +14,8 @@ class XCAFDoc_ShapeTool;
 class PartSubShapeTool {
     public:
     PartSubShapeTool(const PartLabel& aPartLabel);
-
+    inline PartLabel label() const {return mPartLabel;}
+    
     bool subShapeIdValid(const SubShapeId& aSubShapeId) const;
     SubShapeId subShapeId(const Shape& aPartPrototype) const;
     Shape subShape(const SubShapeId& aSubShapeId) const;

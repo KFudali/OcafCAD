@@ -34,11 +34,11 @@ TEST_F(GeometryDocImporterTest, ImportsAssemblyWithTwoPrototypes) {
     Part assembly(freeParts[0]);
     EXPECT_TRUE(assembly.isAssembly());
 
-    auto components = assembly.childrenComponents();
+    auto components = assembly.assembly().childrenComponents();
     ASSERT_THAT(components, SizeIs(2));
 
-    EXPECT_TRUE(Part(components[0]).prototype().IsEqual(source.cube));
-    EXPECT_TRUE(Part(components[1]).prototype().IsEqual(source.sphere));
+    EXPECT_TRUE(PartShapeTool(components[0]).shape().IsEqual(source.cube));
+    EXPECT_TRUE(PartShapeTool(components[1]).shape().IsEqual(source.sphere));
 }
 
 TEST_F(GeometryDocImporterTest, ImportsTwoAssembliesWithSamePrototype) {
@@ -56,14 +56,14 @@ TEST_F(GeometryDocImporterTest, ImportsTwoAssembliesWithSamePrototype) {
     EXPECT_TRUE(assemblyA.isAssembly());
     EXPECT_TRUE(assemblyB.isAssembly());
 
-    auto compsA = assemblyA.childrenComponents();
-    auto compsB = assemblyB.childrenComponents();
+    auto compsA = assemblyA.assembly().childrenComponents();
+    auto compsB = assemblyB.assembly().childrenComponents();
 
     ASSERT_THAT(compsA, SizeIs(1));
     ASSERT_THAT(compsB, SizeIs(1));
 
-    EXPECT_TRUE(Part(compsA[0]).prototype().IsEqual(source.cube));
-    EXPECT_TRUE(Part(compsB[0]).prototype().IsEqual(source.cube));
+    EXPECT_TRUE(PartShapeTool(compsA[0]).shape().IsEqual(source.cube));
+    EXPECT_TRUE(PartShapeTool(compsB[0]).shape().IsEqual(source.cube));
 }
 
 TEST_F(GeometryDocImporterTest, ImportsTwoAssembliesWithSharedSubAssembly) {
@@ -80,6 +80,6 @@ TEST_F(GeometryDocImporterTest, ImportsTwoAssembliesWithSharedSubAssembly) {
     EXPECT_TRUE(assemblyA.isAssembly());
     EXPECT_TRUE(assemblyB.isAssembly());
 
-    ASSERT_THAT(assemblyA.childrenComponents(), SizeIs(1));
-    ASSERT_THAT(assemblyB.childrenComponents(), SizeIs(1));
+    ASSERT_THAT(assemblyA.assembly().childrenComponents(), SizeIs(1));
+    ASSERT_THAT(assemblyB.assembly().childrenComponents(), SizeIs(1));
 }

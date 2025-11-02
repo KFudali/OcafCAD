@@ -14,12 +14,12 @@ class PartDoesNotHaveAttribute : public std::runtime_error {
     : std::runtime_error(message) {}
 };
 
-
 class XCAFDoc_ShapeTool;
 class XCAFDoc_ColorTool;
 class PartAttributeTool {
     public:
     PartAttributeTool(const PartLabel& aPartLabel);
+    inline PartLabel label() const {return mPartLabel;}
 
     bool hasName() const;    
     bool hasColor() const;    

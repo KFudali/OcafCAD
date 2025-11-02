@@ -1,7 +1,6 @@
 add_subdirectory(NamedSelection)
 
 add_library(PartGeometryTools
-    PartAssemblyTool.cpp
     PartNamedSelectionTool.cpp
 )
 

@@ -15,8 +15,8 @@ PartLabel DocumentGeometry::addPart(ShapeLabel aPrototype, Location aLocation){
     return mRootAssembly->addPart(aPrototype, aLocation);
 }
 
-ShapeLabel DocumentGeometry::addPrototype(Shape aPrototype) {
-    return mPrototypeRegistry->addPrototype(aPrototype);
+ShapeLabel DocumentGeometry::addShape(Shape aPrototype) {
+    return mPrototypeRegistry->addShape(aPrototype);
 }
 
 ShapeLabel DocumentGeometry::addAssemblyPrototype(Shape aPrototype) {

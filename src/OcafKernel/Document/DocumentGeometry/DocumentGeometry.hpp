@@ -23,7 +23,7 @@ class DocumentGeometry {
     PartLabel addEmptyPart(); 
     PartLabel addEmptyAssembly(); 
     PartLabel addPart(ShapeLabel aPrototype, Location aLocation); 
-    ShapeLabel addPrototype(Shape aPrototype);
+    ShapeLabel addShape(Shape aPrototype);
     ShapeLabel addAssemblyPrototype(Shape aPrototype);
     
     std::vector<ShapeLabel> prototypes() const;

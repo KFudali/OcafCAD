@@ -4,7 +4,7 @@ ShapeRegistry::ShapeRegistry(Handle(TDocStd_Document) aDoc) : mDoc(aDoc) {
     mShapeTool = XCAFDoc_DocumentTool::ShapeTool(mDoc->Main());
 }
 
-ShapeLabel ShapeRegistry::addPrototype(Shape aShape){
+ShapeLabel ShapeRegistry::addShape(Shape aShape){
     TDF_Label label = mShapeTool->FindShape(aShape, false);
     if (label.IsNull()){
         label = mShapeTool->AddShape(aShape, false, false);

@@ -114,7 +114,7 @@ ShapeLabel GeometryDocImporter::importPrototype(TDF_Label aProtoLabel) {
             "GetShape returns Null shape"
         );
     }
-    return mDest.addPrototype(proto);
+    return mDest.addShape(proto);
 }
 
 ShapeLabel GeometryDocImporter::importPartPrototype(TDF_Label aPartLabel){

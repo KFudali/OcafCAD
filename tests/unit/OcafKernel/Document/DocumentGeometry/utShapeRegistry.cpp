@@ -25,7 +25,7 @@ TEST_F(PrototypeRegistryTest, ConstructRegistryInitializesShapeTool) {
 TEST_F(PrototypeRegistryTest, AddPrototypeCreatesNewLabel) {
     Shape cube = StubPartPrototypes::cube();
 
-    ShapeLabel label = registry->addPrototype(cube);
+    ShapeLabel label = registry->addShape(cube);
     EXPECT_TRUE(label.isValid());
 
     auto allPrototypes = registry->prototypeList();
@@ -36,8 +36,8 @@ TEST_F(PrototypeRegistryTest, AddPrototypeCreatesNewLabel) {
 TEST_F(PrototypeRegistryTest, AddPrototypeTwiceDoesNotDuplicate) {
     Shape cube = StubPartPrototypes::cube();
 
-    auto first = registry->addPrototype(cube);
-    auto second = registry->addPrototype(cube);
+    auto first = registry->addShape(cube);
+    auto second = registry->addShape(cube);
 
     EXPECT_TRUE(first.isValid());
     EXPECT_TRUE(second.isValid());
@@ -60,7 +60,7 @@ TEST_F(PrototypeRegistryTest, AddAssemblyPrototypeCreatesNewLabelAlways) {
 
 TEST_F(PrototypeRegistryTest, RemovePrototypeRemovesSuccessfully) {
     Shape cube = StubPartPrototypes::cube();
-    auto label = registry->addPrototype(cube);
+    auto label = registry->addShape(cube);
 
     ASSERT_TRUE(label.isValid());
     bool removed = registry->removePrototype(label);
@@ -79,8 +79,8 @@ TEST_F(PrototypeRegistryTest, PrototypeListReflectsAddedPrototypes) {
     Shape cube = StubPartPrototypes::cube();
     Shape sphere = StubPartPrototypes::sphere();
 
-    registry->addPrototype(cube);
-    registry->addPrototype(sphere);
+    registry->addShape(cube);
+    registry->addShape(sphere);
 
     auto allPrototypes = registry->prototypeList();
     EXPECT_EQ(allPrototypes.size(), 2);

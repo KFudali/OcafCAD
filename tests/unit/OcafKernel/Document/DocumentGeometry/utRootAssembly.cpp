@@ -2,13 +2,11 @@
 #include "StubOccDocument.hpp"
 #include "StubPartPrototypes.hpp"
 
-
 #include "RootAssembly.hpp"
 #include "ShapeRegistry.hpp"
 
-
 #include "PartLabel.hpp"
-#include "GeometryPart.hpp"
+#include "Part.hpp"
 #include "ShapeLabel.hpp"
 
 class RootAssemblyTest : public ::testing::Test {
@@ -41,7 +39,7 @@ TEST_F(RootAssemblyTest, AddEmptyAssemblyCreatesAssemblyLabel) {
 
 TEST_F(RootAssemblyTest, AddPartFromPrototypeCreatesComponentUnderRoot) {
     Shape cube = StubPartPrototypes::cube();
-    auto protoLabel = registry->addPrototype(cube);
+    auto protoLabel = registry->addShape(cube);
     ASSERT_TRUE(protoLabel.isValid());
 
     PartLabel part = rootAssembly->addPart(protoLabel, Location());
@@ -61,7 +59,7 @@ TEST_F(RootAssemblyTest, FreePartsIncludeAddedEmptyPart) {
 
 TEST_F(RootAssemblyTest, TopLevelPartsIncludePrototypeParts) {
     Shape cube = StubPartPrototypes::cube();
-    auto protoLabel = registry->addPrototype(cube);
+    auto protoLabel = registry->addShape(cube);
     rootAssembly->addPart(protoLabel, Location());
 
     auto topLevel = rootAssembly->topLevelParts();
@@ -73,10 +71,10 @@ TEST_F(RootAssemblyTest, FreePartsDoNotIncludeNestedAssemblyParts) {
     auto assemblyLabel = rootAssembly->addEmptyAssembly();
     ASSERT_TRUE(assemblyLabel.isValid());
     Shape cube = StubPartPrototypes::cube();
-    auto protoLabel = registry->addPrototype(cube);
+    auto protoLabel = registry->addShape(cube);
     
-    auto assembly = GeometryPart(assemblyLabel);
-    auto compLabel = assembly.addComponent(protoLabel, Location());
+    auto assembly = Part(assemblyLabel);
+    auto compLabel = assembly.assembly().addComponent(protoLabel, Location());
 
     auto free = rootAssembly->freeParts();
     ASSERT_EQ(free.size(), 1);

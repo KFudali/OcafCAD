@@ -11,6 +11,7 @@ class XCAFDoc_ShapeTool;
 class PartShapeTool {
     public:
     PartShapeTool(const PartLabel& aPartLabel);
+    inline PartLabel label() const {return mPartLabel;}
 
     Shape shape() const;
     Location location() const;

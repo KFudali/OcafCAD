@@ -13,6 +13,8 @@ class PartAssemblyTool {
     public:
     PartAssemblyTool(const PartLabel& aPartLabel);
 
+    inline PartLabel label() const {return mPartLabel;}
+
     bool expandToAssembly();
     PartLabel addComponent(PartLabel aPartLabel, Location aLocation);
     PartLabel addComponent(ShapeLabel aPartLabel, Location aLocation);

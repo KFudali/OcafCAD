@@ -1,6 +1,5 @@
 add_subdirectory(MeshSettings)
 
-
 add_library(MeshObject
     MeshObject.cpp
 )

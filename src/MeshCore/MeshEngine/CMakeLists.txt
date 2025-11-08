@@ -4,6 +4,7 @@ add_subdirectory(GmshMeshEngine)
 add_library(MeshEngine INTERFACE)
 
 target_link_libraries(MeshEngine
+    INTERFACE NetgenMeshEngine
     INTERFACE MeshObject
     INTERFACE Tools
 )

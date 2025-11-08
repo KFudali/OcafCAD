@@ -12,9 +12,10 @@ class NamedSelection {
    
     inline bool isValid() {return !mSelectionLabel.label().IsNull();} 
     inline NamedSelectionLabel label() const {return mSelectionLabel;}
-    SubShapeId namedShapeId() const;
     
+    SubShapeId namedShapeId() const;
     inline std::string name() const {return mSelectionLabel.name();};
+    
     inline bool rename(const std::string& aNewName) {
         return mSelectionLabel.rename(aNewName);
     }

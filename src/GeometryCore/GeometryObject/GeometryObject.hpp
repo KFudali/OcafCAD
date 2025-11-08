@@ -15,7 +15,7 @@ class GeometryObject {
     inline PartNamedSelectionTool& namedSelections() {
         return mNamedSelectionTool;
     }
-       
+    
     private:
     Part mSourcePart;
     PartNamedSelectionTool mNamedSelectionTool;

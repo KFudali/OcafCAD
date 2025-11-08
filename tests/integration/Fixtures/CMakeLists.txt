@@ -5,6 +5,8 @@ target_link_libraries(IntegrationFixtures
     INTERFACE GeometryCore
     INTERFACE MeshCore
 
+    INTERFACE OcafKernelFixtures
+
     INTERFACE Tools
     INTERFACE GTest::gmock_main
 )

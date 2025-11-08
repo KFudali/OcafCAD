@@ -1,5 +1,5 @@
-#ifndef PartPrototype_hpp
-#define PartPrototype_hpp
+#ifndef Shape_hpp
+#define Shape_hpp
 
 #include <TopoDS_Shape.hxx>
 

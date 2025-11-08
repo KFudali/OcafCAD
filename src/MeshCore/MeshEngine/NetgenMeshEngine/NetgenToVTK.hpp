@@ -10,3 +10,10 @@ namespace NetgenToVTK {
 };
 
 #endif
+
+
+// GeometryObject()
+//     domain
+
+
+

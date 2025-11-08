@@ -1,3 +1,5 @@
+add_subdirectory(MeshPreprocessor)
+
 add_library(NetgenMeshEngine
     NetgenMeshEngine.cpp
     NetgenToVTK.cpp
@@ -5,6 +7,7 @@ add_library(NetgenMeshEngine
 
 target_link_libraries(NetgenMeshEngine
     PUBLIC MeshEngine
+    PUBLIC MeshPreprocessor
     PRIVATE ${Netgen_LIBRARIES}
 )
 

@@ -11,6 +11,7 @@ target_link_libraries(MeshCore
     PUBLIC GeometryCore
     PUBLIC MeshObject
     PUBLIC MeshEngine
+    PUBLIC OcafKernel
     PUBLIC Tools
 )
 

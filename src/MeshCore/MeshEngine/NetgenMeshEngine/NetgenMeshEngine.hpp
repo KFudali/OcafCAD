@@ -3,6 +3,13 @@
 
 #include "AbstractMeshEngine.hpp"
 
+#ifndef OCCGEOMETRY
+#define OCCGEOMETRY
+#endif
+
+#include <occgeom.hpp>
+#include <meshing.hpp>
+
 class NetgenMeshEngine : public AbstractMeshEngine {
     public:
     NetgenMeshEngine() = default;

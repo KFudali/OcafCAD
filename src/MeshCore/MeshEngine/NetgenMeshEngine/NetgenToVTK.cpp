@@ -109,6 +109,7 @@ vtkSmartPointer<vtkPolyData> copySurfaceConnectivity(
         for (size_t j = 0; j < elem.GetNP(); ++j) {
             connVTK->SetValue(offset + 1 + j, static_cast<vtkIdType>(elem.PNum(j)));
         }
+        auto faceDescriptor = aSource.GetFaceDescriptor(elem);
     }
 
     vtkSmartPointer<vtkCellArray> cells = vtkSmartPointer<vtkCellArray>::New();

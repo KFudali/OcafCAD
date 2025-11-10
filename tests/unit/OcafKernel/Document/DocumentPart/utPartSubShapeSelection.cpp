@@ -1,78 +1,110 @@
 #include <gtest/gtest.h>
 
+#include "DocumentGeometryFixture.hpp"
 #include "PartSubShapeSelection.hpp"
 
 #include <XCAFApp_Application.hxx>
 #include <TDocStd_Document.hxx>
 #include <TDF_Label.hxx>
 #include <TDF_LabelSequence.hxx>
+#include <TopExp.hxx>
+#include <unordered_set>
 
 #include <gtest/gtest.h>
 #include "PartSubShapeSelection.hpp"
 
-// class MockRefTreeLabel : public RefTreeLabel {
-// public:
-//     MockRefTreeLabel() : RefTreeLabel() {}
-
-//     TDF_LabelSequence references() const override {
-//         TDF_LabelSequence seq;
-//         return seq;
-//     }
-
-//     bool appendReference(const TDF_Label&) override { return true; }
-//     bool removeReference(const TDF_Label&) override { return true; }
-// };
-
-class PartSubShapeSelectionTest : public ::testing::Test {
+class PartSubShapeSelectionTest : public DocumentGeometryFixture {
 protected:
     void SetUp() override {
-        app = XCAFApp_Application::GetApplication(); 
-        app->NewDocument("XmlXCAF", doc);
-        root = doc->Main().NewChild();
+        DocumentGeometryFixture::SetUp();
+        cubeShapeLabel = geoDoc->addShape(cubeShape);
+        cubePartLabel = geoDoc->addPart(cubeShapeLabel, Location());
+        
+        shapeTool = XCAFDoc_DocumentTool::ShapeTool(cubeShapeLabel.label().Root());
+        subShapeTool = std::make_unique<PartSubShapeTool>(cubePartLabel);
+
+        TopExp::MapShapes(cubeShape, ShapeType::TopAbs_FACE, subFaces);
+        shapeTool->AddSubShape(cubeShapeLabel.label(), subFaces(1), faceLabel_1);
+        shapeTool->AddSubShape(cubeShapeLabel.label(), subFaces(2), faceLabel_2);
+        faceSeq.Append(faceLabel_1);       
+        faceSeq.Append(faceLabel_2);       
+
     }
 
-    Handle(XCAFApp_Application) app;
-    Handle(TDocStd_Document) doc;
-    TDF_Label root;
+    Shape cubeShape = StubPartPrototypes::cube();
+    ShapeLabel cubeShapeLabel;
+    PartLabel cubePartLabel;
+    TopTools_IndexedMapOfShape subFaces;
+
+    Shape face_1;
+    Shape face_2;
+
+    TDF_Label faceLabel_1;
+    TDF_Label faceLabel_2;
+    
+    TDF_LabelSequence faceSeq;
+
+    std::unique_ptr<PartSubShapeTool> subShapeTool;
+    Handle(XCAFDoc_ShapeTool) shapeTool;
 };
 
-TEST_F(PartSubShapeSelectionTest, TestTrue){
-    EXPECT_TRUE(true);
+
+TEST_F(PartSubShapeSelectionTest, idsReturnsValidSubShapeList) {
+    auto anyParent = cubeShapeLabel.label().NewChild();
+    PartSubShapeSelection selection(cubePartLabel, anyParent, faceSeq);
+    auto subShapeIds = selection.ids();
+
+    ASSERT_EQ(subShapeIds.subIds().size(), 2);
+    auto seq = subShapeTool->subShapeLabels(subShapeIds);
+
+    std::unordered_set<TDF_Label> seqSet;
+    std::unordered_set<TDF_Label> faceSeqSet;
+
+    for (Standard_Integer i = 1; i <= seq.Size(); ++i)
+        seqSet.insert(seq.Value(i));
+
+    for (Standard_Integer i = 1; i <= faceSeq.Size(); ++i)
+        faceSeqSet.insert(faceSeq.Value(i));
+
+    EXPECT_EQ(seqSet, faceSeqSet);
 }
 
-// TEST_F(PartSubShapeSelectionTest, ConstructorWithLabelSequence) {
-//     TDF_LabelSequence seq;
-//     PartLabel partLabel;
-//     PartSubShapeSelection sel(partLabel, root, seq);
+TEST_F(PartSubShapeSelectionTest, removeRemovesLabelFromSelection) {
+    auto anyParent = cubeShapeLabel.label().NewChild();
+    PartSubShapeSelection selection(cubePartLabel, anyParent, faceSeq);
+    
+    auto subShapeIds = selection.ids();
+    ASSERT_EQ(subShapeIds.subIds().size(), 2);
+    
+    selection.remove(subShapeIds.subIds()[0]);
 
-//     ASSERT_NE(sel.label(), nullptr);
-// }
+    auto newSubShapeIds = selection.ids();
+    ASSERT_EQ(newSubShapeIds.subIds().size(), 1);
+    EXPECT_EQ(newSubShapeIds.subIds()[0], subShapeIds.subIds()[1]);
+}
 
-// TEST_F(PartSubShapeSelectionTest, ConstructorWithRefTreeLabel) {
-//     PartLabel partLabel;
-//     MockRefTreeLabel mockLabel;
-//     PartSubShapeSelection sel(partLabel, mockLabel);
+TEST_F(PartSubShapeSelectionTest, appendCanAddNewSubShapeIdToSelection) {
+    auto anyParent = cubeShapeLabel.label().NewChild();
+    PartSubShapeSelection selection(cubePartLabel, anyParent, faceSeq);
+    
+    auto subShapeIds = selection.ids();
+    ASSERT_EQ(subShapeIds.subIds().size(), 2);
 
-//     ASSERT_NE(sel.label(), nullptr);
-// }
+    SubShapeId newId(cubePartLabel, ShapeType::TopAbs_FACE, 3);
+    selection.append(newId);
 
-// TEST_F(PartSubShapeSelectionTest, ClearLabel) {
-//     TDF_LabelSequence seq;
-//     PartLabel partLabel;
-//     PartSubShapeSelection sel(partLabel, root, seq);
+    subShapeIds = selection.ids();
+    ASSERT_EQ(subShapeIds.subIds().size(), 3);
+}
 
-//     sel.clear();
-// }
-
-// TEST_F(PartSubShapeSelectionTest, AppendAndRemove) {
-//     TDF_LabelSequence seq;
-//     PartLabel partLabel;
-//     PartSubShapeSelection sel(partLabel, root, seq);
-
-//     SubShapeId id;
-//     bool appended = sel.append(id);
-//     bool removed = sel.remove(id);
-
-//     ASSERT_TRUE(appended);
-//     ASSERT_TRUE(removed);
-// }
+TEST_F(PartSubShapeSelectionTest, SelectionCanBeReconstructedFromLabel) {
+    RefTreeLabel* refLabel;
+    {
+        auto anyParent = cubeShapeLabel.label().NewChild();
+        PartSubShapeSelection selection(cubePartLabel, anyParent, faceSeq);
+        refLabel = selection.label();
+    }
+    PartSubShapeSelection selection{cubePartLabel, *refLabel};
+    auto subShapeIds = selection.ids();
+    ASSERT_EQ(subShapeIds.subIds().size(), 2);
+}

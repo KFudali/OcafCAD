@@ -21,11 +21,14 @@ class PartSubShapeTool {
     inline PartLabel label() const {return mPartLabel;}
     
     bool subShapeIdValid(const SubShapeId& aSubShapeId) const;
+
+    Shape subShape(const SubShapeId& aSubShapeId) const;
+
     SubShapeId subShapeId(const Shape& aPartShape) const;
     SubShapeId subShapeId(const SubShapeLabel& aPartShape) const;
-    Shape subShape(const SubShapeId& aSubShapeId) const;
-    SubShapeLabel subShapeLabel(const SubShapeId& aSubShapeId) const;
+
     SubShapeLabel subShapeLabel(const Shape& aSubShape) const;
+    SubShapeLabel subShapeLabel(const SubShapeId& aSubShapeId) const;
     
     TDF_LabelSequence subShapeLabels(const SubShapeIdList& aSubShapeId) const;
     SubShapeIdList subShapeIds(const TDF_LabelSequence& aSubShapeLabels) const;

@@ -85,8 +85,8 @@ SubShapeLabel PartSubShapeTool::subShapeLabel(const Shape& aSubShape) const
     TDF_Label mainShapeLabel;
     TDF_Label subShapeLabel;
     mShapeTool->GetReferredShape(mPartLabel.label(), mainShapeLabel);
-    mShapeTool->FindSubShape(mainShapeLabel, aSubShape, subShapeLabel);
-    if(mainShapeLabel.IsNull() || !subShapeLabel.IsNull()){
+    mShapeTool->AddSubShape(mainShapeLabel, aSubShape, subShapeLabel);
+    if(mainShapeLabel.IsNull() || subShapeLabel.IsNull()){
         return SubShapeLabel();
     } else {
         return SubShapeLabel(subShapeLabel);

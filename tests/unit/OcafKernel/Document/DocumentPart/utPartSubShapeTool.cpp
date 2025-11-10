@@ -37,20 +37,20 @@ TEST_F(PartSubShapeToolTest, SubShapeIdValidReturnsFalseForInvalidId) {
 
 TEST_F(PartSubShapeToolTest, SubShapesOfTypeReturnsExpectedFaceCountForCube) {
     auto faceList = subShapeTool->subShapesOfType(ShapeType::TopAbs_FACE);
-    EXPECT_EQ(faceList.subIds().size(), 6);
+    EXPECT_EQ(faceList.subIdVec().size(), 6);
     EXPECT_EQ(faceList.shapeType(), ShapeType::TopAbs_FACE);
     EXPECT_EQ(faceList.root(), cubePartLabel);
 }
 
 TEST_F(PartSubShapeToolTest, SubShape_ReturnsCorrectShapeType) {
     auto faceList = subShapeTool->subShapesOfType(ShapeType::TopAbs_FACE);
-    ASSERT_FALSE(faceList.subIds().empty());
+    ASSERT_FALSE(faceList.subIdVec().empty());
 
     Shape faceShape = subShapeTool->subShape(
         SubShapeId(
             faceList.root(), 
             ShapeType::TopAbs_FACE, 
-            faceList.subIds().front()
+            faceList.subIdVec().front()
         )
     );
 

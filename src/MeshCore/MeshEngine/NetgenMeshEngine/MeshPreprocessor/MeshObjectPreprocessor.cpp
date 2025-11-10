@@ -4,7 +4,7 @@
 
 void applyNamedSelections(
     MeshInput& aMeshInput, 
-    const std::vector<NamedSelection>& aNamedSelections
+    const std::vector<NamedSelectionHandle>& aNamedSelections
 ) {
     aMeshInput.applyNamedSelection();
 }

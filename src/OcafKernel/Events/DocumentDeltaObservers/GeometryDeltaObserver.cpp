@@ -8,7 +8,7 @@
 #include "PrototypeEvents.hpp"
 
 #include "PartMarkerAttribute.hpp"
-#include "PrototypeMarkerAttribute.hpp"
+#include "ShapeMarkerAttribute.hpp"
 
 GeometryDeltaObserver::GeometryDeltaObserver(MessagePublisher& aMessagePublisher)
     : mMessagePublisher(aMessagePublisher) {}
@@ -17,7 +17,7 @@ void GeometryDeltaObserver::onAddition(Handle(TDF_DeltaOnAddition) aDelta) {
     if (aDelta.IsNull() || aDelta->Attribute().IsNull()) return;
     auto label = aDelta->Label();
 
-    if (aDelta->Attribute()->IsKind(STANDARD_TYPE(PrototypeMarkerAttribute))) {
+    if (aDelta->Attribute()->IsKind(STANDARD_TYPE(ShapeMarkerAttribute))) {
         mMessagePublisher.publish(PrototypeAddedEvent(DocLabel(label)));
     }
     else if (aDelta->Attribute()->IsKind(STANDARD_TYPE(PartMarkerAttribute))) {
@@ -33,7 +33,7 @@ void GeometryDeltaObserver::onRemoval(Handle(TDF_DeltaOnRemoval) aDelta) {
     if (aDelta.IsNull() || aDelta->Attribute().IsNull()) return;
     auto label = aDelta->Label();
 
-    if (aDelta->Attribute()->IsKind(STANDARD_TYPE(PrototypeMarkerAttribute))) {
+    if (aDelta->Attribute()->IsKind(STANDARD_TYPE(ShapeMarkerAttribute))) {
         mMessagePublisher.publish(PrototypeRemovedEvent(DocLabel(label)));
     }
     else if (aDelta->Attribute()->IsKind(STANDARD_TYPE(PartMarkerAttribute))) {
@@ -49,7 +49,7 @@ void GeometryDeltaObserver::onForget(Handle(TDF_DeltaOnForget) aDelta) {
     if (aDelta.IsNull() || aDelta->Attribute().IsNull()) return;
     auto label = aDelta->Label();
 
-    if (aDelta->Attribute()->IsKind(STANDARD_TYPE(PrototypeMarkerAttribute))) {
+    if (aDelta->Attribute()->IsKind(STANDARD_TYPE(ShapeMarkerAttribute))) {
         mMessagePublisher.publish(PrototypeRemovedEvent(DocLabel(label)));
     }
     else if (aDelta->Attribute()->IsKind(STANDARD_TYPE(PartMarkerAttribute))) {
@@ -61,7 +61,7 @@ void GeometryDeltaObserver::onResume(Handle(TDF_DeltaOnResume) aDelta) {
     if (aDelta.IsNull() || aDelta->Attribute().IsNull()) return;
     auto label = aDelta->Label();
 
-    if (aDelta->Attribute()->IsKind(STANDARD_TYPE(PrototypeMarkerAttribute))) {
+    if (aDelta->Attribute()->IsKind(STANDARD_TYPE(ShapeMarkerAttribute))) {
         mMessagePublisher.publish(PrototypeAddedEvent(DocLabel(label)));
     }
     else if (aDelta->Attribute()->IsKind(STANDARD_TYPE(PartMarkerAttribute))) {

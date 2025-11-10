@@ -7,7 +7,7 @@
 #include "AssemblyEvents.hpp"
 #include "PartEvents.hpp"
 #include "PartMarkerAttribute.hpp"
-#include "PrototypeMarkerAttribute.hpp"
+#include "ShapeMarkerAttribute.hpp"
 
 #include "GeometryDeltaObserver.hpp"
 #include "MockMessageBus.hpp"
@@ -26,7 +26,7 @@ class GeometryObserverTest : public ::testing::Test {
 };
 
 TEST_F(GeometryObserverTest, PrototypeAdditionPublishesCorrectEvent) {
-    Handle(PrototypeMarkerAttribute) attr = new PrototypeMarkerAttribute();
+    Handle(ShapeMarkerAttribute) attr = new ShapeMarkerAttribute();
     Handle(TDF_DeltaOnAddition) delta(new TDF_DeltaOnAddition(attr));
 
     EXPECT_CALL(mockBus,
@@ -36,7 +36,7 @@ TEST_F(GeometryObserverTest, PrototypeAdditionPublishesCorrectEvent) {
 }
 
 TEST_F(GeometryObserverTest, PrototypeRemovalPublishesCorrectEvent) {
-    Handle(PrototypeMarkerAttribute) attr = new PrototypeMarkerAttribute();
+    Handle(ShapeMarkerAttribute) attr = new ShapeMarkerAttribute();
     Handle(TDF_DeltaOnRemoval) delta(new TDF_DefaultDeltaOnRemoval(attr));
 
     EXPECT_CALL(mockBus,
@@ -46,7 +46,7 @@ TEST_F(GeometryObserverTest, PrototypeRemovalPublishesCorrectEvent) {
 }
 
 TEST_F(GeometryObserverTest, PrototypeForgetPublishesCorrectEvent) {
-    Handle(PrototypeMarkerAttribute) attr = new PrototypeMarkerAttribute();
+    Handle(ShapeMarkerAttribute) attr = new ShapeMarkerAttribute();
     Handle(TDF_DeltaOnForget) delta(new TDF_DeltaOnForget(attr));
 
     EXPECT_CALL(mockBus,
@@ -56,7 +56,7 @@ TEST_F(GeometryObserverTest, PrototypeForgetPublishesCorrectEvent) {
 }
 
 TEST_F(GeometryObserverTest, PrototypeResumePublishesCorrectEvent) {
-    Handle(PrototypeMarkerAttribute) attr = new PrototypeMarkerAttribute();
+    Handle(ShapeMarkerAttribute) attr = new ShapeMarkerAttribute();
     Handle(TDF_DeltaOnResume) delta(new TDF_DeltaOnResume(attr));
 
     EXPECT_CALL(mockBus,
@@ -66,7 +66,7 @@ TEST_F(GeometryObserverTest, PrototypeResumePublishesCorrectEvent) {
 }
 
 TEST_F(GeometryObserverTest, PrototypeModificationPublishesNothing) {
-    Handle(PrototypeMarkerAttribute) attr = new PrototypeMarkerAttribute();
+    Handle(ShapeMarkerAttribute) attr = new ShapeMarkerAttribute();
     Handle(TDF_DeltaOnModification)
         delta(new TDF_DefaultDeltaOnModification(attr));
 

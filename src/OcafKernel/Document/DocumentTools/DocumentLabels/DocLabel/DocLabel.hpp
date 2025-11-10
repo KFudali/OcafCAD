@@ -4,6 +4,19 @@
 #include <TDF_Label.hxx>
 #include <string>
 #include <vector>
+#include <stdexcept>
+
+class LabelException : public std::exception {
+public:
+    explicit LabelException(std::string msg)
+        : mMsg(std::move(msg)) {}
+
+    const char* what() const noexcept override {
+        return mMsg.c_str();
+    }
+private:
+    std::string mMsg;
+};
 
 class DocLabel {
     public: 

@@ -1,8 +1,8 @@
 #include "DocLabelUtils.hpp"
 #include "RootAssemblyMarkerAttribute.hpp"
 
-#include "XCAFDoc_ShapeTool.hxx"
-#include "XCAFDoc_DocumentTool.hxx"
+#include <XCAFDoc_ShapeTool.hxx>
+#include <XCAFDoc_DocumentTool.hxx>
 
 bool DocLabelUtils::isRootAssemblyLabel(TDF_Label aLabel) {
     return aLabel.IsAttribute(RootAssemblyMarkerAttribute::GetID());
@@ -20,7 +20,7 @@ bool DocLabelUtils::canBePartLabel(TDF_Label aLabel) {
     return false;
 }
 
-bool DocLabelUtils::canBePrototypeLabel(TDF_Label aLabel) {
+bool DocLabelUtils::canBeShapeLabel(TDF_Label aLabel) {
     if (aLabel.IsNull()){
         return false;
     }
@@ -33,4 +33,12 @@ bool DocLabelUtils::canBePrototypeLabel(TDF_Label aLabel) {
     } else {
         return false;
     }
+}
+
+bool DocLabelUtils::canBeSubShapeLabel(TDF_Label aLabel) {
+    if (aLabel.IsNull()){
+        return false;
+    }
+    auto shapeTool = XCAFDoc_DocumentTool::ShapeTool(aLabel.Root());
+    return shapeTool->IsSubShape(aLabel);
 }

@@ -1,17 +1,8 @@
-add_library(DocumentLabels)
+add_subdirectory(DocLabel)
+add_subdirectory(PartLabel)
+add_subdirectory(RefLabels)
 
-target_sources(DocumentLabels PRIVATE
-    DocLabel.cpp
-    DocLabelUtils.cpp   
-    PartLabel.cpp
-    ShapeLabel.cpp
-)
-
-target_link_libraries(DocumentLabels
-    PUBLIC ${OpenCASCADE_LIBRARIES}
-    PRIVATE LabelMarkerAttributes
-)
-
-target_include_directories(DocumentLabels
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+add_interface_library(DocumentLabels
+    LINK_LIBS ${OpenCASCADE_LIBRARIES} DocLabel PartLabel RefLabels
+    INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
 )

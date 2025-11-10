@@ -1,14 +1,6 @@
-add_subdirectory(NamedSelection)
+add_subdirectory(PartNamedSelection)
 
-add_library(PartGeometryTools
-    PartNamedSelectionTool.cpp
-)
-
-target_link_libraries(PartGeometryTools
-    PUBLIC DocumentTools
-    PUBLIC NamedSelectionLabel
-)
-
-target_include_directories(PartGeometryTools
-    PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
+add_interface_library(PartGeometryTools
+    LINK_LIBS PartNamedSelection
+    INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
 )

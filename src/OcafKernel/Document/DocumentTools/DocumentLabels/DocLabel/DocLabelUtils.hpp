@@ -6,7 +6,8 @@
 namespace DocLabelUtils {
     bool isRootAssemblyLabel(TDF_Label aLabel);
     bool canBePartLabel(TDF_Label aLabel);
-    bool canBePrototypeLabel(TDF_Label aLabel);
+    bool canBeShapeLabel(TDF_Label aLabel);
+    bool canBeSubShapeLabel(TDF_Label aLabel);
 };
 
 #endif

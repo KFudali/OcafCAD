@@ -23,10 +23,10 @@ class PartNamedSelectionToolTest : public DocumentGeometryFixture {
         
         auto faces = subShapeTool.subShapesOfType(ShapeType::TopAbs_FACE);
         faceId = SubShapeId(
-            cubePartLabel, ShapeType::TopAbs_FACE, faces.subIds()[0]
+            cubePartLabel, ShapeType::TopAbs_FACE, faces.subIdVec()[0]
         );
         anotherFaceId = SubShapeId(
-            cubePartLabel, ShapeType::TopAbs_FACE, faces.subIds()[1]
+            cubePartLabel, ShapeType::TopAbs_FACE, faces.subIdVec()[1]
         );
         
         namedSelectionTool = std::make_unique<PartNamedSelectionTool>(cubePartLabel);
@@ -43,7 +43,7 @@ class PartNamedSelectionToolTest : public DocumentGeometryFixture {
 };
 
 TEST_F(PartNamedSelectionToolTest, AddNamedSelectionCreatesSelectionOnProperLabel){
-    std::string name("NamedSelection");
+    std::string name("NamedSelectionHandle");
     auto namedSelection = namedSelectionTool->addNamedSelection(faceId, name);
     EXPECT_EQ(namedSelection.name(), name);
     EXPECT_EQ(faceId, namedSelection.namedShapeId());
@@ -52,7 +52,7 @@ TEST_F(PartNamedSelectionToolTest, AddNamedSelectionCreatesSelectionOnProperLabe
 
 TEST_F(PartNamedSelectionToolTest, AddedNamedSelectionsCanBeFetched)
 {
-    std::string name("NamedSelection");
+    std::string name("NamedSelectionHandle");
     std::string anotherName("AnotherNamedSelection");
 
     auto namedSelection = namedSelectionTool->addNamedSelection(faceId, name);
@@ -68,7 +68,7 @@ TEST_F(PartNamedSelectionToolTest, AddedNamedSelectionsCanBeFetched)
 }
 
 TEST_F(PartNamedSelectionToolTest, AddedNamedSelectionsCanBeRemoved){
-    std::string name("NamedSelection");
+    std::string name("NamedSelectionHandle");
     std::string anotherName("AnotherNamedSelection");
     auto namedSelection = namedSelectionTool->addNamedSelection(faceId, name);
     auto anotherNamedSelection = namedSelectionTool->addNamedSelection(

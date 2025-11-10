@@ -33,7 +33,7 @@ std::vector<ShapeLabel> ShapeRegistry::prototypeList() const {
     mShapeTool->GetShapes(labels);
 
     for (auto label : labels) {
-        if (ShapeLabel::isPrototypeLabel(label)){
+        if (ShapeLabel::isShapeLabel(label)){
             prototypes.push_back(ShapeLabel(label));
         }
     }

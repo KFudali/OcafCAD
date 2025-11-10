@@ -3,6 +3,8 @@ add_library(PartCommonTools
     PartAssemblyTool.cpp
     PartSubShapeTool.cpp
     PartShapeTool.cpp
+    PartSubShapeSelectionBase.cpp
+    PartSubShapeSelection.cpp
 )
 
 target_link_libraries(PartCommonTools

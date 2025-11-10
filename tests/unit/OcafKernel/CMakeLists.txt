@@ -6,9 +6,9 @@ add_subdirectory(Events)
 
 add_library(utOcafKernel INTERFACE)
 target_link_libraries(utOcafKernel INTERFACE
-    utCommandStack
+    # utCommandStack
     utDocument
-    utOcafKernelEvents
+    # utOcafKernelEvents
     GTest::gmock_main
 )
 

@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 #include "DocLabel.hpp"
-
 #include <TDF_Label.hxx>
 #include <TDocStd_Document.hxx>
 #include <XCAFApp_Application.hxx>

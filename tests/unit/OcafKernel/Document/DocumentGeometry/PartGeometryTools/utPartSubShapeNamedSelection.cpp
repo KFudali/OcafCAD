@@ -1,80 +1,60 @@
-#include <gmock/gmock.h>
-
-#include <XCAFDoc_DocumentTool.hxx>
-#include <XCAFDoc_ShapeTool.hxx>
+#include <gtest/gtest.h>
 
 #include "DocumentGeometryFixture.hpp"
-#include "StubPartPrototypes.hpp"
+#include "PartSubShapeNamedSelection.hpp"
 
-#include "PartNamedSelectionTool.hpp"
-#include "PartSubShapeTool.hpp"
-using ::testing::UnorderedElementsAre;
-using ::testing::Contains;
-class PartNamedSelectionToolTest : public DocumentGeometryFixture {
-    protected:
-    void SetUp() {
+#include <XCAFApp_Application.hxx>
+#include <TDocStd_Document.hxx>
+#include <TDF_Label.hxx>
+#include <TDF_LabelSequence.hxx>
+#include <TopExp.hxx>
+#include <unordered_set>
+
+#include <gtest/gtest.h>
+#include "PartSubShapeNamedSelection.hpp"
+
+class PartSubShapeNamedSelectionTest : public DocumentGeometryFixture {
+protected:
+    void SetUp() override {
         DocumentGeometryFixture::SetUp();
-        auto cubeShapeLabel = geoDoc->addShape(cubePrototype);
-        auto cubePartLabel = geoDoc->addPart(cubeShapeLabel, Location());
-        shapeTool = XCAFDoc_DocumentTool::ShapeTool(cubePartLabel.label());
+        cubeShapeLabel = geoDoc->addShape(cubeShape);
+        cubePartLabel = geoDoc->addPart(cubeShapeLabel, Location());
+        
+        shapeTool = XCAFDoc_DocumentTool::ShapeTool(cubeShapeLabel.label().Root());
+        subShapeTool = std::make_unique<PartSubShapeTool>(cubePartLabel);
 
-        TDF_Label subShapeLabel;
-        auto subShapeTool = PartSubShapeTool(cubePartLabel);
-        
-        auto faces = subShapeTool.subShapesOfType(ShapeType::TopAbs_FACE);
-        faceId = SubShapeId(
-            cubePartLabel, ShapeType::TopAbs_FACE, faces.subIdVec()[0]
-        );
-        anotherFaceId = SubShapeId(
-            cubePartLabel, ShapeType::TopAbs_FACE, faces.subIdVec()[1]
-        );
-        
-        namedSelectionTool = std::make_unique<PartNamedSelectionTool>(cubePartLabel);
+        TopExp::MapShapes(cubeShape, ShapeType::TopAbs_FACE, subFaces);
+        shapeTool->AddSubShape(cubeShapeLabel.label(), subFaces(1), faceLabel_1);
+        shapeTool->AddSubShape(cubeShapeLabel.label(), subFaces(2), faceLabel_2);
+        faceSeq.Append(faceLabel_1);       
+        faceSeq.Append(faceLabel_2);       
+
     }
+
+    Shape cubeShape = StubPartPrototypes::cube();
+    ShapeLabel cubeShapeLabel;
+    PartLabel cubePartLabel;
+    TopTools_IndexedMapOfShape subFaces;
+
+    Shape face_1;
+    Shape face_2;
+
+    TDF_Label faceLabel_1;
+    TDF_Label faceLabel_2;
     
-    Shape cubePrototype = StubPartPrototypes::cube();
-    Shape exampleFace;
+    TDF_LabelSequence faceSeq;
 
-    SubShapeId faceId;
-    SubShapeId anotherFaceId;
-
-    std::unique_ptr<PartNamedSelectionTool> namedSelectionTool;
+    std::unique_ptr<PartSubShapeTool> subShapeTool;
     Handle(XCAFDoc_ShapeTool) shapeTool;
 };
 
-TEST_F(PartNamedSelectionToolTest, AddNamedSelectionCreatesSelectionOnProperLabel){
-    std::string name("NamedSelectionHandle");
-    auto namedSelection = namedSelectionTool->addNamedSelection(faceId, name);
-    EXPECT_EQ(namedSelection.name(), name);
-    EXPECT_EQ(faceId, namedSelection.namedShapeId());
-}
 
-
-TEST_F(PartNamedSelectionToolTest, AddedNamedSelectionsCanBeFetched)
-{
-    std::string name("NamedSelectionHandle");
-    std::string anotherName("AnotherNamedSelection");
-
-    auto namedSelection = namedSelectionTool->addNamedSelection(faceId, name);
-    auto anotherNamedSelection = namedSelectionTool->addNamedSelection(
-        anotherFaceId, anotherName
-    );
-
-    ASSERT_EQ(namedSelectionTool->namedSelections().size(), 2);
-    EXPECT_THAT(
-        namedSelectionTool->namedSelections(), 
-        UnorderedElementsAre(namedSelection, anotherNamedSelection)
-    );
-}
-
-TEST_F(PartNamedSelectionToolTest, AddedNamedSelectionsCanBeRemoved){
-    std::string name("NamedSelectionHandle");
-    std::string anotherName("AnotherNamedSelection");
-    auto namedSelection = namedSelectionTool->addNamedSelection(faceId, name);
-    auto anotherNamedSelection = namedSelectionTool->addNamedSelection(
-        anotherFaceId, anotherName
-    );
-    namedSelectionTool->removeNamedSelection(namedSelection);
-    ASSERT_EQ(namedSelectionTool->namedSelections().size(), 1);
-    EXPECT_EQ(namedSelectionTool->namedSelections()[0], anotherNamedSelection);
+TEST_F(PartSubShapeNamedSelectionTest, rename) {
+    auto anyParent = cubeShapeLabel.label().NewChild();
+    std::string name =  "name";
+    std::string newName =  "newName";
+    PartSubShapeNamedSelection selection(cubePartLabel, anyParent, faceSeq, name);
+    EXPECT_EQ(selection.name(), name);
+    selection.rename(newName);
+    EXPECT_EQ(selection.name(), newName);
 }

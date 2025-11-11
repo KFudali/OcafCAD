@@ -6,7 +6,7 @@ add_subdirectory(DocumentPart)
 add_library(utDocument INTERFACE)
 
 target_link_libraries(utDocument INTERFACE
-    # utDocumentGeometry
+    utDocumentGeometry
     utDocumentPart
     utDocumentTools
 )

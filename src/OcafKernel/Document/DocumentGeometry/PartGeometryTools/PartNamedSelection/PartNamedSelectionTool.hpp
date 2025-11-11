@@ -21,7 +21,7 @@ class PartNamedSelectionTool {
         const SubShapeIdList& aSubShapeIdList, 
         const std::string& aName
     );
-    bool removeSelection(const PartSubShapeNamedSelection& aNamedSelection);
+    bool removeSelection(PartSubShapeNamedSelection& aNamedSelection);
     
     private:
     TDF_Label namedSelectionTreeLabel() const;

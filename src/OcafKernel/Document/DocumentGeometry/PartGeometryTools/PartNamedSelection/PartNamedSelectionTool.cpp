@@ -5,18 +5,11 @@
 #include "NamedRefTreeAttribute.hpp"
 #include "NamedSelectionTreeMarkerAttribute.hpp"
 
+#include <TDF_ChildIterator.hxx>
 #include <algorithm>
 
 PartNamedSelectionTool::PartNamedSelectionTool(const PartLabel& aPartLabel) :
     mPartLabel(aPartLabel), mSubShapeTool(aPartLabel){}
-
-
-std::vector<PartSubShapeNamedSelection> selections() const;
-PartSubShapeNamedSelection addSelection(
-    const SubShapeIdList& aSubShapeIdList, 
-    const std::string& aName
-);
-bool removeSelection(const PartSubShapeNamedSelection& aNamedSelection);
 
 PartSubShapeNamedSelection PartNamedSelectionTool::addSelection(
     const SubShapeIdList& aSubShapeIdList, 
@@ -24,7 +17,8 @@ PartSubShapeNamedSelection PartNamedSelectionTool::addSelection(
 ) {
     TDF_Label treeRootLabel = namedSelectionTreeLabel();
     auto labels = mSubShapeTool.subShapeLabels(aSubShapeIdList);
-    return PartSubShapeNamedSelection(mPartLabel, treeRootLabel, labels);
+    PartSubShapeNamedSelection selection(mPartLabel, treeRootLabel, labels, aName);
+    return selection;
 }
 
 TDF_Label PartNamedSelectionTool::namedSelectionTreeLabel() const
@@ -67,8 +61,8 @@ std::vector<PartSubShapeNamedSelection> PartNamedSelectionTool::selections() con
     return result;
 }
 
-bool PartNamedSelectionTool::removeSelections(
-    const PartSubShapeNamedSelection& aNamedSelection
+bool PartNamedSelectionTool::removeSelection(
+    PartSubShapeNamedSelection& aNamedSelection
 ) {
     aNamedSelection.clear();
     return true;

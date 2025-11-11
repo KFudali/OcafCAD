@@ -2,12 +2,12 @@
 
 #include "Dim.hpp"
 
-void applyNamedSelections(
-    MeshInput& aMeshInput, 
-    const std::vector<NamedSelectionHandle>& aNamedSelections
-) {
-    aMeshInput.applyNamedSelection();
-}
+// void applyNamedSelections(
+//     MeshInput& aMeshInput, 
+//     const std::vector<NamedSelectionHandle>& aNamedSelections
+// ) {
+//     aMeshInput.applyNamedSelection();
+// }
 
 // MeshInput MeshObjectPreprocessor::preprocessMeshObject(
 //     const MeshObject& aMeshObject

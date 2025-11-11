@@ -1,8 +1,5 @@
 #include "MeshInput.hpp"
 
-
-
-
 bool MeshInput::applyNamedSelection() {
     
     mNetgenGeometry->BuildFMap();

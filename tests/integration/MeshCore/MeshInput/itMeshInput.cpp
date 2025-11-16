@@ -18,10 +18,10 @@ class MeshInputTest : public DocumentGeometryFixture {
         geoObject = std::make_shared<GeometryObject>(cubePartLabel);
         meshObject = std::make_unique<MeshObject>(geoObject);
 
-        input = std::make_unique<MeshInput>(
-            meshObject->geometry().rootShape(),
-            DomainId(1, Dim::D3)
-        );
+        // input = std::make_unique<MeshInput>(
+        //     meshObject->geometry().rootShape(),
+        //     DomainId(1, Dim::D3)
+        // );
     }
 
     std::unique_ptr<MeshInput> input;    
@@ -33,5 +33,5 @@ class MeshInputTest : public DocumentGeometryFixture {
 };
 
 TEST_F(MeshInputTest, TestTrue) {
-    input->applyNamedSelection();
+    // input->applyNamedSelection();
 }

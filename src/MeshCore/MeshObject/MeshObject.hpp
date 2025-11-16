@@ -2,10 +2,12 @@
 #define MeshObject_hpp
 
 #include "GeometryObject.hpp"
+
+#include <memory>
+
 #include "LocalMeshSettings.hpp"
 #include "GlobalMeshSettings.hpp"
 #include "Mesh.hpp"
-#include <memory>
 
 class MeshObject {
     public:
@@ -14,15 +16,19 @@ class MeshObject {
         mLocalSettings(std::make_unique<LocalMeshSettings>()),
         mGlobalSettings(std::make_unique<GlobalMeshSettings>()){}
     
-    inline const GeometryObject& geometry() const {return *mGeometryObject;};
+    inline GeometryObject& geometry() const {return *mGeometryObject;};
 
     inline LocalMeshSettings& localSettings() const {return *mLocalSettings;}
     inline GlobalMeshSettings& globalSettings() const {return *mGlobalSettings;} 
 
+	inline bool hasSurfaceMesh() const {return false;}	
+
     private:
     std::shared_ptr<GeometryObject> mGeometryObject;
+
     std::unique_ptr<LocalMeshSettings> mLocalSettings;
     std::unique_ptr<GlobalMeshSettings> mGlobalSettings;
+    std::unique_ptr<Mesh> mMesh;
 };
 
 #endif

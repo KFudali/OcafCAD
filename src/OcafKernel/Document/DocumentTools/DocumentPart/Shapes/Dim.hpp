@@ -2,6 +2,7 @@
 #define Dim_hpp
 
 #include "Shape.hpp"
+#include "ShapeType.hpp"
 
 enum class Dim {
     D1 = 1,
@@ -10,8 +11,8 @@ enum class Dim {
 };
 
 namespace DimUtils{
-    inline Dim determineDim(const Shape& aShape) {
-        switch (aShape.ShapeType()) {
+    inline Dim determineDim(const ShapeType& aShapeType) {
+        switch (aShapeType) {
             case TopAbs_VERTEX:
             case TopAbs_EDGE:
                 return Dim::D1;
@@ -30,8 +31,9 @@ namespace DimUtils{
                 return Dim::D3;
         }
     }
+    
+    inline Dim determineDim(const Shape& aShape) {
+            return determineDim(aShape.ShapeType());
+    };
 };
-
-
-
 #endif

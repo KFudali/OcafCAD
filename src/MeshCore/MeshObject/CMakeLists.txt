@@ -1,3 +1,4 @@
+add_subdirectory(Mesh)
 add_subdirectory(MeshSettings)
 
 add_library(MeshObject
@@ -5,6 +6,7 @@ add_library(MeshObject
 )
 
 target_link_libraries(MeshObject
+    PUBLIC Mesh
     PUBLIC MeshSettings
     PUBLIC GeometryObject
     PUBLIC ${Netgen_LIBRARIES}

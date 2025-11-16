@@ -3,6 +3,9 @@
 
 #include "MeshObject.hpp"
 #include "DomainId.hpp"
+#include "Shape.hpp"
+#include "ShapeDomainDescription.hpp"
+#include "LocalMeshSettings.hpp"
 
 #ifndef OCCGEOMETRY
 #define OCCGEOMETRY
@@ -14,20 +17,18 @@
 
 class MeshInput {
 public:
-    MeshInput(const Shape& aShape, const DomainId& aDomainId)
-        : mNetgenGeometry(std::make_shared<netgen::OCCGeometry>(aShape)),
-          mNetgenMesh(makeMesh(mNetgenGeometry)),
-          mId(aDomainId),
-          mDim(DimUtils::determineDim(aShape)){
-    }
-    bool applyNamedSelection();
-    // bool applyFaceSizings();
-    // bool applyEdgeSizings();
-    // bool applyVolumeSizings();
-    // bool applyGlobalSettings();
+    MeshInput(
+        const Shape& aShape,
+        const ShapeDomainDescription& aDomainDescription,
+        const LocalMeshSettings& aLocalSettings
+    );
+    inline const ShapeDomainDescription& domains() const {return mDomains;}
+    
+    inline netgen::Mesh& mesh() {return *mNetgenMesh;}
+    inline netgen::OCCGeometry& geometry() {return *mNetgenGeometry;}
 
-private:
-
+    private:
+    
     static std::shared_ptr<netgen::Mesh> makeMesh(
         const std::shared_ptr<netgen::OCCGeometry>& geometry
     ) {
@@ -39,10 +40,7 @@ private:
 private:
     std::shared_ptr<netgen::OCCGeometry> mNetgenGeometry;
     std::shared_ptr<netgen::Mesh> mNetgenMesh;
-
-    
-
-    DomainId mId;
+    const ShapeDomainDescription mDomains;
     Dim mDim;
 };
 

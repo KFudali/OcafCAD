@@ -3,6 +3,7 @@
 
 #include "Part.hpp"
 #include "PartNamedSelectionTool.hpp"
+#include "PartSubShapeTool.hpp"
 
 class GeometryObject {
     public:
@@ -11,13 +12,14 @@ class GeometryObject {
     inline Shape rootShape() const {
         return mSourcePart.shape().Located(mSourcePart.location());
     };
-    inline PartSubShapeTool& subShapes() {return mSourcePart.subShapes();} 
+    inline PartSubShapeTool& subShapes() {return mSubShapes;} 
     inline PartNamedSelectionTool& namedSelections() {
         return mNamedSelectionTool;
     }
     
     private:
     Part mSourcePart;
+    PartSubShapeTool mSubShapes;
     PartNamedSelectionTool mNamedSelectionTool;
 };
 

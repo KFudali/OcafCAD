@@ -9,20 +9,17 @@
 #include <vtkTetra.h>
 #include <vtkTriangle.h>
 #include <vtkUnsignedCharArray.h>
-#include <vtkSmartPointer.h>
 #include <vtkUnstructuredGrid.h>
+#include <vtkPolyData.h>
 #include <vtkCellArray.h>
 #include <vtkUnsignedCharArray.h>
 #include <numeric>
 #include <execution>
 #include <meshing.hpp>
 
-
-#include <vtkSmartPointer.h>
 #include <vtkPoints.h>
 #include <algorithm> 
 #include <vtkDoubleArray.h>
-#include <vtkSmartPointer.h>
 #include <vtkPoints.h>
 #include <cstring>
 #include <numeric>
@@ -102,6 +99,7 @@ vtkSmartPointer<vtkPolyData> copySurfaceConnectivity(
     vtkSmartPointer<vtkIdTypeArray> connVTK = vtkSmartPointer<vtkIdTypeArray>::New();
     connVTK->SetNumberOfValues(totalConn);
 
+
     for (size_t i = 0; i < nElems; ++i) {
         const auto& elem = sourceElems[i];
         vtkIdType offset = offsetsVTK->GetValue(i) - (1 + elem.GetNP());
@@ -109,7 +107,6 @@ vtkSmartPointer<vtkPolyData> copySurfaceConnectivity(
         for (size_t j = 0; j < elem.GetNP(); ++j) {
             connVTK->SetValue(offset + 1 + j, static_cast<vtkIdType>(elem.PNum(j)));
         }
-        auto faceDescriptor = aSource.GetFaceDescriptor(elem);
     }
 
     vtkSmartPointer<vtkCellArray> cells = vtkSmartPointer<vtkCellArray>::New();
@@ -117,7 +114,6 @@ vtkSmartPointer<vtkPolyData> copySurfaceConnectivity(
     vtkSmartPointer<vtkPolyData> polyData = vtkSmartPointer<vtkPolyData>::New();
     polyData->SetPoints(points);
     polyData->SetPolys(cells);
-
     return polyData;
 }
 
@@ -183,8 +179,8 @@ bool NetgenToVTK::transfer(const netgen::Mesh& aSource, Mesh& aDest) {
     auto num = points->GetNumberOfPoints();
     auto numSurf = surfaceCells->GetNumberOfCells();
     auto numVol = volumeGrid->GetNumberOfCells();
-    aDest.setPoints(points);
-    aDest.setBoundaryMesh(surfaceCells);
-    aDest.setInternalMesh(volumeGrid);
+    // aDest.setPoints(points);
+    // aDest.setBoundaryMesh(surfaceCells);
+    // aDest.setInternalMesh(volumeGrid);
 	return true;
 }

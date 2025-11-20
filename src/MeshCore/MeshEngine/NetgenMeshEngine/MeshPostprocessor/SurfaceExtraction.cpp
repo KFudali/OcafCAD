@@ -6,33 +6,43 @@
 #include <vtkIdTypeArray.h>
 #include <vtkPolyData.h>
 
-SurfaceConnectivity SurfaceExtraction::extractSurfaceConnectivity(
-    std::shared_ptr<netgen::Mesh> mesh
+SurfaceConnectivity SurfaceExtraction::extractSurfaceConn(
+    const ElemContainer& elems,
+    const std::unordered_map<int, DomainId>& surfaceDomainMap,
+    vtkSmartPointer<vtkIdTypeArray> offsets,
+    std::execution::sequenced_policy exec
 ) {
-    // const auto& sourceElems = mesh->SurfaceElements();
-    // using ElemContainer = ngcore::Array<netgen::Element2d, netgen::SurfaceElementIndex>;
-    // const auto offsets = MeshExtractionUtils::computeOffsets<ElemContainer>(
-    //     sourceElems
-    // );
-    // const auto conn = MeshExtractionUtils::computeConnectivity<ElemContainer>(
-    //     sourceElems, offsets
-    // );
-    // const auto points = MeshExtractionUtils::extractPoints(mesh);
+    const size_t n = std::distance(elems.begin(), elems.end());
+    auto conn = vtkSmartPointer<vtkIdTypeArray>::New();
+    auto elemPointCountSum = offsets->GetValue(offsets->GetSize() - 1);
+    conn->SetNumberOfValues(elemPointCountSum);
 
+    vtkIdType* connPtr = conn->GetPointer(0);
+    
+    auto surfIds = vtkSmartPointer<vtkIdTypeArray>::New();
+    auto domainIds = vtkSmartPointer<vtkIdTypeArray>::New();
+    surfIds->SetNumberOfValues(n);
+    domainIds->SetNumberOfValues(n);
+    
+    auto indices = std::views::iota(static_cast<size_t>(0), n);
+    std::for_each(exec, indices.begin(), indices.end(), [&](vtkIdType ei) {
+        const vtkIdType start = offsets->GetValue(ei);
+        const vtkIdType end   = offsets->GetValue(ei + 1);
+        const vtkIdType npts  = end - start;
+        const auto& elem = elems[ei];
+        auto surfNum = elem.GetIndex();
+        surfIds->SetValue(ei, surfNum);
+        auto it = surfaceDomainMap.find(surfNum);
+        if (it != surfaceDomainMap.end()) {
+            domainIds->SetValue(ei, it->second.value());
+        } else {
+            domainIds->SetValue(ei, surfNum);
+        }
+        const netgen::PointIndex* p = elems[ei].PNums().Data();
+        std::copy(p, p + npts, connPtr + start);
+    });
+    auto cells = vtkSmartPointer<vtkCellArray>::New();
+    cells->SetData(offsets, conn);
 
-    // vtkSmartPointer<vtkIdTypeArray> vtkConn = vtkSmartPointer<vtkIdTypeArray>::New();
-    // vtkIdType* rawConn = new vtkIdType[conn.size()];
-    // std::memcpy(rawConn, conn.data(), conn.size() * sizeof(vtkIdType));
-    // vtkConn->SetArray(rawConn, static_cast<vtkIdType>(conn.size()), 1);
-
-    // vtkSmartPointer<vtkIdTypeArray> vtkOffsets = vtkSmartPointer<vtkIdTypeArray>::New();
-    // vtkIdType* rawOffsets = new vtkIdType[offsets.size()];
-    // std::memcpy(rawOffsets, offsets.data(), offsets.size() * sizeof(vtkIdType));
-    // vtkOffsets->SetArray(rawOffsets, static_cast<vtkIdType>(offsets.size()), 1);
-
-    // vtkSmartPointer<vtkCellArray> cells = vtkSmartPointer<vtkCellArray>::New();
-    // cells->SetData(vtkOffsets, vtkConn);
-    // vtkSmartPointer<vtkIdTypeArray> shapeIds = vtkSmartPointer<vtkIdTypeArray>::New();
-    // vtkSmartPointer<vtkIdTypeArray> domainIds = vtkSmartPointer<vtkIdTypeArray>::New();
-    return SurfaceConnectivity();
+    return SurfaceConnectivity(cells, surfIds, domainIds);
 }

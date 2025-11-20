@@ -13,7 +13,10 @@
 namespace VolumeExtraction{
 
     VolumeConnectivity extractVolumeConnectivity(
-        std::shared_ptr<netgen::Mesh> aNetgenMesh
+        const ElemContainer& elems,
+        const std::unordered_map<int, DomainId>& surfaceDomainMap,
+        vtkSmartPointer<vtkIdTypeArray> offsets,
+        std::execution::sequenced_policy exec = std::execution::seq
     )
 
 };

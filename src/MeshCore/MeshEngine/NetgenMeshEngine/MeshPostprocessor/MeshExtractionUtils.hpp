@@ -14,12 +14,16 @@
 #include <vector>
 #include <numeric>
 #include <execution>
+#include <unordered_map>
 
+#include "DomainId.hpp"
+#include "SurfaceConnectivity.hpp"
 
 namespace MeshExtractionUtils {
 
-
     using ElemContainer = ngcore::Array<netgen::Element2d, netgen::SurfaceElementIndex>;
+    vtkSmartPointer<vtkPoints> extractPoints(std::shared_ptr<netgen::Mesh> mesh);
+
     vtkSmartPointer<vtkIdTypeArray> computeOffsets(
         const ElemContainer& elems,
         std::execution::sequenced_policy exec = std::execution::seq
@@ -30,7 +34,8 @@ namespace MeshExtractionUtils {
         vtkSmartPointer<vtkIdTypeArray> offsets,
         std::execution::sequenced_policy exec = std::execution::seq
     );
-    vtkSmartPointer<vtkPoints> extractPoints(std::shared_ptr<netgen::Mesh> mesh);
+
+
 
 };
 

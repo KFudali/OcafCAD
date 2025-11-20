@@ -4,6 +4,7 @@
 #include <vtkPoints.h>
 #include <vtkSmartPointer.h>
 #include <vtkIdTypeArray.h>
+#include <vtkCellArray.h>
 
 vtkSmartPointer<vtkPoints> MeshExtractionUtils::extractPoints(
     std::shared_ptr<netgen::Mesh> mesh
@@ -49,7 +50,7 @@ vtkSmartPointer<vtkIdTypeArray> MeshExtractionUtils::computeOffsets(
         elems.end(),
         offsets->Begin(),
         vtkIdType(0),
-        [](vtkIdType sum, const auto& e){ return sum + e.GetNP(); }
+        [](vtkIdType sum, const auto& e){return sum + e.GetNP();}
     );
     auto lastOffset = offsets->GetValue(n - 1) + static_cast<vtkIdType>(elems[n - 1].GetNP());
     offsets->SetValue(n, lastOffset);
@@ -67,12 +68,12 @@ vtkSmartPointer<vtkIdTypeArray> MeshExtractionUtils::computeConn(
     conn->SetNumberOfValues(elemPointCountSum);
 
     vtkIdType* connPtr = conn->GetPointer(0);
-
+    
     auto indices = std::views::iota(static_cast<size_t>(0), n);
     std::for_each(exec, indices.begin(), indices.end(), [&](vtkIdType ei) {
-        vtkIdType start = offsets->GetValue(ei);
-        vtkIdType end   = offsets->GetValue(ei + 1);
-        vtkIdType npts  = end - start;
+        const vtkIdType start = offsets->GetValue(ei);
+        const vtkIdType end   = offsets->GetValue(ei + 1);
+        const vtkIdType npts  = end - start;
         const netgen::PointIndex* p = elems[ei].PNums().Data();
         std::copy(p, p + npts, connPtr + start);
     });

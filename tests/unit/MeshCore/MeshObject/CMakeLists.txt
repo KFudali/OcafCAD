@@ -8,7 +8,6 @@ target_sources(utMeshObject INTERFACE
 target_link_libraries(utMeshObject INTERFACE
     MeshObject
     MeshCoreFixtures
-    GeometryCoreFixtures
     OcafKernelFixtures
     GTest::gmock_main
 )

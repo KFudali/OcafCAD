@@ -6,6 +6,7 @@
 #include "Shape.hpp"
 #include "ShapeDomainDescription.hpp"
 #include "LocalMeshSettings.hpp"
+#include "GlobalMeshSettings.hpp"
 
 #ifndef OCCGEOMETRY
 #define OCCGEOMETRY
@@ -20,15 +21,20 @@ public:
     MeshInput(
         const Shape& aShape,
         const ShapeDomainDescription& aDomainDescription,
-        const LocalMeshSettings& aLocalSettings
+        const LocalMeshSettings& aLocalSettings,
+        const GlobalMeshSettings& aGlobalSettings 
     );
     inline const ShapeDomainDescription& domains() const {return mDomains;}
     
     inline netgen::Mesh& mesh() {return *mNetgenMesh;}
+    inline std::shared_ptr<netgen::Mesh>& meshPtr() {return mNetgenMesh;}
     inline netgen::OCCGeometry& geometry() {return *mNetgenGeometry;}
-
-    private:
     
+    inline netgen::MeshingParameters& meshingParams() {
+        return mNetgenMeshingParams;
+    }
+    
+    private:
     static std::shared_ptr<netgen::Mesh> makeMesh(
         const std::shared_ptr<netgen::OCCGeometry>& geometry
     ) {
@@ -37,11 +43,20 @@ public:
         return mesh;
     }
 
+    static netgen::MeshingParameters makeNetgenMeshingParams(
+        const GlobalMeshSettings& meshSettings
+    );
+
+
 private:
     std::shared_ptr<netgen::OCCGeometry> mNetgenGeometry;
     std::shared_ptr<netgen::Mesh> mNetgenMesh;
+    netgen::MeshingParameters mNetgenMeshingParams;
+
     const ShapeDomainDescription mDomains;
-    Dim mDim;
+    const Dim mDim;
+    const LocalMeshSettings mLocalSettings;
+    const GlobalMeshSettings mGlobalSettings;
 };
 
 #endif

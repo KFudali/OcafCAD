@@ -11,8 +11,9 @@ bool NetgenMeshEngine::generateSurfaceMesh(MeshObject& aMeshObject) const {
     auto meshInput = mMeshPre->preprocessMeshObject(aMeshObject);
     
     mMeshingLauncher->generateSurfaceMesh(meshInput);
-    auto surfaceMesh = mMeshPost->postProcessSurfMesh(meshInput);
    
+    auto surfaceMesh = mMeshPost->postProcessSurfMesh(meshInput);
+    
     // aMeshObject.setSurfaceMesh(surfaceMesh);
     
     return true;

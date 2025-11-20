@@ -11,8 +11,8 @@ class MeshingLauncher {
     
     MeshingLauncher() = default;
     
-    std::unique_ptr<SurfaceMesh> generateSurfaceMesh(const MeshInput& aMeshInput);
-    std::unique_ptr<VolumeMesh> generateVolumeMesh(const MeshInput& aMeshInput);
+    bool generateSurfaceMesh(MeshInput& aMeshInput);
+    bool generateVolumeMesh(MeshInput& aMeshInput);
 };
 
 

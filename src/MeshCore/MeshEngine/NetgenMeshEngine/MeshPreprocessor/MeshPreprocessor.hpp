@@ -11,13 +11,13 @@ class MeshPreprocessor {
     public:
     MeshPreprocessor() = default;
 
-    MeshInput preprocessMeshObject(MeshObject& aMeshObject);
+    MeshInput preprocessMeshObject(MeshObject& aMeshObject) const;
    
     private: 
-    ShapeDomainDescription preprocessDomains(MeshObject& aMeshObject);
-    LocalMeshSettings preprocessLocalSettings(MeshObject& aMeshObject);
+    ShapeDomainDescription preprocessDomains(MeshObject& aMeshObject) const;
+    LocalMeshSettings preprocessLocalSettings(MeshObject& aMeshObject) const;
+    GlobalMeshSettings preprocessGlobalSettings(MeshObject& aMeshObject) const;
 
-    DomainRegistry mDomainRegistry;
 };
 
 #endif

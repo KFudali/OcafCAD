@@ -1,7 +1,8 @@
 #ifndef Points_hpp
 #define Points_hpp
 
-#include <vtkPoints>
+#include <vtkPoints.h>
+#include <vtkSmartPointer.h>
 
 using Points = vtkPoints;
 

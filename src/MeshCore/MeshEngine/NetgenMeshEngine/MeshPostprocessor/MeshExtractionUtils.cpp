@@ -32,7 +32,7 @@ vtkSmartPointer<vtkPoints> MeshExtractionUtils::extractPoints(
 }
 
 vtkSmartPointer<vtkIdTypeArray> MeshExtractionUtils::computeOffsets(
-    const ElemContainer& elems,
+    const Elem2DContainer& elems,
     std::execution::sequenced_policy exec
 ) {
     const size_t n = std::distance(elems.begin(), elems.end());
@@ -58,7 +58,7 @@ vtkSmartPointer<vtkIdTypeArray> MeshExtractionUtils::computeOffsets(
 }
 
 vtkSmartPointer<vtkIdTypeArray> MeshExtractionUtils::computeConn(
-    const ElemContainer& elems,
+    const Elem2DContainer& elems,
     vtkSmartPointer<vtkIdTypeArray> offsets,
     std::execution::sequenced_policy exec
 ) {

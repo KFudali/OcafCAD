@@ -7,7 +7,7 @@
 #include <vtkPolyData.h>
 
 SurfaceConnectivity SurfaceExtraction::extractSurfaceConn(
-    const ElemContainer& elems,
+    const Elem2DContainer& elems,
     const std::unordered_map<int, DomainId>& surfaceDomainMap,
     vtkSmartPointer<vtkIdTypeArray> offsets,
     std::execution::sequenced_policy exec

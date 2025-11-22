@@ -2,14 +2,17 @@
 #define Mesh2D_hpp
 
 #include "SurfaceConnectivity.hpp"
+#include <vtkPoints.h>
+#include <vtkSmartPointer.h>
 
-struct Mesh2D{
+class Mesh2D{
     Mesh2D(
-        const Points& aPoints,
+        vtkSmartPointer<vtkPoints> aPoints,
         const SurfaceConnectivity& aSurfConn,
-    ) : surface(surface), volume(volume) {}
-    
-    SurfaceMesh surface;
+    ) : mPoints(aPoints), mSurfConn(aSurfConn) {}
+
+    vtkSmartPointer<vtkPoints> mPoints; 
+    const SurfaceConnectivity mSurfConn;
 };
 
 #endif

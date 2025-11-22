@@ -2,8 +2,6 @@
 #define MeshingLauncher_hpp
 
 #include <memory>
-#include "SurfaceMesh.hpp"
-#include "VolumeMesh.hpp"
 #include "MeshInput.hpp"
 
 class MeshingLauncher {

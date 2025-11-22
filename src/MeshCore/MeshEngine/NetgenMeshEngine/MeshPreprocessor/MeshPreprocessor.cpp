@@ -41,3 +41,9 @@ LocalMeshSettings MeshPreprocessor::preprocessLocalSettings(
 ) const {
     return LocalMeshSettings();
 }
+
+GlobalMeshSettings MeshPreprocessor::preprocessGlobalSettings(
+    MeshObject& aMeshObject
+) const {
+    return GlobalMeshSettings();
+}

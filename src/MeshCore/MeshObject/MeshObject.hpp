@@ -7,7 +7,7 @@
 
 #include "LocalMeshSettings.hpp"
 #include "GlobalMeshSettings.hpp"
-#include "Mesh.hpp"
+#include "Mesh3D.hpp"
 
 class MeshObject {
     public:
@@ -22,13 +22,18 @@ class MeshObject {
     inline GlobalMeshSettings& globalSettings() const {return *mGlobalSettings;} 
 
 	inline bool hasSurfaceMesh() const {return false;}	
+	inline bool hasMesh() const {return false;}	
+    inline Mesh3D& mesh() const {return *mMesh;} 
 
     private:
+    
+    
+
     std::shared_ptr<GeometryObject> mGeometryObject;
 
     std::unique_ptr<LocalMeshSettings> mLocalSettings;
     std::unique_ptr<GlobalMeshSettings> mGlobalSettings;
-    std::unique_ptr<Mesh> mMesh;
+    std::unique_ptr<Mesh3D> mMesh;
 };
 
 #endif

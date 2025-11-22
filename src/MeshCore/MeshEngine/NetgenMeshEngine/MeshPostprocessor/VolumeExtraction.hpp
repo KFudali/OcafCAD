@@ -8,17 +8,15 @@
 
 #include "MeshExtractionUtils.hpp"
 #include "VolumeConnectivity.hpp"
-#include "Points.hpp"
+#include "NetgenElemContainers.hpp"
 
 namespace VolumeExtraction{
-
-    VolumeConnectivity extractVolumeConnectivity(
-        const ElemContainer& elems,
-        const std::unordered_map<int, DomainId>& surfaceDomainMap,
+    VolumeConnectivity extractVolumeConn(
+        const Elem3DContainer& elems,
+        const std::unordered_map<int, DomainId>& volumeDomainMap,
         vtkSmartPointer<vtkIdTypeArray> offsets,
         std::execution::sequenced_policy exec = std::execution::seq
-    )
-
+    );
 };
 
 #endif

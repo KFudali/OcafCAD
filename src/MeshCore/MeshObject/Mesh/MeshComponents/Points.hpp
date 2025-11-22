@@ -4,6 +4,6 @@
 #include <vtkPoints.h>
 #include <vtkSmartPointer.h>
 
-using Points = vtkPoints;
+using Points = vtkSmartPointer<vtkPoints>;
 
 #endif

@@ -4,16 +4,19 @@
 #include "SurfaceConnectivity.hpp"
 #include "VolumeConnectivity.hpp"
 
-
+#include <vtkPoints.h>
+#include <vtkSmartPointer.h>
 
 class Mesh3D {
     Mesh3D(
-        const Points& aPoints,
+        vtkSmartPointer<vtkPoints> aPoints,
         const SurfaceConnectivity& aSurfConn,
         const VolumeConnectivity& aVolumeConn
     ) {}
    
-    vtkSmartPointer<vtkUnstructuredGrid> mGrid;
+    vtkSmartPointer<vtkPoints> mPoints;
+    SurfaceConnectivity mSurfConn;
+    VolumeConnectivity mVolumeConn;
 };
 
 #endif

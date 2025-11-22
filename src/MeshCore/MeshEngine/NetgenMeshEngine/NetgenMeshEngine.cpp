@@ -11,10 +11,8 @@ bool NetgenMeshEngine::generateSurfaceMesh(MeshObject& aMeshObject) const {
     auto meshInput = mMeshPre->preprocessMeshObject(aMeshObject);
     
     mMeshingLauncher->generateSurfaceMesh(meshInput);
-   
-    auto surfaceMesh = mMeshPost->postProcessSurfMesh(meshInput);
-    
-    // aMeshObject.setSurfaceMesh(surfaceMesh);
+
+    mMeshPost->transferSurfaceMesh(meshInput, aMeshObject);
     
     return true;
 }
@@ -26,9 +24,8 @@ bool NetgenMeshEngine::generateVolumeMesh(MeshObject& aMeshObject) const {
     auto meshInput = mMeshPre->preprocessMeshObject(aMeshObject);
     
     mMeshingLauncher->generateVolumeMesh(meshInput);
-   
-    auto volumeMesh = mMeshPost->postProcessVolMesh(meshInput);
+
+    mMeshPost->transferVolumeMesh(meshInput, aMeshObject);
     
-    // aMeshObject.setVolumeMesh(volumeMesh);
     return true;
 }

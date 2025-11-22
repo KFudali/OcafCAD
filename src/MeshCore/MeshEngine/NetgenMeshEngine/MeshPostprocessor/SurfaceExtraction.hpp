@@ -9,12 +9,12 @@
 
 #include "MeshExtractionUtils.hpp"
 #include "SurfaceConnectivity.hpp"
+#include "NetgenElemContainers.hpp"
 #include "Points.hpp"
 
 namespace SurfaceExtraction {
-    using ElemContainer = ngcore::Array<netgen::Element2d, netgen::SurfaceElementIndex>;
     SurfaceConnectivity extractSurfaceConn(
-        const ElemContainer& elems,
+        const Elem2DContainer& elems,
         const std::unordered_map<int, DomainId>& surfaceDomainMap,
         vtkSmartPointer<vtkIdTypeArray> offsets,
         std::execution::sequenced_policy exec = std::execution::seq

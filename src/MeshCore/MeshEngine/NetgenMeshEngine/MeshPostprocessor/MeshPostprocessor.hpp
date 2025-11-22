@@ -4,20 +4,20 @@
 #include <memory>
 
 #include "MeshInput.hpp"
-#include "SurfaceMesh.hpp"
-#include "VolumeMesh.hpp"
 
 class MeshPostprocessor {
     public:
     MeshPostprocessor() = default;
 
-    std::unique_ptr<SurfaceMesh> postProcessSurfMesh(
-        const MeshInput& aMeshInput
-    ) const;
+    bool transferSurfaceMesh(
+        const MeshInput& aMeshInput,
+        MeshObject& aMeshObject
+    ) const {return true;}
     
-    std::unique_ptr<VolumeMesh> postProcessVolMesh(
-        const MeshInput& aMeshInput
-    ) const;
+    bool transferVolumeMesh(
+        const MeshInput& aMeshInput,
+        MeshObject& aMeshObject
+    ) const {return true;}
     
     private:
     
